@@ -71,3 +71,11 @@ a{
     border-bottom: 3px solid black; 
     padding-bottom: 5px;            
 }
+
+/* so the nav bar doesn't cover the paragraph*/
+.main-content {
+    padding-top: 80px;
+    width: 80vw;
+    margin: auto;
+    font-family: var(--font-main);
+}
