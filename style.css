@@ -1,29 +1,73 @@
-.container {
-    display: flex;
-    justify-content: space-between;
+:root{
+    --nav-height: 50px;
+    --nav-border: 2px solid rgb(235,235,235);
+    --nav-bg: white;
+    --font-main: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    --brand-font-size: 30px;
 }
-.link {
-    
-    text-decoration: none;
-}
-a {
+
+/* Global Syles */
+a{
     color: black;
     text-decoration: none;
 }
-.nav_bar {
-    border: 2px solid rgb(235, 235, 235);
-    background-color: white; 
+
+/* containers */ 
+.container {
     display: flex;
+    justify-content: space-between;
+    width: 80vw;
+    margin: auto;
+}
+
+/* nav-bar */
+.nav_bar{
     position: fixed;
     top: 0;
     width: 100vw;
-    height: 50px;
-    justify-content: left;
+    display: flex;
     align-items: center;
+    height: var(--nav-height);
     padding: 10px;
+    background: var(--nav-bg);
+    border: var(--nav-border);
     z-index: 1000;
 }
-#homeImage{
-    width: 50px;
-    height: 50px;
+
+/* cantainer inside nav bar */ 
+
+.nav-container{
+    display: flex; 
+    align-items: center;
+}
+
+/* Logo */
+
+.logo-img{
+    height: 60px;
+    width: auto;
+}
+/* Nav links*/
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 140px;
+}
+
+.brand-name{
+    font-size: var(--brand-font-size);
+    font-weight: bold;
+    font-family: var(--font-main);    
+}
+
+/* active tab highlight*/
+.nav-links a.active {
+    font-weight: bold;
+    border-bottom: 3px solid black; 
+     display: inline-block;
+}
+.logo.active {
+    border-bottom: 3px solid black; 
+    padding-bottom: 5px;            
 }
