@@ -1,7 +1,7 @@
 :root{
     --nav-height: 50px;
     --nav-border: 2px solid rgb(235,235,235);
-    --nav-bg: white;
+    --nav-bg: #FFFDD0;
     --font-main: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     --brand-font-size: 30px;
 }
