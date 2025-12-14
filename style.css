@@ -4,12 +4,22 @@
     --nav-bg: #f14747;
     --font-main: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     --brand-font-size: 30px;
+    --page-bg: rgb(191, 167, 93);
 }
+
 
 /* Global Syles */
 a{
     color: black;
     text-decoration: none;
+}
+
+/* main content (gives a bcx around the text) */
+.main-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 /* containers */ 
