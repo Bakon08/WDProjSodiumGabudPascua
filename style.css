@@ -1,7 +1,7 @@
 :root{
     --nav-height: 50px;
     --nav-border: 2px solid rgb(235,235,235);
-    --nav-bg: #f14747;
+    --nav-bg: #7d1010;
     --font-main: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     --brand-font-size: 30px;
     --page-bg: rgb(191, 167, 93);
@@ -10,13 +10,17 @@
 
 /* Global Syles */
 a{
-    color: black;
+    color: rgb(255, 255, 255);
     text-decoration: none;
+}
+
+body{
+    background-color: antiquewhite;
 }
 
 /* main content (gives a bcx around the text) */
 .main-content {
-    background: white;
+    background: var(--page-bg);
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
@@ -53,33 +57,34 @@ a{
 }
 
 /* Logo */
-
 .logo-img{
     height: 60px;
     width: auto;
 }
-/* Nav links*/
 
+/* Nav links*/
 .nav-links {
     display: flex;
     align-items: center;
     gap: 300px;
+    color:white;
 }
 
 .brand-name{
     font-size: var(--brand-font-size);
     font-weight: bold;
-    font-family: var(--font-main);    
+    font-family: var(--font-main);
 }
 
 /* active tab highlight*/
 .nav-links a.active {
     font-weight: bold;
-    border-bottom: 3px solid black; 
-     display: inline-block;
+    border-bottom: 3px solid rgb(255, 255, 255); 
+    display: inline-block;
+    color: white;
 }
 .logo.active {
-    border-bottom: 3px solid black; 
+    border-bottom: 3px solid rgb(255, 246, 246); 
     padding-bottom: 5px;            
 }
 
@@ -94,6 +99,7 @@ a{
 /* footer */
 footer {
     text-align: center;
+    color: white;
     padding: 20px;
     margin-top: 40px;
     font-family: var(--font-main);
