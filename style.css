@@ -79,3 +79,13 @@ a{
     margin: auto;
     font-family: var(--font-main);
 }
+
+/* footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    font-family: var(--font-main);
+    background: var(--nav-bg);
+    border-top: var(--nav-border);
+}
