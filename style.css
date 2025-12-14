@@ -34,10 +34,11 @@ a{
     z-index: 1000;
 }
 
-/* cantainer inside nav bar */ 
+/* container inside nav bar */ 
 
 .nav-container{
     display: flex; 
+    gap: 200px;
     align-items: center;
 }
 
@@ -52,7 +53,7 @@ a{
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 140px;
+    gap: 300px;
 }
 
 .brand-name{
