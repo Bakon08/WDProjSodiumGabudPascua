@@ -1,0 +1,107 @@
+:root{
+    --nav-height: 50px;
+    --nav-border: 2px solid rgb(235,235,235);
+    --nav-bg: #7d1010;
+    --font-main: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    --brand-font-size: 30px;
+    --page-bg: rgb(191, 167, 93);
+}
+
+
+/* Global Syles */
+a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+body{
+    background-color: antiquewhite;
+}
+
+/* main content (gives a bcx around the text) */
+.main-content {
+    background: var(--page-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* containers */ 
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 80vw;
+    margin: auto;
+}
+
+/* nav-bar */
+.nav_bar{
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    height: var(--nav-height);
+    padding: 10px;
+    background: var(--nav-bg);
+    border: var(--nav-border);
+    z-index: 1000;
+}
+
+/* container inside nav bar */ 
+
+.nav-container{
+    display: flex; 
+    gap: 200px;
+    align-items: center;
+}
+
+/* Logo */
+.logo-img{
+    height: 60px;
+    width: auto;
+}
+
+/* Nav links*/
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 300px;
+}
+
+.brand-name{
+    font-size: var(--brand-font-size);
+    font-weight: bold;
+    font-family: var(--font-main);
+}
+
+/* active tab highlight*/
+.nav-links a.active {
+    font-weight: bold;
+    border-bottom: 3px solid rgb(255, 255, 255); 
+    display: inline-block;
+    color: white;
+}
+.logo.active {
+    border-bottom: 3px solid rgb(255, 246, 246); 
+    padding-bottom: 5px;            
+}
+
+/* so the nav bar doesn't cover the paragraph*/
+.main-content {
+    padding-top: 80px;
+    width: 80vw;
+    margin: auto;
+    font-family: var(--font-main);
+}
+
+/* footer */
+footer {
+    text-align: center;
+    color: white;
+    padding: 20px;
+    margin-top: 40px;
+    font-family: var(--font-main);
+    background: var(--nav-bg);
+    border-top: var(--nav-border);
+}
