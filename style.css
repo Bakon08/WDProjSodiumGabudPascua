@@ -67,6 +67,7 @@ body{
     display: flex;
     align-items: center;
     gap: 300px;
+    font-size: 30px;
 }
 
 .brand-name{
