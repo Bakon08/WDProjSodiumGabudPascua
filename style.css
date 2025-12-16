@@ -18,21 +18,14 @@ body{
     background-color: antiquewhite;
 }
 
-/* main content (gives a bcx around the text) */
-.main-content {
-    background: var(--page-bg);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-}
 
-/* containers */ 
+/* containers */ /*
 .container {
     display: flex;
     justify-content: space-between;
     width: 80vw;
     margin: auto;
-}
+} */
 
 /* nav-bar */
 .nav_bar{
@@ -45,7 +38,6 @@ body{
     padding: 10px;
     background: var(--nav-bg);
     border: var(--nav-border);
-    z-index: 1000;
 }
 
 /* container inside nav bar */ 
@@ -89,18 +81,22 @@ body{
 
 /* so the nav bar doesn't cover the paragraph*/
 .main-content {
-    padding-top: 80px;
+    padding: 40px;
     width: 80vw;
     margin: auto;
+    margin-top: 40px;
     font-family: var(--font-main);
+    color: black;
+    background: var(--page-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 /* footer */
 footer {
     text-align: center;
     color: white;
-    padding: 20px;
-    margin-top: 40px;
+    padding: 5px;
     font-family: var(--font-main);
     background: var(--nav-bg);
     border-top: var(--nav-border);
