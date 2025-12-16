@@ -106,3 +106,105 @@ footer {
     background: var(--nav-bg);
     border-top: var(--nav-border);
 }
+
+/* goals tab */
+.goal-trackers-container {
+    display: flex;
+    flex-wrap: wrap; /* allows the goal trackers to wrap if the screen is too small */
+    gap: 20px;
+    padding: 20px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content { /* hidden dropdown menu */
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 250px; /* increased width to accommodate goal text */
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 10; /* higer z-index to ensure it sits above other elements */
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.dropdown:hover .dropdown-content, 
+.dropdown-content:hover { 
+    display: block;
+}
+
+.input-area { /* styling for the input area */
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+input {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    min-width: 150px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+ul li:last-child {
+    border-bottom: none;
+}
+
+.goal-text {
+    flex-grow: 1;
+    margin-right: 10px;
+    word-break: break-word;
+}
+
+.completed .goal-text {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 16px;
+    padding: 0;
+}
+
+.complete-btn { color: green; }
+.delete-btn { color: red; }
+
+.add-btn {
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-weight: bold;
+}
