@@ -206,3 +206,53 @@ ul li:last-child {
   padding: 5px 10px;
   font-weight: bold;
 }
+
+/*notes css */
+.notes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.notes-table th,
+.notes-table td {
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: left;
+}
+
+.notes-table th {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+}
+
+.notes-input {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.notes-input input,
+.notes-input select,
+.notes-input textarea {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: var(--font-main);
+}
+
+.notes-input textarea {
+    flex: 1;
+    min-height: 40px;
+    resize: vertical;
+}
+
+.add-btn {
+    background-color: #7d1010;
+    color: white;
+    border-radius: 6px;
+    padding: 6px 12px;
+    border: none;
+    cursor: pointer;
+}

@@ -39,8 +39,48 @@
           in advanced.
         </p>
       <!--Write paragraph here-->
-    </div>
-</body>
+      </div>
+      <div class="main-content">
+      <h2>📓 Notes</h2>
+
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>
+              Note Name
+              <button class="add-btn" id="addNewNoteBtn">+ New Note</button>
+            </th>
+            <th>Progress</th>
+            <th>Note Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody id="notesBody">
+          <!-- Notes will appear here -->
+        </tbody>
+          </table>
+        </div>
+
+        <!-- Hidden form for adding/editing notes -->
+        <div class="notes-input" id="notesForm" style="display:none;">
+          <input type="text" id="noteTitle" placeholder="Note title">
+          <select id="noteType">
+            <option value="Reminder">Reminder</option>
+            <option value="Task">Task</option>
+            <option value="Idea">Idea</option>
+          </select>
+          <select id="noteProgress">
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+          <textarea id="noteDescription" placeholder="Description"></textarea>
+          <button class="add-btn" id="saveNoteBtn">Save Note</button>
+          <button class="add-btn" id="cancelNoteBtn">Cancel</button>
+        </div>
+
+        <script src="notes.js"></script>
+    </body>
 
 <footer>
   &copy GABUD; PASCUA
