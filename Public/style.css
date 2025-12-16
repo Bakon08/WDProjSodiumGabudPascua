@@ -1,0 +1,208 @@
+:root{
+    --nav-height: 50px;
+    --nav-border: 2px solid rgb(235,235,235);
+    --nav-bg: #7d1010;
+    --font-main: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    --brand-font-size: 30px;
+    --page-bg: rgb(191, 167, 93);
+}
+
+
+/* Global Syles */
+a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+body{
+    background-color: antiquewhite;
+}
+
+
+/* containers */ /*
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 80vw;
+    margin: auto;
+} */
+
+/* nav-bar */
+.nav_bar{
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    height: var(--nav-height);
+    padding: 10px;
+    background: var(--nav-bg);
+    border: var(--nav-border);
+}
+
+/* container inside nav bar */ 
+
+.nav-container{
+    display: flex; 
+    gap: 200px;
+    align-items: center;
+}
+
+/* Logo */
+.logo-img{
+    height: 60px;
+    width: auto;
+}
+
+/* Nav links*/
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 200px;
+    font-size: 30px;
+}
+
+.brand-name{
+    font-size: var(--brand-font-size);
+    font-weight: bold;
+    font-family: var(--font-main);
+}
+
+/* active tab highlight*/
+.nav-links a.active {
+    font-weight: bold;
+    border-bottom: 3px solid rgb(255, 255, 255); 
+    display: inline-block;
+    color: white;
+}
+.logo.active {
+    border-bottom: 3px solid rgb(255, 246, 246); 
+    padding-bottom: 5px;            
+}
+
+/* so the nav bar doesn't cover the paragraph*/
+.main-content {
+    padding: 40px;
+    width: 80vw;
+    margin: auto;
+    margin-top: 40px;
+    font-family: var(--font-main);
+    color: black;
+    background: var(--page-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* footer */
+footer {
+    text-align: center;
+    color: white;
+    padding: 5px;
+    font-family: var(--font-main);
+    background: var(--nav-bg);
+    border-top: var(--nav-border);
+}
+
+/* goals tab */
+.goal-trackers-container {
+    display: flex;
+    flex-wrap: wrap; /* allows the goal trackers to wrap if the screen is too small */
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content { /* hidden dropdown menu */
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 250px; /* increased width to accommodate goal text */
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 10; /* higer z-index to ensure it sits above other elements */
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.dropdown:hover .dropdown-content, 
+.dropdown-content:hover { 
+    display: block;
+}
+
+.input-area { /* styling for the input area */
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+input {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    min-width: 150px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+ul li:last-child {
+    border-bottom: none;
+}
+
+.goal-text {
+    flex-grow: 1;
+    margin-right: 10px;
+    word-break: break-word;
+}
+
+.completed .goal-text {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 16px;
+    padding: 0;
+}
+
+.complete-btn { color: green; }
+.delete-btn { color: red; }
+
+.add-btn {
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-weight: bold;
+}

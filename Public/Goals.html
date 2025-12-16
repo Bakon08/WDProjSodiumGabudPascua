@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="../style.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
   <title>Lockin</title>
-  <link rel="icon" type="image/png" href="../Images/Logo.png">
+  <link rel="icon" type="image/png" href="../Assets/Logo.png">
 </head>
 
 <body> 
     <nav class="nav_bar">
       <div class="nav-container">
           <a href="/index.html" class="logo link">
-            <img src="../Images/Logo.png" class="logo-img">
+            <img src="../Assets/Logo.png" class="logo-img">
           </a> 
 
           <div class = "nav-links">
@@ -35,7 +35,67 @@
         </p>
       <!--Write paragraph here-->
     </div>
-  </body>
+  
+    <div class="goal-trackers-container">
+      <div class="dropdown">
+        <button class="dropbtn">Annual Goals</button>
+          <div class="dropdown-content">
+            <div class="input-area">
+              <input type="text" id="annualGoalInput" placeholder="Add an annual goal...">
+              <button type="button" onclick="addGoal(event, 'annual')" class="add-btn">+</button>
+            </div>
+            <ul id="annualGoalUL"></ul>
+          </div>
+      </div>
+      
+      <div class="dropdown">
+        <button class="dropbtn">Quarterly Goals</button>
+          <div class="dropdown-content">
+            <div class="input-area">
+              <input type="text" id="quarterlyGoalInput" placeholder="Add a quarterly goal...">
+              <button type="button" onclick="addGoal(event, 'quarterly')" class="add-btn">+</button>
+            </div>
+            <ul id="quarterlyGoalUL"></ul>
+          </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="dropbtn">Monthly Goals</button>
+          <div class="dropdown-content">
+            <div class="input-area">
+              <input type="text" id="monthlyGoalInput" placeholder="Add a monthly goal...">
+              <button type="button" onclick="addGoal(event, 'monthly')" class="add-btn">+</button>
+            </div>
+            <ul id="monthlyGoalUL"></ul>
+          </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="dropbtn">Weekly Goals</button>
+        <div class="dropdown-content">
+          <div class="input-area">
+            <input type="text" id="weeklyGoalInput" placeholder="Add a weekly goal...">
+            <button type="button" onclick="addGoal(event, 'weekly')" class="add-btn">+</button>
+          </div>
+          <ul id="weeklyGoalUL"></ul>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="dropbtn">Daily Goals</button>
+        <div class="dropdown-content">
+          <div class="input-area">
+            <input type="text" id="dailyGoalInput" placeholder="Add a daily goal...">
+            <button type="button" onclick="addGoal(event, 'daily')" class="add-btn">+</button>
+          </div>
+          <ul id="dailyGoalUL"></ul>
+        </div>
+      </div>
+   </div>
+   
+  <script src="script.js"></script>
+
+</body>
 
   <footer>
   &copy GABUD; PASCUA
