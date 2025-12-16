@@ -19,13 +19,27 @@ body{
 }
 
 
-/* containers */ /*
+/* containers */
 .container {
     display: flex;
     justify-content: space-between;
     width: 80vw;
     margin: auto;
-} */
+}
+
+.box {
+    background-color: #b7dd7f;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+    margin: 10px;
+}
+
+.box:hover {
+    transform: scale(1.1);
+}
 
 /* nav-bar */
 .nav_bar{
@@ -219,6 +233,13 @@ ul li:last-child {
     border: 1px solid #000;
     padding: 10px;
     text-align: left;
+    white-space: normal; 
+    overflow-wrap: break-word; 
+    word-break: break-all;
+}
+
+.notes-table th:nth-child(4) { 
+    width: 50%; 
 }
 
 .notes-table th {
