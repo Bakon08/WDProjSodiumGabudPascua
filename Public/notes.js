@@ -21,6 +21,8 @@ if (savedNotes) {
     notes = [];
 }
 
+let editIndex = null;
+
 // Show form to add new note
 function showNoteForm() {
     notesForm.style.display = "flex";
