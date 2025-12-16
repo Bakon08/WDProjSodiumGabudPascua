@@ -1,122 +1,139 @@
 //--------------gets the html elements--------------
-const addNewPlannerBtn = document.getElementById("addNewNoteBtn");
-const plannerForm = document.getElementById("notesForm");
-const savePlannerBtn = document.getElementById("saveNoteBtn");
-const cancelPlannerBtn = document.getElementById("cancelNoteBtn");
+const addNewNoteBtn = document.getElementById("addNewNoteBtn");
+const notesForm = document.getElementById("notesForm");
+const saveNoteBtn = document.getElementById("saveNoteBtn");
+const cancelNoteBtn = document.getElementById("cancelNoteBtn");
 
-const plannerTitle = document.getElementById("noteTitle");
+const noteTitle = document.getElementById("noteTitle");
+const noteType = document.getElementById("noteType");
+const noteProgress = document.getElementById("noteProgress");
+const noteDescription = document.getElementById("noteDescription");
 const plannerDueDate = document.getElementById("plannerDueDate");
-const plannerProgress = document.getElementById("noteProgress");
-const plannerDescription = document.getElementById("noteDescription");
-const plannerType = document.getElementById("noteType");
 
-const plannerBody = document.getElementById("notesBody");
+const notesBody = document.getElementById("notesBody");
 //-------------------------------------------------
 
-// puts the data into an array
-let savedPlanners = localStorage.getItem("planners");
-let planners;
-
-if (savedPlanners) {
-    planners = JSON.parse(savedPlanners);
+//puts the data into an array
+let savedNotes = localStorage.getItem("notes");
+let notes;
+if (savedNotes) {
+    notes = JSON.parse(savedNotes);
 } else {
-    planners = [];
+    notes = [];
 }
 
 let editIndex = null;
 
-// Show form to add new planner
-function showPlannerForm() {
-    plannerForm.style.display = "flex";
-    clearPlannerForm();
+// Show form to add new note
+function showNoteForm() {
+    notesForm.style.display = "flex";
+    clearForm();
 }
-addNewPlannerBtn.addEventListener("click", showPlannerForm);
+addNewNoteBtn.addEventListener("click", showNoteForm);
 
 // Cancel adding/editing
-function hidePlannerForm() {
-    plannerForm.style.display = "none";
-    clearPlannerForm();
+function hideNoteForm() {
+    notesForm.style.display = "none";
+    clearForm();
 }
-cancelPlannerBtn.addEventListener("click", hidePlannerForm);
+cancelNoteBtn.addEventListener("click", hideNoteForm);
 
-// Save new or edited planner
-function savePlanner() {
-    if (plannerTitle.value.trim() === "") {
-        alert("Please enter a task title!");
-        return;
+// Save new or edited note
+function saveNote() {
+    //Check if the title is empty
+    if (noteTitle.value.trim() === "") {
+        alert("Please enter a note title!");
+        return; // Stop the function if title is empty
+    }
+    if (plannerDueDate.value === "") {
+        alert("Please select a due date!");
+        return; // Stop the function if due date is empty
     }
 
-    let plannerData = {
-    title: plannerTitle.value,
-    dueDate: plannerDueDate.value, //calendar date
-    type: plannerType.value,
-    progress: plannerProgress.value,
-    description: plannerDescription.value
-};
+    //Create an object to hold the note information
+    let noteData = {
+        title: noteTitle.value,
+        dueDate: plannerDueDate.value,
+        type: noteType.value,
+        progress: noteProgress.value,
+        description: noteDescription.value
+    };
+
+    //Check if we are adding a new note or editing an existing one
     if (editIndex === null) {
-        planners.push(plannerData);
+        // Adding a new note
+        notes.push(noteData);
     } else {
-        planners[editIndex] = plannerData;
-        editIndex = null;
+        // Editing an existing note
+        notes[editIndex] = noteData;
+        editIndex = null; // Reset editIndex
     }
 
-    localStorage.setItem("planners", JSON.stringify(planners));
+    // Save the updated notes array to localStorage
+    localStorage.setItem("notes", JSON.stringify(notes));
 
-    plannerForm.style.display = "none";
-    clearPlannerForm();
-    renderPlanner();
+    // Hide the form and clear the inputs
+    notesForm.style.display = "none";
+    clearForm();
+
+    //Re-render the table with updated notes
+    renderNotes();
 }
 
-savePlannerBtn.addEventListener("click", savePlanner);
+//Attach the function to the save button
+saveNoteBtn.addEventListener("click", saveNote);
 
-// Render planner table
-function renderPlanner() {
-    plannerBody.innerHTML = "";
+// Render notes table
+function renderNotes() {
+    notesBody.innerHTML = "";
 
-    planners.forEach((planner, index) => {
+    // Sort notes by due date (earliest first)
+    notes.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+
+    notes.forEach((note, index) => {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td>${planner.title}</td>
-            <td>${planner.dueDate || "-"}</td>
-            <td>${planner.progress}</td>
-            <td>${planner.type}</td>
+            <td>${note.title}</td>
+            <td>${note.dueDate}</td>
+            <td>${note.progress}</td>
+            <td>${note.type}</td>
             <td>
-                <button onclick="editPlanner(${index})">✏️</button>
-                <button onclick="deletePlanner(${index})">🗑️</button>
+                <button onclick="editNote(${index})">✏️</button>
+                <button onclick="deleteNote(${index})">🗑️</button>
             </td>
         `;
-        plannerBody.appendChild(row);
+
+        notesBody.appendChild(row);
     });
 }
 
-// Edit planner
-function editPlanner(index) {
-    const planner = planners[index];
-    plannerTitle.value = planner.title;
-    plannerType.value = planner.type;
-    plannerProgress.value = planner.progress;
-    plannerDescription.value = planner.description;
-    plannerDueDate.value = planner.dueDate || "";
+// Edit note
+function editNote(index) {
+    const note = notes[index];
+    noteTitle.value = note.title;
+    plannerDueDate.value = note.dueDate;
+    noteType.value = note.type;
+    noteProgress.value = note.progress;
+    noteDescription.value = note.description;
     editIndex = index;
-    plannerForm.style.display = "flex";
+    notesForm.style.display = "flex";
 }
 
-// Delete planner
-function deletePlanner(index) {
-    planners.splice(index, 1);
-    localStorage.setItem("planners", JSON.stringify(planners));
-    renderPlanner();
+// Delete note
+function deleteNote(index) {
+    notes.splice(index, 1);
+    localStorage.setItem("notes", JSON.stringify(notes));
+    renderNotes();
 }
 
 // Clear form
-function clearPlannerForm() {
-    plannerTitle.value = "";
-    plannerType.value = "Reminder";
-    plannerProgress.value = "Not Started";
-    plannerDescription.value = "";
+function clearForm() {
+    noteTitle.value = "";
     plannerDueDate.value = "";
-
+    noteType.value = "Reminder";
+    noteProgress.value = "Not Started";
+    noteDescription.value = "";
 }
 
-renderPlanner();
+renderNotes();
