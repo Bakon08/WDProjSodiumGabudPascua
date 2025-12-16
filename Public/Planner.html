@@ -41,6 +41,47 @@
           webpages, it becomes a very powerful tool for productivity.
         </p>
     </div>
+    <div class="main-content">
+      <h2>📅 Planner</h2>
+
+      <table class="notes-table">
+        <thead>
+          <tr>
+            <th>
+              Tasks
+              <button class="add-btn" id="addNewNoteBtn">+ New Note</button>
+            </th>
+            <th>Due Date</th>
+            <th>progress</th>
+            <th style="word-break: break-all;">task type</th>
+          </tr>
+        </thead>
+        <tbody id="notesBody">
+          <!-- Notes will appear here -->
+        </tbody>
+          </table>
+        </div>
+
+        <!-- Hidden form for adding/editing notes -->
+        <div class="notes-input" id="notesForm" style="display:none;">
+          <input type="text" id="noteTitle" placeholder="Note title">
+          <input type="date" id="plannerDueDate" />
+          <select id="noteType">
+            <option value="Reminder">Reminder</option>
+            <option value="Task">Task</option>
+            <option value="Idea">Idea</option>
+          </select>
+          <select id="noteProgress">
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+          <textarea id="noteDescription" placeholder="Description"></textarea>
+          <button class="add-btn" id="saveNoteBtn">Save Note</button>
+          <button class="add-btn" id="cancelNoteBtn">Cancel</button>
+        </div>
+
+        <script src="Planner.js"></script>
 </body>
 
 <footer>
