@@ -7,7 +7,6 @@ const cancelNoteBtn = document.getElementById("cancelNoteBtn");
 const noteTitle = document.getElementById("noteTitle");
 const noteType = document.getElementById("noteType");
 const noteProgress = document.getElementById("noteProgress");
-const noteDescription = document.getElementById("noteDescription");
 const plannerDueDate = document.getElementById("plannerDueDate");
 
 const notesBody = document.getElementById("notesBody");
@@ -56,7 +55,6 @@ function saveNote() {
         dueDate: plannerDueDate.value,
         type: noteType.value,
         progress: noteProgress.value,
-        description: noteDescription.value
     };
 
     //Check if we are adding a new note or editing an existing one
@@ -115,7 +113,6 @@ function editNote(index) {
     plannerDueDate.value = note.dueDate;
     noteType.value = note.type;
     noteProgress.value = note.progress;
-    noteDescription.value = note.description;
     editIndex = index;
     notesForm.style.display = "flex";
 }
@@ -133,7 +130,6 @@ function clearForm() {
     plannerDueDate.value = "";
     noteType.value = "Reminder";
     noteProgress.value = "Not Started";
-    noteDescription.value = "";
 }
 
 renderNotes();
