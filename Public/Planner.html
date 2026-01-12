@@ -49,38 +49,38 @@
           <tr>
             <th>
               Tasks
-              <button class="add-btn" id="addNewNoteBtn">+ New Note</button>
+              <button class="add-btn" id="addNewTaskBtn">+ New Task</button>
             </th>
             <th>Due Date</th>
             <th>progress</th>
             <th style="word-break: break-all;">task type</th>
           </tr>
         </thead>
-        <tbody id="notesBody">
+        <tbody id="tasksBody">
           <!-- Notes will appear here -->
         </tbody>
           </table>
         </div>
 
         <!-- Hidden form forremm adding/editing notes -->
-        <div class="notes-input" id="notesForm" style="display:none;">
-          <input type="text" id="noteTitle" placeholder="Note title">
+        <div class="notes-input" id="TasksForm" style="display:none;">
+          <input type="text" id="taskTitle" placeholder="Note title">
           <input type="date" id="plannerDueDate" />
-          <select id="noteType">
+          <select id="taskType">
             <option value="Reminder">Reminder</option>
             <option value="Task">Task</option>
             <option value="Idea">Idea</option>
           </select>
-          <select id="noteProgress">
+          <select id="taskProgress">
             <option value="Not Started">Not Started</option>
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
           </select>
-          <button class="add-btn" id="saveNoteBtn">Save Note</button>
-          <button class="add-btn" id="cancelNoteBtn">Cancel</button>
+          <button class="add-btn" id="saveTaskBtn">Save Note</button>
+          <button class="add-btn" id="cancelTaskBtn">Cancel</button>
         </div>
 
-        <script src="Planner.js"></script>
+        <script src="planner.js"></script>
 </body>
 
 <footer>
