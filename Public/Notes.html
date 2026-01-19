@@ -17,7 +17,7 @@
 
           <div class = "nav-links">
               <a href="Planner.html"> 📅 Planner </a> 
-              <a href="Stats.html"> 📈 Stats </a> 
+              <!-- <a href="Stats.html"> 📈 Stats </a>  -->
               <a href="Goals.html"> 🎖️ Goals </a> 
               <a href="Notes.html" class="active" > 📓 Notes </a> 
           </div>   
@@ -26,39 +26,42 @@
 
       <div class="main-content">
        <!--Write paragraph here-->
-        <p>
-          This page is where you can put your personal notes and reminders. This will be 
-          a table where you can write a note and put additional information on it like note type,
-          progress and description.
-        </p>
-
-        <p>
-          This webpage is mainly to help the users personalize their experience. This also helps you set personal 
-          reminders that you might forget in the future like noting down what task to prioritize or if the task 
-          needs any materials/preparation in advanced.
-        </p>
+        <details>
+          <summary>When to use</summary>
+          <p>
+            This page is where you can put your personal notes and reminders. This will be 
+            a table where you can write a note and put additional information on it like note type,
+            progress and description.
+          </p>
+          <p>
+            This webpage is mainly to help the users personalize their experience. This also helps you set personal 
+            reminders that you might forget in the future like noting down what task to prioritize or if the task 
+            needs any materials/preparation in advanced.
+          </p>
+        </details>
+        
       <!--Write paragraph here-->
       </div>
       <div class="main-content">
-      <h2>📓 Notes</h2>
+        <h2>📓 Notes</h2>
 
-      <table class="notes-table">
-        <thead>
-          <tr>
-            <th>
-              Note Name
-              <button class="add-btn" id="addNewNoteBtn">+ New Note</button>
-            </th>
-            <th>Progress</th>
-            <th>Note Type</th>
-            <th style="word-break: break-all;">Description</th>
-          </tr>
-        </thead>
-        <tbody id="notesBody">
-          <!-- Notes will appear here -->
-        </tbody>
-          </table>
-        </div>
+        <table class="notes-table">
+          <thead>
+            <tr>
+              <th>
+                Note Name
+                <button class="add-btn" id="addNewNoteBtn">+ New Note</button>
+              </th>
+              <th>Progress</th>
+              <th>Note Type</th>
+              <th style="word-break: break-all;">Description</th>
+            </tr>
+          </thead>
+          <tbody id="notesBody">
+            <!-- Notes will appear here -->
+          </tbody>
+        </table>
+      </div>
 
         <!-- Hidden form for adding/editing note -->
         <div class="notes-input" id="notesForm" style="display:none;">
