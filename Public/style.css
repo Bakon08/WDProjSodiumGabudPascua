@@ -280,3 +280,64 @@ ul li:last-child {
     border: none;
     cursor: pointer;
 }
+
+/*----tasks CSS----*/
+
+.tasks-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tasks-table th,
+.tasks-table td {
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: left;
+    white-space: normal; 
+    overflow-wrap: break-word; 
+    word-break: break-all;
+}
+
+.tasks-table th:nth-child(4) { 
+    width: 50%; 
+}
+
+.tasks-table th {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+}
+
+.tasks-input {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tasks-input input,
+.tasks-input select,
+.tasks-input textarea {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: var(--font-main);
+}
+
+.tasks-input textarea {
+    flex: 1;
+    min-height: 40px;
+    resize: vertical;
+}
+
+.add-btn {
+    background-color: #7d1010;
+    color: white;
+    border-radius: 6px;
+    padding: 6px 12px;
+    border: none;
+    cursor: pointer;
+}

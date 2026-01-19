@@ -1,128 +1,115 @@
-//--------------gets the html elements--------------
-const addNewNoteBtn = document.getElementById("addNewTaskeBtn");
-const notesForm = document.getElementById("TasksForm");
-const saveNoteBtn = document.getElementById("saveTaskBtn");
-const cancelNoteBtn = document.getElementById("cancelTaskBtn");
+// ---------- Get HTML elements ----------
+const addNewTaskBtn = document.getElementById("addNewTaskBtn");
+const tasksForm = document.getElementById("TasksForm");
+const saveTaskBtn = document.getElementById("saveTaskBtn");
+const cancelTaskBtn = document.getElementById("cancelTaskBtn");
 
 const taskTitle = document.getElementById("taskTitle");
 const taskType = document.getElementById("taskType");
 const taskProgress = document.getElementById("taskProgress");
 const plannerDueDate = document.getElementById("plannerDueDate");
 
-const notesBody = document.getElementById("tasksBody");
-//-------------------------------------------------
+const tasksBody = document.getElementById("tasksBody");
+// --------------------------------------
 
-//puts the data into an array
-let savedNotes = localStorage.getItem("notes");
-let notes;
-if (savedNotes) {
-    notes = JSON.parse(savedNotes);
-} else {
-    notes = [];
-}
-
+// Load tasks from localStorage
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let editIndex = null;
 
-// Show form to add new note
-function showNoteForm() {
-    notesForm.style.display = "flex";
-    clearForm();
+// Show form
+function showTaskForm() {
+  tasksForm.style.display = "flex";
+  clearForm();
 }
-addNewNoteBtn.addEventListener("click", showNoteForm);
+addNewTaskBtn.addEventListener("click", showTaskForm);
 
-// Cancel adding/editing
-
-function hideNoteForm() {
-    notesForm.style.display = "none";
-    clearForm();
+// Hide form
+function hideTaskForm() {
+  tasksForm.style.display = "none";
+  clearForm();
 }
-cancelNoteBtn.addEventListener("click", hideNoteForm);
+cancelTaskBtn.addEventListener("click", hideTaskForm);
 
-// Save new or edited note
-function saveNote() {
-    //Check if the title is empty
-    if (noteTitle.value.trim() === "") {
-        alert("Please enter a note title!");
-        return; // Stop the function if title is empty
-    }
-    //Create an object to hold the note information
-    let noteData = {
-        title: noteTitle.value,
-        type: noteType.value,
-        progress: noteProgress.value,
-        description: noteDescription.value
-    };
-    //Check if we are adding a new note or editing an existing one
-    if (editIndex === null) {
-        // Adding a new note
-        notes.push(noteData);
-    } else {
-        // Editing an existing note
-        notes[editIndex] = noteData;
-        editIndex = null; // Reset editIndex
-    }
+// Save task
+function saveTask() {
+  if (taskTitle.value.trim() === "") {
+    alert("Please enter a task title!");
+    return;
+  }
 
-    // Save the updated notes array to localStorage
-    let notesString = JSON.stringify(notes); // Convert array to string
-    localStorage.setItem("notes", notesString);
+  const taskData = {
+    title: taskTitle.value,
+    dueDate: plannerDueDate.value,
+    progress: taskProgress.value,
+    type: taskType.value
+  };
 
-    //  Hide the form and clear the inputs
-    notesForm.style.display = "none";
-    clearForm();
+  if (editIndex === null) {
+    tasks.push(taskData);
+  } else {
+    tasks[editIndex] = taskData;
+    editIndex = null;
+  }
 
-    //Re-render the table with updated notes
-    renderNotes();
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  hideTaskForm();
+  renderTasks();
 }
 
-//Attach the function to the save button
-saveNoteBtn.addEventListener("click", saveNote);
+saveTaskBtn.addEventListener("click", saveTask);
 
-// Render notes table
-function renderNotes() {
-    notesBody.innerHTML = "";
-    notes.forEach((note, index) => {
-        const row = document.createElement("tr");
+// Render table
+function renderTasks() {
+  tasksBody.innerHTML = "";
 
-        row.innerHTML = `
-            <td>${note.title}</td>
-            <td>${note.progress}</td>
-            <td>${note.type}</td>
-            <td>${note.description}</td>
-            <td>
-                <button onclick="editNote(${index})">✏️</button>
-                <button onclick="deleteNote(${index})">🗑️</button>
-            </td>
-        `;
+  tasks.forEach((task, index) => {
+    const row = document.createElement("tr");
 
-        notesBody.appendChild(row);
-    });
+    row.innerHTML = `
+      <td>${task.title}</td>
+      <td>${task.dueDate || "-"}</td>
+      <td>${task.progress}</td>
+      <td>${task.type}</td>
+      <td>
+        <button class="edit-btn">✏️</button>
+        <button class="delete-btn">🗑️</button>
+      </td>
+    `;
+
+    row.querySelector(".edit-btn").addEventListener("click", () => editTask(index));
+    row.querySelector(".delete-btn").addEventListener("click", () => deleteTask(index));
+
+    tasksBody.appendChild(row);
+  });
 }
 
-// Edit note
-function editNote(index) {
-    const note = notes[index];
-    noteTitle.value = note.title;
-    noteType.value = note.type;
-    noteProgress.value = note.progress;
-    noteDescription.value = note.description;
-    editIndex = index;
-    notesForm.style.display = "flex";
+// Edit task
+function editTask(index) {
+  const task = tasks[index];
+
+  taskTitle.value = task.title;
+  plannerDueDate.value = task.dueDate;
+  taskProgress.value = task.progress;
+  taskType.value = task.type;
+
+  editIndex = index;
+  tasksForm.style.display = "flex";
 }
 
-// Delete note
-function deleteNote(index) {
-    notes.splice(index, 1);
-    const notesString = JSON.stringify(notes); // Convert array to string
-    localStorage.setItem("notes", notesString);
-    renderNotes();
+// Delete task
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  renderTasks();
 }
 
 // Clear form
 function clearForm() {
-    noteTitle.value = "";
-    noteType.value = "Reminder";
-    noteProgress.value = "Not Started";
-    noteDescription.value = "";
+  taskTitle.value = "";
+  plannerDueDate.value = "";
+  taskProgress.value = "Not Started";
+  taskType.value = "Reminder";
 }
 
-renderNotes();
+// Initial render
+renderTasks();
