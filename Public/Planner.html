@@ -19,22 +19,22 @@
               <a href="Planner.html" class="active" > 📅 Planner </a> 
               <!-- <a href="Stats.html"> 📈 Stats </a>  -->
               <a href="Goals.html"> 🎖️ Goals </a> 
-              <a href="Notes.html"> 📓 Notes </a> 
+              <a href="Notes.html"> 📓 tasks </a> 
           </div>   
       </div>
     </nav>
 
       <div class="main-content">
         <p> 
-          This will be the "main" webpage of the website. This is where you note 
+          This will be the "main" webpage of the website. This is where you Task 
           down the tasks you have and when they are due. You are also able to update 
           your progress on the task you are working on. We will add a feature where you
-          will be able to note down the task type like school, house, family, personal, etc..
+          will be able to Task down the task type like school, house, family, personal, etc..
           This would help you organize you tasks across different backgrounds.
         </p>
 
         <p>
-          This is the typical planner website where you can note down tasks but we format 
+          This is the typical planner website where you can Task down tasks but we format 
           it in a way that is very organized and easy to understand. It would also prioritize the 
           earliest due date to be on the top while the later ones to be at the bottom. There isn't 
           anything too special about this webpage but because it is connected to the other 
@@ -44,43 +44,43 @@
     <div class="main-content">
       <h2>📅 Planner</h2>
 
-      <table class="notes-table">
+      <table class="tasks-table">
         <thead>
           <tr>
             <th>
               Tasks
-              <button class="add-btn" id="addNewNoteBtn">+ New Note</button>
+              <button class="add-btn" id="addNewTaskBtn">+ New Task</button>
             </th>
             <th>Due Date</th>
             <th>progress</th>
             <th style="word-break: break-all;">task type</th>
           </tr>
         </thead>
-        <tbody id="notesBody">
-          <!-- Notes will appear here -->
+        <tbody id="tasksBody">
+          <!-- tasks will appear here -->
         </tbody>
           </table>
         </div>
 
-        <!-- Hidden form forremm adding/editing notes -->
-        <div class="notes-input" id="notesForm" style="display:none;">
-          <input type="text" id="noteTitle" placeholder="Note title">
+        <!-- Hidden form forremm adding/editing tasks -->
+        <div class="tasks-input" id="TasksForm" style="display:none;">
+          <input type="text" id="taskTitle" placeholder="Task title">
           <input type="date" id="plannerDueDate" />
-          <select id="noteType">
+          <select id="taskType">
             <option value="Reminder">Reminder</option>
             <option value="Task">Task</option>
             <option value="Idea">Idea</option>
           </select>
-          <select id="noteProgress">
+          <select id="taskProgress">
             <option value="Not Started">Not Started</option>
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
           </select>
-          <button class="add-btn" id="saveNoteBtn">Save Note</button>
-          <button class="add-btn" id="cancelNoteBtn">Cancel</button>
+          <button class="add-btn" id="saveTaskBtn">Save Task</button>
+          <button class="add-btn" id="cancelTaskBtn">Cancel</button>
         </div>
 
-        <script src="Planner.js"></script>
+        <script src="planner.js"></script>
 </body>
 
 <footer>
