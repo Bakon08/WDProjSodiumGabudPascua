@@ -1,6 +1,6 @@
 :root{
     --nav-height: 50px;
-    --nav-border: 2px solid rgb(255, 255, 255);
+    --nav-border: 0.1px solid rgb(255, 255, 255);
     --nav-bg: #b15eff;
     --font-main: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     --brand-font-size: 30px;
@@ -15,11 +15,7 @@ a{
 }
 
 body{
-    background-image: url("../Assets/mountains.jpg");
-    background-size: cover;      /* makes the image cover the entire viewport */
-    background-repeat: no-repeat; /* prevents tiling */
-    background-position: center;  /* centers the image */
-    background-attachment: fixed; /* makes it stay in place on scroll */
+      background-image: radial-gradient(circle at top left, rgb(116, 49, 147), rgb(51, 7, 100));
 }
 
 
@@ -45,57 +41,103 @@ body{
     transform: scale(1.1);
 }
 
-/* nav-bar */
-.nav_bar{
+/* --- Navbar --- */
+.nav_bar {
     position: fixed;
     top: 0;
-    width: 100vw;
-    display: flex;
-    align-items: center;
+    left: 0;
+    width: 100%;
     height: var(--nav-height);
-    padding: 10px;
     background: var(--nav-bg);
-    border: var(--nav-border);
+    display: flex;
+    justify-content: center; /* center nav container */
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* subtle shadow */
+    z-index: 100;
 }
 
-/* container inside nav bar */ 
-
-.nav-container{
-    display: flex; 
-    gap: 200px;
+/* container inside navbar */
+.nav-container {
+    display: flex;
+    justify-content: space-between; /* logo left, links right */
     align-items: center;
+    width: 80%;
+    max-width: 1400px; /* wider container for large gaps */
 }
 
 /* Logo */
-.logo-img{
+.logo-img {
     height: 60px;
     width: auto;
 }
 
-/* Nav links*/
+/* Nav links */
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 200px;
-    font-size: 30px;
+    gap: 200px; /* keeps your big spacing */
+    font-size: 30px; /* matches brand style */
+    font-family: var(--font-main);
 }
 
-.brand-name{
+/* --- Nav links as boxes --- */
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;           /* bigger space inside the box */
+    border-radius: 6px;           /* rounded corners */
+    border: 2px solid white;      /* outline for default box */
+    background-color: rgba(255,255,255,0.1); /* subtle default background */
+    transition: all 0.3s ease;    /* smooth transition */
+}
+
+/* Hover effect */
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* slightly brighter */
+    transform: scale(1.05);                      /* subtle pop */
+}
+
+/* Active tab stays highlighted */
+.nav-links a.active {
+    background-color: rgba(255, 255, 255, 0.3); /* same as hover */
+    font-weight: bold;
+}
+
+
+/* Brand name */
+.brand-name {
     font-size: var(--brand-font-size);
     font-weight: bold;
     font-family: var(--font-main);
 }
 
-/* active tab highlight*/
-.nav-links a.active {
-    font-weight: bold;
-    border-bottom: 3px solid rgb(255, 255, 255); 
-    display: inline-block;
-    color: white;
+/* Logo hover like nav tabs */
+.logo-img {
+    height: 60px;
+    width: auto;
+    transition: all 0.3s ease;
+    border-radius: 6px; /* matches nav links */
+    padding: 5px;       /* gives space for hover box */
 }
-.logo.active {
-    border-bottom: 3px solid rgb(255, 246, 246); 
-    padding-bottom: 5px;            
+
+.logo-img {
+    height: 60px;
+    width: auto;
+    padding: 5px;
+    border-radius: 6px;
+    border: 2px solid white;
+    background-color: rgba(255, 255, 255, 0.1); /* same subtle box */
+    transition: all 0.3s ease;
+}
+
+.logo-img:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.logo-img.active {
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 /* so the nav bar doesn't cover the paragraph*/
@@ -119,7 +161,11 @@ footer {
     padding: 5px;
     font-family: var(--font-main);
     background: var(--nav-bg);
-    border-top: var(--nav-border);
+    border-top: var(--nav-border); 
+    position: fixed;   /* Stick to bottom */
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 /* goals tab */
@@ -140,7 +186,7 @@ footer {
 .dropdown-content { /* hidden dropdown menu */
     display: none;
     position: absolute;
-    background-color: #fff;
+    background-color: #ffffff;
     min-width: 250px; /* increased width to accommodate goal text */
     box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
     z-index: 10; /* higer z-index to ensure it sits above other elements */
@@ -241,6 +287,7 @@ ul li:last-child {
     white-space: normal; 
     overflow-wrap: break-word; 
     word-break: break-all;
+    color:white;
 }
 
 .notes-table th:nth-child(4) { 
@@ -249,7 +296,7 @@ ul li:last-child {
 
 .notes-table th {
     background-color: #000;
-    color: #fff;
+    color: #ffffff;
     font-weight: bold;
 }
 
@@ -269,6 +316,7 @@ ul li:last-child {
     border-radius: 10px;
     border: 1px solid #ccc;
     font-family: var(--font-main);
+
 }
 
 .notes-input textarea {
@@ -302,6 +350,7 @@ ul li:last-child {
     white-space: normal; 
     overflow-wrap: break-word; 
     word-break: break-all;
+    color:white;
 }
 
 .tasks-table th:nth-child(4) { 
