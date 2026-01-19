@@ -19,7 +19,7 @@
               <a href="Planner.html" class="active" > 📅 Planner </a> 
               <!-- <a href="Stats.html"> 📈 Stats </a>  -->
               <a href="Goals.html"> 🎖️ Goals </a> 
-              <a href="Notes.html"> 📓 tasks </a> 
+              <a href="Notes.html"> 📓 Notes </a> 
           </div>   
       </div>
     </nav>
@@ -70,10 +70,11 @@
         <div class="tasks-input" id="TasksForm" style="display:none;">
           <input type="text" id="taskTitle" placeholder="Task title">
           <input type="date" id="plannerDueDate" />
-          <select id="taskType">
-            <option value="Reminder">Reminder</option>
-            <option value="Task">Task</option>
-            <option value="Idea">Idea</option>
+          <select id="taskType" placeholder="Task Type">
+            <option value="School">School</option>
+            <option value="Personal">Personal</option>
+            <option value="House">House</option>
+            <option value="Work">Work</option>
           </select>
           <select id="taskProgress">
             <option value="Not Started">Not Started</option>
