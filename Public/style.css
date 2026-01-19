@@ -1,10 +1,10 @@
 :root{
     --nav-height: 50px;
-    --nav-border: 2px solid rgb(235,235,235);
-    --nav-bg: #7d1010;
+    --nav-border: 2px solid rgb(255, 255, 255);
+    --nav-bg: #b15eff;
     --font-main: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     --brand-font-size: 30px;
-    --page-bg: rgb(191, 167, 93);
+    --page-bg: rgb(38, 61, 165);
 }
 
 
@@ -15,7 +15,7 @@ a{
 }
 
 body{
-    background-color: antiquewhite;
+    background-image: url("Assets/mountains.jpg");
 }
 
 
@@ -28,7 +28,7 @@ body{
 }
 
 .box {
-    background-color: #b7dd7f;
+    background-color: #7fd7dd;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -96,15 +96,16 @@ body{
 
 /* so the nav bar doesn't cover the paragraph*/
 .main-content {
-    padding: 40px;
+    padding: 20px;
     width: 80vw;
     margin: auto;
-    margin-top: 40px;
+    margin-top: 100px;
     font-family: var(--font-main);
-    color: black;
+    color: rgb(0, 0, 0);
     background: var(--page-bg);
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 30px;
+    box-shadow: 0 8px 20px rgba(1, 0, 0, 0.05);
+    margin-bottom: 30px;
 }
 
 /* footer */
@@ -162,7 +163,7 @@ input {
 }
 
 .dropbtn {
-    background-color: #4CAF50;
+    background-color: #5bdff7;
     color: white;
     padding: 12px;
     font-size: 16px;
@@ -249,9 +250,9 @@ ul li:last-child {
 }
 
 .notes-input {
-    margin-top: 15px;
+    margin-top: 0px;
     display: flex;
-    gap: 10px;
+    gap: 1px;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -261,12 +262,73 @@ ul li:last-child {
 .notes-input select,
 .notes-input textarea {
     padding: 8px;
-    border-radius: 6px;
+    border-radius: 10px;
     border: 1px solid #ccc;
     font-family: var(--font-main);
 }
 
 .notes-input textarea {
+    flex: 1;
+    min-height: 40px;
+    resize: vertical;
+}
+
+.add-btn {
+    background-color: #7d1010;
+    color: white;
+    border-radius: 6px;
+    padding: 6px 12px;
+    border: none;
+    cursor: pointer;
+}
+
+/*----tasks CSS----*/
+
+.tasks-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tasks-table th,
+.tasks-table td {
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: left;
+    white-space: normal; 
+    overflow-wrap: break-word; 
+    word-break: break-all;
+}
+
+.tasks-table th:nth-child(4) { 
+    width: 50%; 
+}
+
+.tasks-table th {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+}
+
+.tasks-input {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tasks-input input,
+.tasks-input select,
+.tasks-input textarea {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: var(--font-main);
+}
+
+.tasks-input textarea {
     flex: 1;
     min-height: 40px;
     resize: vertical;
