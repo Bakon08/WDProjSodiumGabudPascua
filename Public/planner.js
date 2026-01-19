@@ -110,6 +110,6 @@ function clearForm() {
   taskProgress.value = "Not Started";
   taskType.value = "Reminder";
 }
-
+ 
 // Initial render
 renderTasks();

@@ -1,10 +1,10 @@
 :root{
     --nav-height: 50px;
-    --nav-border: 2px solid rgb(235,235,235);
-    --nav-bg: #7d1010;
+    --nav-border: 2px solid rgb(255, 255, 255);
+    --nav-bg: #b15eff;
     --font-main: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     --brand-font-size: 30px;
-    --page-bg: rgb(191, 167, 93);
+    --page-bg: rgb(38, 61, 165);
 }
 
 
@@ -15,7 +15,7 @@ a{
 }
 
 body{
-    background-color: antiquewhite;
+    background-image: url("Assets/mountains.jpg");
 }
 
 
@@ -28,7 +28,7 @@ body{
 }
 
 .box {
-    background-color: #b7dd7f;
+    background-color: #7fd7dd;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -163,7 +163,7 @@ input {
 }
 
 .dropbtn {
-    background-color: #4CAF50;
+    background-color: #5bdff7;
     color: white;
     padding: 12px;
     font-size: 16px;
