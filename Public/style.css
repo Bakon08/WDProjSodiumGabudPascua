@@ -16,8 +16,8 @@ a{
 
 body{
       background-image: radial-gradient(circle at top left, rgb(116, 49, 147), rgb(51, 7, 100));
+      padding-bottom: 50px;
 }
-
 
 /* containers */
 .container {
@@ -25,6 +25,8 @@ body{
     justify-content: space-between;
     width: 80vw;
     margin: auto;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .box {
@@ -39,6 +41,11 @@ body{
 
 .box:hover {
     transform: scale(1.1);
+}
+
+#tasksLeftChart {
+    max-width: 100%;
+    height: auto;
 }
 
 /* --- Navbar --- */
@@ -162,7 +169,8 @@ footer {
     font-family: var(--font-main);
     background: var(--nav-bg);
     border-top: var(--nav-border); 
-    position: fixed;   /* Stick to bottom */
+    position: fixed;
+    line-height: 7px;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -171,7 +179,7 @@ footer {
 /* goals tab */
 .goal-trackers-container {
     display: flex;
-    flex-wrap: wrap; /* allows the goal trackers to wrap if the screen is too small */
+    flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
     justify-content: center;
@@ -394,5 +402,100 @@ ul li:last-child {
     padding: 6px 12px;
     border: none;
     cursor: pointer;
+}
+
+/* index stuff */ 
+
+/* habit tracker */
+#habitChecklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#habitChecklist li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+#habitChecklist li:last-child {
+    border-bottom: none;
+}
+
+.habit-item {
+    flex-grow: 1;
+    color: white;
+    background-color: var(--page-bg);
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.habit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.habit-input {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.habit-input input {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: var(--font-main);
+}
+
+.habit-add-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+/* adds scroll to long lists */
+#upcomingDeadlinesList, #progressRemindersList, #tasksLeftLegend {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* adjusts  sizes when shrunk */
+@media (max-width: 1024px) {
+    .nav-links {
+        gap: 100px;
+        font-size: 25px;
+    }
+
+    .brand-name {
+        font-size: 25px;
+    }
+
+    .main-content {
+        width: 90vw;
+    }
+
+    .container {
+        width: 90vw;
+    }
+
+    .notes-input, .tasks-input {
+        max-width: 700px;
+    }
 }
 
