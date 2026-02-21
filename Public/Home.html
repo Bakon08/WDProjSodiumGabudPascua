@@ -3,13 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Prevent caching to ensure fresh CSS media queries are applied -->
+  <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="expires" content="0">
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>Lockin</title>
   <link rel="icon" type="image/png" href="../Assets/Logo.png">
 </head>
 
-<body> 
+<body>
+    <!-- Initialize responsive navigation immediately -->
+    <script>
+        // Ensure login page theme is removed
+        document.body.classList.remove('login-page-theme');
+        
+        // Force media query check for mobile navigation
+        (function() {
+            const checkResponsive = () => {
+                const isMobile = window.innerWidth <= 768;
+                const sidebar = document.querySelector('.sidebar');
+                const bottomNav = document.querySelector('.bottom-nav');
+                
+                if (sidebar && bottomNav) {
+                    if (isMobile) {
+                        sidebar.style.display = 'none';
+                        bottomNav.style.display = 'flex';
+                    } else {
+                        sidebar.style.display = 'flex';
+                        bottomNav.style.display = 'none';
+                    }
+                }
+            };
+            
+            // Check on load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', checkResponsive);
+            } else {
+                checkResponsive();
+            }
+            
+            // Check on resize
+            window.addEventListener('resize', checkResponsive);
+        })();
+    </script>
     <aside class="sidebar">
       <div class="sidebar-header">
         <img src="../Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
@@ -97,9 +135,42 @@
         <ul id="habitChecklist"></ul>
       </div>
     </div>
+
+    <!-- 
+        ==========================================
+        BOTTOM NAVIGATION (Mobile Only)
+        ==========================================
+        Visible only on mobile screens.
+        Replaces sidebar navigation for touch devices.
+        ==========================================
+    -->
+    <nav class="bottom-nav">
+        <!-- Dashboard navigation (active) -->
+        <a href="Home.html" class="bottom-nav-item active">
+            <i class="fas fa-home"></i>
+        </a>
+        <!-- Planner navigation -->
+        <a href="Planner.html" class="bottom-nav-item">
+            <i class="fas fa-calendar-alt"></i>
+        </a>
+        <!-- Goals navigation -->
+        <a href="Goals.html" class="bottom-nav-item">
+            <i class="fas fa-star"></i>
+        </a>
+        <!-- Notes navigation -->
+        <a href="Notes.html" class="bottom-nav-item">
+            <i class="fas fa-sticky-note"></i>
+        </a>
+        <!-- Stats navigation -->
+        <a href="Stats.html" class="bottom-nav-item">
+            <i class="fas fa-chart-bar"></i>
+        </a>
+    </nav>
 </body>
 
 <script src="index.js"></script>
+<!-- Link to navigation.js for responsive navigation system -->
+<script src="../navigation.js"></script>
 
 <footer>
   &copy GABUD; PASCUA

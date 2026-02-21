@@ -51,6 +51,8 @@ loginForm.addEventListener('submit', function(event) {
         if (foundUser) {
             messageDisplay.style.color = "darkgreen";
             messageDisplay.textContent = "Locking in...";
+            // Remove login page theme class and redirect
+            document.body.classList.remove('login-page-theme');
             setTimeout(() => { 
                 window.location.href = "Public/Home.html"; 
             }, 800);
