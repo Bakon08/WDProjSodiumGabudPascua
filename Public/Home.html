@@ -4,24 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>Lockin</title>
-  <link rel="icon" type="image/png" href="Assets/Logo.png">
+  <link rel="icon" type="image/png" href="../Assets/Logo.png">
 </head>
 
 <body> 
-    <nav class="nav_bar">
-      <div class="nav-container">
-          <a href="Home.html" class="logo link active">
-            <img src="../Assets/Logo.png" class="logo-img">
-          </a> 
-          <div class = "nav-links">
-              <a href="Planner.html"> 📅 Planner </a>
-              <a href="Stats.html"> 📈 Stats </a>
-              <a href="Goals.html"> 🎖️ Goals </a> 
-              <a href="Notes.html"> 📓 Notes </a> 
-          </div>   
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="../Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
+        <h1 class="sidebar-title">Lockin</h1>
       </div>
-    </nav>
+
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item active">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+          <div class="nav-indicator"></div>
+        </a>
+        <a href="Planner.html" class="nav-item">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Planner</span>
+          <div class="nav-indicator"></div>
+        </a>
+        <a href="Goals.html" class="nav-item">
+          <i class="fas fa-star"></i>
+          <span>Goals</span>
+          <div class="nav-indicator"></div>
+        </a>
+        <a href="Notes.html" class="nav-item">
+          <i class="fas fa-sticky-note"></i>
+          <span>Notes</span>
+          <div class="nav-indicator"></div>
+        </a>
+        <a href="Stats.html" class="nav-item">
+          <i class="fas fa-chart-bar"></i>
+          <span>Stats</span>
+          <div class="nav-indicator"></div>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>&copy; 2026 Lockin</p>
+      </div>
+    </aside>
 
     <div class="main-content">
        <details>
