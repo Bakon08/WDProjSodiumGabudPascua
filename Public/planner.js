@@ -62,6 +62,21 @@ saveTaskBtn.addEventListener("click", saveTask);
 function renderTasks() {
   tasksBody.innerHTML = "";
 
+  if (tasks.length === 0) {
+    tasksBody.innerHTML = `
+      <tr>
+        <td colspan="5">
+          <div class="empty-state">
+            <div class="empty-state-icon">📭</div>
+            <div class="empty-state-text">No tasks yet</div>
+            <div class="empty-state-subtext">Click "+ New Task" to get started!</div>
+          </div>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
   tasks.forEach((task, index) => {
     const row = document.createElement("tr");
 

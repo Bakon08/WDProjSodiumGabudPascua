@@ -80,6 +80,22 @@ saveNoteBtn.addEventListener("click", saveNote);
 // Render notes table
 function renderNotes() {
     notesBody.innerHTML = "";
+    
+    if (notes.length === 0) {
+        notesBody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📝</div>
+                        <div class="empty-state-text">No notes yet</div>
+                        <div class="empty-state-subtext">Click "+ New Note" to create your first note!</div>
+                    </div>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
     notes.forEach((note, index) => {
         const row = document.createElement("tr");
 

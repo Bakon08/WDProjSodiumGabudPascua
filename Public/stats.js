@@ -249,14 +249,14 @@ function generateInsights() {
 
     // Render insights
     if (insights.length === 0) {
-        insightsContainer.innerHTML = '<div class="no-data">No data available yet. Start adding tasks and goals!</div>';
+        insightsContainer.innerHTML = '<div class="stats-page-no-data">No data available yet. Start adding tasks and goals!</div>';
     } else {
         insightsContainer.innerHTML = insights
             .map(
                 insight => `
-            <div class="insight-item ${insight.type}">
-                <div class="insight-label">${insight.label}</div>
-                <div class="insight-value">${insight.value}</div>
+            <div class="stats-page-insight-item ${insight.type}">
+                <div class="stats-page-insight-label">${insight.label}</div>
+                <div class="stats-page-insight-value">${insight.value}</div>
             </div>
         `
             )

@@ -4,27 +4,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>Lockin</title>
   <link rel="icon" type="image/png" href="../Assets/Logo.png">
 </head>
 
 <body> 
-    <nav class="nav_bar">
-      <div class="nav-container">
-          <a href="/index.html" class="logo link">
-            <img src="../Assets/Logo.png" class="logo-img">
-          </a> 
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
+            <h1 class="sidebar-title">Lockin</h1>
+        </div>
 
-          <div class = "nav-links">
-              <a href="Planner.html"> 📅 Planner </a> 
-              <a href="Stats.html"> 📈 Stats </a>
-              <a href="Goals.html"> 🎖️ Goals </a> 
-              <a href="Notes.html" class="active" > 📓 Notes </a> 
-          </div>   
-      </div>
-    </nav>
+        <nav class="sidebar-nav">
+            <a href="../index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+                <div class="nav-indicator"></div>
+            </a>
+            <a href="Planner.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Planner</span>
+                <div class="nav-indicator"></div>
+            </a>
+            <a href="Goals.html" class="nav-item">
+                <i class="fas fa-star"></i>
+                <span>Goals</span>
+                <div class="nav-indicator"></div>
+            </a>
+            <a href="Notes.html" class="nav-item active">
+                <i class="fas fa-sticky-note"></i>
+                <span>Notes</span>
+                <div class="nav-indicator"></div>
+            </a>
+            <a href="Stats.html" class="nav-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Stats</span>
+                <div class="nav-indicator"></div>
+            </a>
+        </nav>
 
-      <div class="main-content">
+        <div class="sidebar-footer">
+            <p>&copy; 2026 Lockin</p>
+        </div>
+    </aside>
+
+    <div class="main-content">
        <!--Write paragraph here-->
         <details>
           <summary>About</summary>
@@ -48,22 +74,26 @@
       <div class="main-content">
         <h2>📓 Notes</h2>
 
-        <table class="notes-table">
-          <thead>
-            <tr>
-              <th>
-                Note Name
-                <button class="add-btn" id="addNewNoteBtn">+ New Note</button>
-              </th>
-              <th>Progress</th>
-              <th>Note Type</th>
-              <th style="word-break: break-all;">Description</th>
-            </tr>
-          </thead>
-          <tbody id="notesBody">
-            <!-- Notes will appear here -->
-          </tbody>
-        </table>
+        <div class="action-bar">
+          <button class="add-btn" id="addNewNoteBtn">+ New Note</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="notes-table">
+            <thead>
+              <tr>
+                <th>Note Name</th>
+                <th>Progress</th>
+                <th>Note Type</th>
+                <th style="word-break: break-all;">Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="notesBody">
+              <!-- Notes will appear here -->
+            </tbody>
+          </table>
+        </div>
       </div>
 
         <!-- Hidden form for adding/editing note -->
@@ -73,6 +103,7 @@
             <option value="Reminder">Reminder</option>
             <option value="Task">Task</option>
             <option value="Idea">Idea</option>
+            <option value="Important">Important</option>
           </select>
           <select id="noteProgress">
             <option value="Not Started">Not Started</option>
@@ -81,25 +112,45 @@
           </select>
           <textarea id="noteDescription" placeholder="Description"></textarea>
           <button class="add-btn" id="saveNoteBtn">Save Note</button>
-          <button class="add-btn" id="cancelNoteBtn">Cancel</button>
+          <button class="add-btn cancel" id="cancelNoteBtn">Cancel</button>
         </div>
 
-        <script src="notes.js"></script>
+    <footer>
+      &copy GABUD; PASCUA
+      <p> 
+        W3Schools.com. (n.d.). 
+        <a href="https://www.w3schools.com/" target="_blank" style = color:blue>
+          https://www.w3schools.com/
+        </a>
+      </p>
+
+      <p>
+        GeeksforGeeks. (n.d.). GeeksforGeeks.
+        <a href="https://www.geeksforgeeks.org/" target="_blank" style = color:blue>
+          https://www.geeksforgeeks.org/
+        </a>
+      </p>
+    </footer>
+
+    <!-- Bottom Navigation (Mobile) -->
+    <nav class="bottom-nav">
+        <a href="../index.html" class="bottom-nav-item">
+            <i class="fas fa-home"></i>
+        </a>
+        <a href="Planner.html" class="bottom-nav-item">
+            <i class="fas fa-calendar-alt"></i>
+        </a>
+        <a href="Goals.html" class="bottom-nav-item">
+            <i class="fas fa-star"></i>
+        </a>
+        <a href="Notes.html" class="bottom-nav-item active">
+            <i class="fas fa-sticky-note"></i>
+        </a>
+        <a href="Stats.html" class="bottom-nav-item">
+            <i class="fas fa-chart-bar"></i>
+        </a>
+    </nav>
+
+    <script src="notes.js"></script>
     </body>
-
-<footer>
-  &copy GABUD; PASCUA
-  <p> 
-    W3Schools.com. (n.d.). 
-    <a href="https://www.w3schools.com/" target="_blank" style = color:blue>
-      https://www.w3schools.com/
-    </a>
-  </p>
-
-  <p>
-    GeeksforGeeks. (n.d.). GeeksforGeeks.
-    <a href="https://www.geeksforgeeks.org/" target="_blank" style = color:blue>
-      https://www.geeksforgeeks.org/
-  </p>
-</footer>
 </html>
