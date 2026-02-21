@@ -54,7 +54,7 @@ loginForm.addEventListener('submit', function(event) {
             // persist logged-in user so Public pages detect auth
             localStorage.setItem('lockinUser', foundUser.username);
             setTimeout(() => {
-                window.location.href = "dashboard.html";
+                window.location.href = "Public/dashboard.html";
             }, 800);
         } else {
             messageDisplay.style.color = "darkred";
