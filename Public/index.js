@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Initial render of habits
         renderHabits();
-    };
+    }
     // --------------AUTH (Login/Logout)--------------
     const authBtn = document.getElementById('authBtn');
     const userGreeting = document.getElementById('userGreeting');
@@ -97,7 +97,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Only run auth code if elements exist on page
     if (!authBtn || !userGreeting || !usernameDisplay) {
       // Auth elements not on this page (e.g., Notes without sidebar login)
+      console.log('Auth elements missing:', { authBtn, userGreeting, usernameDisplay });
     } else {
+      console.log('Auth elements found, initializing listeners');
       function updateAuthUI() {
         const user = localStorage.getItem('lockinUser');
         if (user) {
@@ -114,16 +116,16 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       authBtn.addEventListener('click', function() {
+        console.log('Logout button clicked');
         const user = localStorage.getItem('lockinUser');
+        console.log('User in localStorage:', user);
         if (user) {
-          // Logout: clear user and redirect to login
-          localStorage.removeItem('lockinUser');
-          // Detect if on Public page or dashboard
-          const currentPage = window.location.href;
-          const redirectPath = (currentPage.includes('Public') || currentPage.includes('\\Public\\')) 
-            ? '../index.html' 
-            : 'index.html';
-          window.location.href = redirectPath;
+          // Show confirmation dialog
+          if (confirm('Are you sure you want to log out?')) {
+            localStorage.removeItem('lockinUser');
+            // All pages in Public folder redirect up one level to root index.html
+            window.location.href = '../index.html';
+          }
         } else {
           const name = prompt('Enter your name to login:');
           if (name && name.trim()) {
