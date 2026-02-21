@@ -18,11 +18,13 @@ const notes = JSON.parse(localStorage.getItem("notes")) || [];
 // ============================================
 
 function calculateMetrics() {
-    // Total Tasks
+    // Total Tasks (all tasks including completed ones)
     const totalTasks = tasks.length;
 
-    // Completed Tasks
-    const completedTasks = tasks.filter(task => task.progress === "Completed").length;
+    // Completed Tasks - check both completed flag and progress status for compatibility
+    const completedTasks = tasks.filter(task => 
+        task.completed === true || task.progress === "Completed"
+    ).length;
 
     // Completion Rate
     const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
@@ -57,7 +59,8 @@ function getMostProductiveDay() {
     const dayCompletionMap = {};
 
     tasks.forEach(task => {
-        if (task.progress === "Completed" && task.dueDate) {
+        // Check both completed flag and progress status
+        if ((task.completed === true || task.progress === "Completed") && task.dueDate) {
             const date = new Date(task.dueDate);
             const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
 
@@ -92,7 +95,8 @@ function getLast7DaysData() {
 
     // Count completions for each day
     tasks.forEach(task => {
-        if (task.progress === "Completed" && task.dueDate) {
+        // Check both completed flag and progress status
+        if ((task.completed === true || task.progress === "Completed") && task.dueDate) {
             const dateStr = task.dueDate;
             if (completionData.hasOwnProperty(dateStr)) {
                 completionData[dateStr]++;

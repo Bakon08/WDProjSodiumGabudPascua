@@ -1,17 +1,42 @@
+<!-- 
+    ============================================
+    STATISTICS PAGE - Productivity Analytics
+    ============================================
+    Displays comprehensive productivity metrics:
+    - Key performance indicators (cards)
+    - Task completion charts (7-day bar chart)
+    - Category breakdown (doughnut chart)
+    - Goals overview (grouped bar chart)
+    - AI-generated insights
+    ============================================
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Character encoding for proper text display -->
     <meta charset="UTF-8">
+    <!-- Responsive viewport settings for mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link to main stylesheet -->
     <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- Font Awesome icons library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js library for creating charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Page title shown in browser tab -->
     <title>Statistics - Lockin</title>
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="../Assets/Logo.png">
 </head>
 
 <body>
-    <!-- Sidebar Navigation -->
+    <!-- 
+        ==========================================
+        SIDEBAR NAVIGATION (Desktop/Tablet)
+        ==========================================
+        Navigation bar for larger screens.
+        ==========================================
+    -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <img src="../Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
@@ -51,16 +76,36 @@
         </div>
     </aside>
 
+    <!-- 
+        ==========================================
+        MAIN STATISTICS CONTENT
+        ==========================================
+        Dashboard showing all productivity metrics.
+        ==========================================
+    -->
     <div class="main-content">
         <h1 style="color: white; margin-bottom: 30px;">📊 Your Productivity Dashboard</h1>
 
-        <!-- Key Metrics -->
+        <!-- 
+            ==========================================
+            KEY METRICS CARDS
+            ==========================================
+            Five cards showing core statistics:
+            1. Total Tasks
+            2. Tasks Completed (with progress bar)
+            3. Completion Rate (with progress bar)
+            4. Goals Completed (with progress bar)
+            5. Most Productive Day
+            ==========================================
+        -->
         <div class="stats-page-container">
+            <!-- Card 1: Total tasks count -->
             <div class="stats-page-card">
                 <div class="stats-page-label">Total Tasks</div>
                 <div class="stats-page-number" id="totalTasks">0</div>
             </div>
 
+            <!-- Card 2: Tasks completed with visual progress bar -->
             <div class="stats-page-card completed">
                 <div class="stats-page-label">Tasks Completed</div>
                 <div class="stats-page-number" id="completedTasks">0</div>
@@ -69,6 +114,7 @@
                 </div>
             </div>
 
+            <!-- Card 3: Completion rate percentage with progress bar -->
             <div class="stats-page-card">
                 <div class="stats-page-label">Completion Rate</div>
                 <div class="stats-page-number" id="completionRate">0%</div>
@@ -77,6 +123,7 @@
                 </div>
             </div>
 
+            <!-- Card 4: Goals completed count with progress bar -->
             <div class="stats-page-card goals">
                 <div class="stats-page-label">Goals Completed</div>
                 <div class="stats-page-number" id="completedGoals">0</div>
@@ -85,6 +132,7 @@
                 </div>
             </div>
 
+            <!-- Card 5: Most productive day of the week -->
             <div class="stats-page-card productivity">
                 <div class="stats-page-label">Most Productive Day</div>
                 <div class="stats-page-number" id="productiveDay">-</div>
@@ -92,36 +140,70 @@
             </div>
         </div>
 
-        <!-- Charts -->
+        <!-- 
+            ==========================================
+            CHARTS SECTION
+            ==========================================
+            Two side-by-side charts:
+            1. 7-Day Task Completion (bar chart)
+            2. Tasks by Category (doughnut chart)
+            ==========================================
+        -->
         <div class="stats-page-charts-container">
-            <!-- 7-Day Task Completion Chart -->
+            <!-- Chart 1: Last 7 days task completion trend -->
             <div class="stats-page-chart-wrapper">
                 <div class="stats-page-chart-title">📈 Tasks Completed (Last 7 Days)</div>
                 <canvas id="tasksChart"></canvas>
             </div>
 
-            <!-- Tasks by Category Chart -->
+            <!-- Chart 2: Task distribution by category/type -->
             <div class="stats-page-chart-wrapper">
                 <div class="stats-page-chart-title">🏷️ Tasks by Category</div>
                 <canvas id="categoryChart"></canvas>
             </div>
         </div>
 
-        <!-- Goals Breakdown -->
+        <!-- 
+            ==========================================
+            GOALS BREAKDOWN CHART
+            ==========================================
+            Grouped bar chart comparing total goals
+            vs completed goals across all categories.
+            ==========================================
+        -->
         <div class="stats-page-chart-wrapper" style="margin-top: 30px;">
             <div class="stats-page-chart-title">🎖️ Goals Overview</div>
             <canvas id="goalsChart"></canvas>
         </div>
 
-        <!-- Insights -->
+        <!-- 
+            ==========================================
+            PRODUCTIVITY INSIGHTS
+            ==========================================
+            AI-generated insights based on user data:
+            - Completion rate feedback
+            - Task backlog warnings
+            - Goal progress updates
+            - Most productive day analysis
+            - Daily average calculations
+            ==========================================
+        -->
         <div class="stats-page-insights-container">
             <div class="stats-page-insights-title">💡 Productivity Insights</div>
+            <!-- Insights populated by stats.js -->
             <div id="insightsContent">
                 <div class="stats-page-no-data">No data available yet. Start adding tasks and goals!</div>
             </div>
         </div>
     </div>
 
+    <!-- 
+        ==========================================
+        FOOTER
+        ==========================================
+        Copyright and attribution links.
+        ==========================================
+    -->
     <footer>
         &copy GABUD; PASCUA
         <p>
@@ -146,7 +228,13 @@
         </p>
     </footer>
 
-    <!-- Bottom Navigation (Mobile) -->
+    <!-- 
+        ==========================================
+        BOTTOM NAVIGATION (Mobile Only)
+        ==========================================
+        Touch-friendly bottom navigation bar.
+        ==========================================
+    -->
     <nav class="bottom-nav">
         <a href="../dashboard.html" class="bottom-nav-item">
             <i class="fas fa-home"></i>
@@ -165,6 +253,7 @@
         </a>
     </nav>
 
+    <!-- Link to stats.js for metrics calculation and chart rendering -->
     <script src="stats.js"></script>
 </body>
 </html>

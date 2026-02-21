@@ -1,16 +1,39 @@
+<!-- 
+    ============================================
+    NOTES PAGE - Personal Note-Taking System
+    ============================================
+    Allows users to create and manage notes with:
+    - Note title
+    - Note type (Reminder/Task/Idea/Important)
+    - Progress status
+    - Description/details
+    ============================================
+-->
 <!DOCTYPE html>
 <html lang ="en">
 <head>
+  <!-- Character encoding for proper text display -->
   <meta charset="UTF-8">
+  <!-- Responsive viewport settings for mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Link to main stylesheet -->
   <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- Font Awesome icons library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Page title shown in browser tab -->
   <title>Lockin</title>
+  <!-- Favicon (logo shown in browser tab) -->
   <link rel="icon" type="image/png" href="../Assets/Logo.png">
 </head>
 
 <body> 
-    <!-- Sidebar Navigation -->
+    <!-- 
+        ==========================================
+        SIDEBAR NAVIGATION (Desktop/Tablet)
+        ==========================================
+        Navigation bar for larger screens.
+        ==========================================
+    -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <img src="../Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
@@ -50,6 +73,13 @@
         </div>
     </aside>
 
+    <!-- 
+        ==========================================
+        ABOUT SECTION
+        ==========================================
+        Explains note-taking functionality.
+        ==========================================
+    -->
     <div class="main-content">
        <!--Write paragraph here-->
         <details>
@@ -69,15 +99,27 @@
         </details>
       </div>
 
-      <!--Write paragraph here-->
-      </div>
+      <!-- 
+        ==========================================
+        NOTES TABLE
+        ==========================================
+        Displays all notes with columns:
+        - Note Name (title)
+        - Progress status
+        - Note Type
+        - Description (full details)
+        - Actions (Edit/Delete buttons)
+        ==========================================
+      -->
       <div class="main-content">
         <h2>📓 Notes</h2>
 
+        <!-- Action bar with add button -->
         <div class="action-bar">
           <button class="add-btn" id="addNewNoteBtn">+ New Note</button>
         </div>
 
+        <!-- Responsive table wrapper with horizontal scroll on mobile -->
         <div class="table-wrapper">
           <table class="notes-table">
             <thead>
@@ -90,31 +132,52 @@
               </tr>
             </thead>
             <tbody id="notesBody">
-              <!-- Notes will appear here -->
+              <!-- Notes populated by notes.js -->
             </tbody>
           </table>
         </div>
       </div>
 
-        <!-- Hidden form for adding/editing note -->
+        <!-- 
+            ==========================================
+            NOTE FORM - ADD/EDIT NOTE
+            ==========================================
+            Hidden by default. Shows when:
+            - "+ New Note" button is clicked (add mode)
+            - Edit button is clicked (edit mode)
+            ==========================================
+        -->
         <div class="notes-input" id="notesForm" style="display:none;">
+          <!-- Note title input -->
           <input type="text" id="noteTitle" placeholder="Note title">
+          <!-- Note type dropdown -->
           <select id="noteType">
             <option value="Reminder">Reminder</option>
             <option value="Task">Task</option>
             <option value="Idea">Idea</option>
             <option value="Important">Important</option>
           </select>
+          <!-- Progress status dropdown -->
           <select id="noteProgress">
             <option value="Not Started">Not Started</option>
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
           </select>
+          <!-- Description textarea (multi-line) -->
           <textarea id="noteDescription" placeholder="Description"></textarea>
+          <!-- Save button (adds new or updates existing note) -->
           <button class="add-btn" id="saveNoteBtn">Save Note</button>
+          <!-- Cancel button (hides form without saving) -->
           <button class="add-btn cancel" id="cancelNoteBtn">Cancel</button>
         </div>
 
+    <!-- 
+        ==========================================
+        FOOTER
+        ==========================================
+        Copyright and attribution links.
+        ==========================================
+    -->
     <footer>
       &copy GABUD; PASCUA
       <p> 
@@ -132,7 +195,13 @@
       </p>
     </footer>
 
-    <!-- Bottom Navigation (Mobile) -->
+    <!-- 
+        ==========================================
+        BOTTOM NAVIGATION (Mobile Only)
+        ==========================================
+        Touch-friendly bottom navigation bar.
+        ==========================================
+    -->
     <nav class="bottom-nav">
         <a href="../dashboard.html" class="bottom-nav-item">
             <i class="fas fa-home"></i>
@@ -151,6 +220,7 @@
         </a>
     </nav>
 
+    <!-- Link to notes.js for note CRUD functionality -->
     <script src="notes.js"></script>
     </body>
 </html>

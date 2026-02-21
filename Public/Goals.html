@@ -1,16 +1,40 @@
+<!-- 
+    ============================================
+    GOALS PAGE - 5-Tier Goal Tracking System
+    ============================================
+    Helps users set and track goals across:
+    - Annual goals (long-term yearly objectives)
+    - Quarterly goals (3-month goals)
+    - Monthly goals (30-day goals)
+    - Weekly goals (7-day goals)
+    - Daily goals (today's objectives)
+    ============================================
+-->
 <!DOCTYPE html>
 <html lang ="en">
 <head>
+  <!-- Character encoding for proper text display -->
   <meta charset="UTF-8">
+  <!-- Responsive viewport settings for mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Link to main stylesheet -->
   <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- Font Awesome icons library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Page title shown in browser tab -->
   <title>Lockin</title>
+  <!-- Favicon (logo shown in browser tab) -->
   <link rel="icon" type="image/png" href="../Assets/Logo.png">
 </head>
 
 <body> 
-    <!-- Sidebar Navigation -->
+    <!-- 
+        ==========================================
+        SIDEBAR NAVIGATION (Desktop/Tablet)
+        ==========================================
+        Navigation bar for larger screens.
+        ==========================================
+    -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <img src="../Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
@@ -50,6 +74,13 @@
         </div>
     </aside>
 
+    <!-- 
+        ==========================================
+        ABOUT SECTION
+        ==========================================
+        Explains goal tracking functionality.
+        ==========================================
+    -->
     <div class="main-content">
        <details>
          <summary>About</summary>
@@ -72,18 +103,34 @@
        </details>
     </div>
   
+    <!-- 
+        ==========================================
+        GOAL TRACKERS CONTAINER
+        ==========================================
+        5 collapsible dropdowns for different
+        time-based goal categories.
+        Each dropdown contains:
+        - Input field to add new goal
+        - List of existing goals
+        - Complete/Delete buttons for each goal
+        ==========================================
+    -->
     <div class="goal-trackers-container">
+      <!-- Annual Goals Dropdown (yearly objectives) -->
       <div class="dropdown">
         <button class="dropbtn">Annual Goals</button>
           <div class="dropdown-content">
+            <!-- Input area to add new annual goal -->
             <div class="input-area">
               <input type="text" id="annualGoalInput" placeholder="Add an annual goal...">
               <button type="button" onclick="addGoal(event, 'annual')" class="add-btn">+</button>
             </div>
+            <!-- List of annual goals populated by goals.js -->
             <ul id="annualGoalUL"></ul>
           </div>
       </div>
       
+      <!-- Quarterly Goals Dropdown (3-month objectives) -->
       <div class="dropdown">
         <button class="dropbtn">Quarterly Goals</button>
           <div class="dropdown-content">
@@ -95,6 +142,7 @@
           </div>
       </div>
 
+      <!-- Monthly Goals Dropdown (30-day objectives) -->
       <div class="dropdown">
         <button class="dropbtn">Monthly Goals</button>
           <div class="dropdown-content">
@@ -106,6 +154,7 @@
           </div>
       </div>
 
+      <!-- Weekly Goals Dropdown (7-day objectives) -->
       <div class="dropdown">
         <button class="dropbtn">Weekly Goals</button>
         <div class="dropdown-content">
@@ -117,6 +166,7 @@
         </div>
       </div>
 
+      <!-- Daily Goals Dropdown (today's objectives) -->
       <div class="dropdown">
         <button class="dropbtn">Daily Goals</button>
         <div class="dropdown-content">
@@ -129,6 +179,13 @@
       </div>
    </div>
    
+    <!-- 
+        ==========================================
+        FOOTER
+        ==========================================
+        Copyright and attribution links.
+        ==========================================
+    -->
     <footer>
       &copy GABUD; PASCUA
       <p> 
@@ -146,7 +203,13 @@
       </p>
     </footer>
 
-    <!-- Bottom Navigation (Mobile) -->
+    <!-- 
+        ==========================================
+        BOTTOM NAVIGATION (Mobile Only)
+        ==========================================
+        Touch-friendly bottom navigation bar.
+        ==========================================
+    -->
     <nav class="bottom-nav">
         <a href="../dashboard.html" class="bottom-nav-item">
             <i class="fas fa-home"></i>
@@ -165,6 +228,7 @@
         </a>
     </nav>
 
+    <!-- Link to goals.js for goal CRUD functionality -->
     <script src="goals.js"></script>
 </body>
 </html>
