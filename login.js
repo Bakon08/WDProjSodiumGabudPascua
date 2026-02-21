@@ -51,8 +51,10 @@ loginForm.addEventListener('submit', function(event) {
         if (foundUser) {
             messageDisplay.style.color = "darkgreen";
             messageDisplay.textContent = "Locking in...";
-            setTimeout(() => { 
-                window.location.href = "Public/Home.html"; 
+            // persist logged-in user so Public pages detect auth
+            localStorage.setItem('lockinUser', foundUser.username);
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
             }, 800);
         } else {
             messageDisplay.style.color = "darkred";
