@@ -89,6 +89,44 @@ document.addEventListener('DOMContentLoaded', function() {
     renderHabits();
     // Initial render of habits
     renderHabits();
+    // --------------AUTH (Login/Logout)--------------
+    const authBtn = document.getElementById('authBtn');
+    const userGreeting = document.getElementById('userGreeting');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+
+    function updateAuthUI() {
+      const user = localStorage.getItem('lockinUser');
+      if (user) {
+        authBtn.textContent = 'Logout';
+        userGreeting.classList.add('show');
+        usernameDisplay.textContent = user;
+      } else {
+        // If user is not logged in, send them to the main login page
+        window.location.href = '../index.html';
+      }
+    }
+
+    if (authBtn) {
+      authBtn.addEventListener('click', function() {
+        const user = localStorage.getItem('lockinUser');
+        if (user) {
+          localStorage.removeItem('lockinUser');
+          // hide greeting immediately and redirect to login
+          userGreeting.classList.remove('show');
+          updateAuthUI();
+        } else {
+          const name = prompt('Enter your name to login:');
+          if (name && name.trim()) {
+            localStorage.setItem('lockinUser', name.trim());
+            updateAuthUI();
+          }
+        }
+      });
+    }
+
+    // Initialize auth UI on load
+    updateAuthUI();
+    //-----------------------------------------------
     //-------------------------------------------------
 
     //--------------DATA LOADING FROM LOCALSTORAGE--------------

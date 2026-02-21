@@ -29,6 +29,8 @@
     --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08);
     --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
     --shadow-hover: 0 12px 35px rgba(0, 0, 0, 0.15);
+    /* Link color tuned to a lighter sage/green vibe */
+    --link-green: #5fae83;
 }
 
 /* Mobile-first responsive design */
@@ -43,13 +45,9 @@ html {
 
 /* Global Styles */
 a {
-    color: var(--forest-dark);
+    color: var(--link-green);
     text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: var(--forest-green);
+    transition: color 0.2s ease;
 }
 
 body {
@@ -2323,6 +2321,47 @@ body.login-page-theme {
     margin-bottom: 30px;
     font-size: 18px;
     font-weight: 400;
+}
+
+/* Sidebar auth button - minimalist light green */
+.sidebar-login {
+    padding: 12px 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px; /* reserve space so button doesn't shift */
+}
+
+.auth-btn {
+    background-color: #e6f7ea; /* very light green */
+    color: #2f6b3a; /* darker green text */
+    border: 1px solid rgba(47,107,58,0.12);
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: none;
+    transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.auth-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(47,107,58,0.08);
+}
+
+.user-greeting {
+    margin-top: 6px;
+    font-size: 0.9em;
+    color: #3b6a45;
+    min-height: 18px; /* reserve vertical space */
+    visibility: hidden; /* keep layout stable */
+}
+
+/* When JS shows greeting, reveal without reflow */
+.user-greeting.show {
+    visibility: visible;
 }
 
 .toggle-text {
