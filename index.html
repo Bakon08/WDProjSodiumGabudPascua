@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Planner</title>
+    <title>Lockin - Welcome</title>
     <link rel="stylesheet" href="Public/style.css">
 </head>
 <body class="login-page-theme">
+
     <div class="login-container">
-        <h2 class="login-title">Welcome Back</h2>
+        <h1 class="brand-title">Lockin</h1>
+        <h2 id="form-title" class="login-title">Welcome Back</h2>
         
         <form id="loginForm">
             <div class="input-group">
@@ -21,51 +23,16 @@
                 <input type="password" id="password" placeholder="Enter password" required>
             </div>
             
-            <button type="submit" class="login-btn">Log In</button>
+            <button type="submit" id="submit-btn" class="login-btn">Log In</button>
+            
+            <p class="toggle-text">
+                Don't have an account? <a href="#" id="toggle-link">Create one</a>
+            </p>
+            
             <p id="message"></p>
         </form>
     </div>
 
-    <script>
-        // Initialize dummy user if not exists
-        if (!localStorage.getItem("myAppUser")) {
-            const dummyUser = {
-                username: "admin",
-                email: "admin@test.com",
-                password: "password123"
-            };
-            localStorage.setItem("myAppUser", JSON.stringify(dummyUser));
-        }
-
-        // Get form elements
-        const loginForm = document.getElementById('loginForm');
-        const messageDisplay = document.getElementById('message');
-
-        // Handle form submission
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); 
-
-            const enteredUser = document.getElementById('username').value;
-            const enteredPass = document.getElementById('password').value;
-
-            const storedUserData = localStorage.getItem("myAppUser");
-            const storedUser = JSON.parse(storedUserData);
-
-            const isUsernameCorrect = (enteredUser === storedUser.username || enteredUser === storedUser.email);
-            const isPasswordCorrect = (enteredPass === storedUser.password);
-
-            if (isUsernameCorrect && isPasswordCorrect) {
-                messageDisplay.style.color = "darkgreen";
-                messageDisplay.textContent = "Login successful! Welcome back.";
-                
-                setTimeout(() => {
-                    window.location.href = "dashboard.html";
-                }, 500);
-            } else {
-                messageDisplay.style.color = "darkred";
-                messageDisplay.textContent = "Invalid credentials. Try admin / password123.";
-            }
-        });
-    </script>
+    <script src="login.js"></script>
 </body>
 </html>
