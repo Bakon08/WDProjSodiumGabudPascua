@@ -42,7 +42,7 @@
             </div>
             
             <!-- Submit button to trigger login -->
-            <button type="submit" id="loginBtn" class="login-btn">Log In</button>
+            <button type="submit" id="submit-btn" class="login-btn">Log In</button>
             
             <p class="toggle-text">
                 Don't have an account? <a href="#" id="toggle-link">Create one</a>
@@ -51,31 +51,6 @@
             <p id="message"></p>
         </form>
     </div>
-
-    <!-- existing external script kept; add inline toggler before it -->
-    <script>
-    // toggle between login and create-account modes and update link text
-    (function(){
-      const toggleLink = document.getElementById('toggle-link');
-      const formTitle = document.getElementById('form-title');
-      const loginBtn = document.getElementById('loginBtn');
-      if (!toggleLink || !formTitle || !loginBtn) return;
-      let isCreate = false;
-      toggleLink.addEventListener('click', function(e){
-        e.preventDefault();
-        isCreate = !isCreate;
-        if (isCreate) {
-          formTitle.textContent = 'Create Account';
-          loginBtn.textContent = 'Create Account';
-          toggleLink.textContent = 'Go back';
-        } else {
-          formTitle.textContent = 'Welcome Back';
-          loginBtn.textContent = 'Log In';
-          toggleLink.textContent = 'Create one';
-        }
-      });
-    })();
-    </script>
 
     <script src="Public/login.js"></script>
 </body>
