@@ -26,6 +26,46 @@
         </form>
     </div>
 
-    <script src="login.js"></script>
+    <script>
+        // Initialize dummy user if not exists
+        if (!localStorage.getItem("myAppUser")) {
+            const dummyUser = {
+                username: "admin",
+                email: "admin@test.com",
+                password: "password123"
+            };
+            localStorage.setItem("myAppUser", JSON.stringify(dummyUser));
+        }
+
+        // Get form elements
+        const loginForm = document.getElementById('loginForm');
+        const messageDisplay = document.getElementById('message');
+
+        // Handle form submission
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const enteredUser = document.getElementById('username').value;
+            const enteredPass = document.getElementById('password').value;
+
+            const storedUserData = localStorage.getItem("myAppUser");
+            const storedUser = JSON.parse(storedUserData);
+
+            const isUsernameCorrect = (enteredUser === storedUser.username || enteredUser === storedUser.email);
+            const isPasswordCorrect = (enteredPass === storedUser.password);
+
+            if (isUsernameCorrect && isPasswordCorrect) {
+                messageDisplay.style.color = "darkgreen";
+                messageDisplay.textContent = "Login successful! Welcome back.";
+                
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 500);
+            } else {
+                messageDisplay.style.color = "darkred";
+                messageDisplay.textContent = "Invalid credentials. Try admin / password123.";
+            }
+        });
+    </script>
 </body>
 </html>
