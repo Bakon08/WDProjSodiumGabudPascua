@@ -1,96 +1,32 @@
 <!DOCTYPE html>
-<html lang ="en">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="Public/style.css">
-  <title>Lockin</title>
-  <link rel="icon" type="image/png" href="Assets/Logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Planner</title>
+    <link rel="stylesheet" href="Public/style.css">
 </head>
+<body class="login-page-theme">
 
-<body> 
-    <nav class="nav_bar">
-      <div class="nav-container">
-
-          <a href="index.html" class="logo link active">
-            <img src="Assets/Logo.png" class="logo-img">
-          </a> 
-
-          <div class = "nav-links">
-              <a href="Public/Planner.html"> 📅 Planner </a> 
-              <a href="Public/Stats.html"> 📈 Stats </a>
-              <a href="Public/Goals.html"> 🎖️ Goals </a> 
-              <a href="Public/Notes.html"> 📓 Notes </a> 
-          </div>   
-      </div>
-    </nav>
-
-    <div class="main-content">
-       <details>
-         <summary>About</summary>
-         <div style="background-color: white; padding: 1px; border: 1px solid #ccc; border-radius: 15px;">
-          <p>
-            This is our website home page. You will be able to see a bit of everything 
-            on this page. You will be able to see the number of tasks left, your progress reminders
-            your deadlines and your checklists. The number of tasks left to do will consist of a ring chart,
-            a legend and all the number of tasks you have left. There will also be a deadline updater that 
-            notifies you on your requirement deadlienes. 
-          </p>
-
-          <p>
-            This site will also have some progress reminders which notifies you your time left 
-            to accomplish a goal. And finally there is a habit checklist to make sure you are doing 
-            all your good habits and letting go of your old ones. This web page is mainly so that you 
-            can see the information you want to see quickly so that you don't have to navigate through 
-            the website to find basic information. 
-          </p>
-        </div>
-       </details>
+    <div class="login-container">
+        <h2 class="login-title">Welcome Back</h2>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" placeholder="Enter username" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Log In</button>
+            <p id="message"></p>
+        </form>
     </div>
 
-    <div class="container">
-      <div class="box">
-        <h2>📊 Tasks Left</h2>
-        <canvas id="tasksLeftChart" width="200" height="200"></canvas>
-        <div id="tasksLeftLegend"></div>
-      </div>
-
-      <div class="box">
-        <h2>⏰ Upcoming Deadlines</h2>
-        <ul id="upcomingDeadlinesList"></ul>
-      </div>
-
-      <div class="box">
-        <h2>⏳ Progress Reminders</h2>
-        <ul id="progressRemindersList"></ul>
-      </div>
-
-      <div class="box">
-        <h2>✅ Habit Checklist</h2>
-        <div class="habit-input">
-          <input type="text" id="habitInput" placeholder="Add a new habit">
-          <button class="habit-add-btn" id="addHabitBtn">Add</button>
-        </div>
-        <ul id="habitChecklist"></ul>
-      </div>
-    </div>
-</body>
-
-<script src="Public/index.js"></script>
-
-<footer>
-  &copy GABUD; PASCUA
-  <p> 
-    W3Schools.com. (n.d.). 
-    <a href="https://www.w3schools.com/" target="_blank" style = color:blue>
-      https://www.w3schools.com/
-    </a>
-  </p>
-
-  <p>
-    GeeksforGeeks. (n.d.). GeeksforGeeks.
-    <a href="https://www.geeksforgeeks.org/" target="_blank" style = color:blue>
-      https://www.geeksforgeeks.org/
-  </p>
-</footer>
+    <script src="login.js"></script>
+</body class="login-page-theme">
 </html>
