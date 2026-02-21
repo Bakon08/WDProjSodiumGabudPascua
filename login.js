@@ -59,7 +59,7 @@ loginForm.addEventListener('submit', function(event) {
             messageDisplay.textContent = "Invalid credentials. Try admin / password123";
         }
     } else {
-        // sign-up locgic: check if username/email already exists
+        // sign-up logic: check if username/email already exists
         const userExists = users.some(u => u.username === userIn || u.email === userIn);
         
         if (userExists) {

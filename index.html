@@ -15,7 +15,7 @@
     <!-- Responsive viewport settings for mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Page title shown in browser tab -->
-    <title>Login - Planner</title>
+    <title>Lockin - Welcome</title>
     <!-- Link to external stylesheet -->
     <title>Lockin - Welcome</title>
     <link rel="stylesheet" href="Public/style.css">
@@ -42,9 +42,7 @@
             </div>
             
             <!-- Submit button to trigger login -->
-            <button type="submit" class="login-btn">Log In</button>
-            <!-- Message display for login success/error feedback -->
-            <button type="submit" id="submit-btn" class="login-btn">Log In</button>
+            <button type="submit" id="loginBtn" class="login-btn">Log In</button>
             
             <p class="toggle-text">
                 Don't have an account? <a href="#" id="toggle-link">Create one</a>
@@ -54,65 +52,31 @@
         </form>
     </div>
 
-    <!-- Embedded JavaScript for login functionality -->
+    <!-- existing external script kept; add inline toggler before it -->
     <script>
-        // ==========================================
-        // USER INITIALIZATION
-        // ==========================================
-        // Check if user credentials exist in localStorage
-        // If not, create a default admin user for testing
-        if (!localStorage.getItem("myAppUser")) {
-            const dummyUser = {
-                username: "admin",
-                email: "admin@test.com",
-                password: "password123"
-            };
-            localStorage.setItem("myAppUser", JSON.stringify(dummyUser));
+    // toggle between login and create-account modes and update link text
+    (function(){
+      const toggleLink = document.getElementById('toggle-link');
+      const formTitle = document.getElementById('form-title');
+      const loginBtn = document.getElementById('loginBtn');
+      if (!toggleLink || !formTitle || !loginBtn) return;
+      let isCreate = false;
+      toggleLink.addEventListener('click', function(e){
+        e.preventDefault();
+        isCreate = !isCreate;
+        if (isCreate) {
+          formTitle.textContent = 'Create Account';
+          loginBtn.textContent = 'Create Account';
+          toggleLink.textContent = 'Go back';
+        } else {
+          formTitle.textContent = 'Welcome Back';
+          loginBtn.textContent = 'Log In';
+          toggleLink.textContent = 'Create one';
         }
-
-        // ==========================================
-        // GET DOM ELEMENTS
-        // ==========================================
-        const loginForm = document.getElementById('loginForm');
-        const messageDisplay = document.getElementById('message');
-
-        // ==========================================
-        // LOGIN AUTHENTICATION
-        // ==========================================
-        // Listen for form submission
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission/page reload
-
-            // Get user input values
-            const enteredUser = document.getElementById('username').value;
-            const enteredPass = document.getElementById('password').value;
-
-            // Retrieve stored user credentials from localStorage
-            const storedUserData = localStorage.getItem("myAppUser");
-            const storedUser = JSON.parse(storedUserData);
-
-            // Validate username/email
-            const isUsernameCorrect = (enteredUser === storedUser.username || enteredUser === storedUser.email);
-            // Validate password
-            const isPasswordCorrect = (enteredPass === storedUser.password);
-
-            // Check if both credentials are correct
-            if (isUsernameCorrect && isPasswordCorrect) {
-                // Show success message in green
-                messageDisplay.style.color = "darkgreen";
-                messageDisplay.textContent = "Login successful! Welcome back.";
-                
-                // Redirect to dashboard after 500ms delay
-                setTimeout(() => {
-                    window.location.href = "dashboard.html";
-                }, 500);
-            } else {
-                // Show error message in red
-                messageDisplay.style.color = "darkred";
-                messageDisplay.textContent = "Invalid credentials. Try admin / password123.";
-            }
-        });
+      });
+    })();
     </script>
+
     <script src="login.js"></script>
 </body>
 </html>
