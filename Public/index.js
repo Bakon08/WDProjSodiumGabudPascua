@@ -89,6 +89,53 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initial render of habits
         renderHabits();
     };
+    // --------------AUTH (Login/Logout)--------------
+    const authBtn = document.getElementById('authBtn');
+    const userGreeting = document.getElementById('userGreeting');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+
+    // Only run auth code if elements exist on page
+    if (!authBtn || !userGreeting || !usernameDisplay) {
+      // Auth elements not on this page (e.g., Notes without sidebar login)
+    } else {
+      function updateAuthUI() {
+        const user = localStorage.getItem('lockinUser');
+        if (user) {
+          authBtn.textContent = 'Logout';
+          userGreeting.classList.add('show');
+          usernameDisplay.textContent = user;
+        } else {
+          // If user is not logged in, send them to the main login page
+          // Detect if on a Public page (works on both local files and web paths)
+          const isPublicPage = window.location.href.includes('/Public/') || window.location.href.includes('\\Public\\');
+          const redirectPath = isPublicPage ? '../index.html' : 'index.html';
+          window.location.href = redirectPath;
+        }
+      }
+
+      authBtn.addEventListener('click', function() {
+        const user = localStorage.getItem('lockinUser');
+        if (user) {
+          // Logout: clear user and redirect to login
+          localStorage.removeItem('lockinUser');
+          // Detect if on Public page or dashboard
+          const currentPage = window.location.href;
+          const redirectPath = (currentPage.includes('Public') || currentPage.includes('\\Public\\')) 
+            ? '../index.html' 
+            : 'index.html';
+          window.location.href = redirectPath;
+        } else {
+          const name = prompt('Enter your name to login:');
+          if (name && name.trim()) {
+            localStorage.setItem('lockinUser', name.trim());
+            updateAuthUI();
+          }
+        }
+      });
+
+      // Initialize auth UI on load
+      updateAuthUI();
+    }
     //-----------------------------------------------
     //-------------------------------------------------
 
