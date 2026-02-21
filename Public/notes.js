@@ -6,10 +6,7 @@
  */
 
 //--------------DOM ELEMENT REFERENCES--------------
-// Button to trigger the note creation form
-const addNewNoteBtn = document.getElementById("addNewNoteBtn");
-
-// The form container (hidden by default, shown when adding/editing)
+// The entry bar container (always visible at top)
 const notesForm = document.getElementById("notesForm");
 
 // Buttons within the notes form
@@ -43,29 +40,16 @@ if (savedNotes) {
 let editIndex = null;
 //---------------------------------------------
 
-//--------------FORM VISIBILITY FUNCTIONS--------------
+//--------------FORM CANCEL FUNCTION--------------
 /**
- * Shows the note form for adding a new note
- * Clears any previous form data to start fresh
+ * Clears the entry bar fields and resets to add mode
+ * Called when user clicks Cancel (X) button
  */
-function showNoteForm() {
-    notesForm.style.display = "flex"; // Make form visible
-    clearForm(); // Reset all input fields
-}
-// Attach function to the "Add New Note" button
-// Attach function to the "Add New Note" button
-addNewNoteBtn.addEventListener("click", showNoteForm);
-
-/**
- * Hides the note form and cancels any add/edit operation
- * Clears the form data to prevent stale data on next open
- */
-function hideNoteForm() {
-    notesForm.style.display = "none"; // Hide the form
-    clearForm(); // Reset all fields
+function cancelForm() {
+    clearForm(); // Reset all input fields and mode
 }
 // Attach function to the "Cancel" button
-cancelNoteBtn.addEventListener("click", hideNoteForm);
+cancelNoteBtn.addEventListener("click", cancelForm);
 //----------------------------------------------------
 
 //--------------SAVE NOTE FUNCTION--------------
@@ -102,11 +86,8 @@ function saveNote() {
     let notesString = JSON.stringify(notes); // Convert array to JSON string
     localStorage.setItem("notes", notesString); // Store in localStorage
 
-    // Hide the form and clear the inputs
-    notesForm.style.display = "none";
+    // Clear the form and re-render the table
     clearForm();
-
-    // Re-render the table with updated notes
     renderNotes();
 }
 
@@ -164,7 +145,7 @@ function renderNotes() {
 
 //--------------EDIT NOTE FUNCTION--------------
 /**
- * Loads note data into the form for editing
+ * Loads note data into the top entry bar for editing
  * @param {number} index - The index of the note in the notes array
  */
 function editNote(index) {
@@ -179,8 +160,11 @@ function editNote(index) {
     // Store the index so saveNote() knows to update instead of add
     editIndex = index;
     
-    // Show the form
-    notesForm.style.display = "flex";
+    // Change button text to indicate edit mode
+    saveNoteBtn.textContent = "Update Note";
+    
+    // Scroll to top so user can see the populated entry bar
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 //--------------------------------------------
 
@@ -204,14 +188,16 @@ function deleteNote(index) {
 
 //--------------HELPER FUNCTION--------------
 /**
- * Clears all input fields in the note form
- * Resets to default values for dropdowns
+ * Clears all input fields in the note entry bar
+ * Resets to default values for dropdowns and button text
  */
 function clearForm() {
     noteTitle.value = "";                  // Clear title
     noteType.value = "Reminder";           // Reset to default type
     noteProgress.value = "Not Started";    // Reset to default progress
     noteDescription.value = "";            // Clear description
+    editIndex = null;                      // Exit edit mode
+    saveNoteBtn.textContent = "Add Note";  // Reset button text to add mode
 }
 //-----------------------------------------
 

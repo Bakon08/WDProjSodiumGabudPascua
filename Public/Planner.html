@@ -115,6 +115,36 @@
 
     <!-- 
         ==========================================
+        TASK ENTRY BAR - TOP ALIGNED & STICKY
+        ==========================================
+        Always visible command center for adding/editing tasks
+        Sticky positioning keeps it at top during scroll
+        ==========================================
+    -->
+    <div class="main-content">
+      <h2>📅 Planner</h2>
+
+      <!-- Task Entry Bar (Sticky) -->
+      <div class="entry-bar" id="TasksForm">
+        <input type="text" id="taskTitle" placeholder="Task title">
+        <input type="date" id="plannerDueDate" />
+        <select id="taskType">
+          <option value="School">School</option>
+          <option value="Personal">Personal</option>
+          <option value="House">House</option>
+          <option value="Work">Work</option>
+        </select>
+        <select id="taskProgress">
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+        <button class="entry-bar-btn" id="saveTaskBtn">Add Task</button>
+        <button class="entry-bar-cancel" id="cancelTaskBtn" title="Clear">✕</button>
+      </div>
+
+    <!-- 
+        ==========================================
         TASKS TABLE - ACTIVE TASKS
         ==========================================
         Displays all incomplete tasks with:
@@ -125,19 +155,13 @@
         - Action buttons (Complete/Edit/Delete)
         ==========================================
     -->
-    <div class="main-content">
-      <h2>📅 Planner</h2>
-
       <!-- Responsive table wrapper with horizontal scroll on mobile -->
       <div class="table-wrapper">
         <table class="tasks-table">
           <thead>
             <tr>
-              <!-- Task title column with add button -->
-              <th>
-                Tasks
-                <button class="add-btn" id="addNewTaskBtn">+ New Task</button>
-              </th>
+              <!-- Task title column -->
+              <th>Tasks</th>
               <!-- Due date column -->
               <th>Due Date</th>
               <!-- Progress status column -->
@@ -191,39 +215,6 @@
         </div>
       </div>
     </div>
-
-        <!-- 
-            ==========================================
-            TASK FORM - ADD/EDIT TASK
-            ==========================================
-            Hidden by default. Shows when:
-            - "+ New Task" button is clicked (add mode)
-            - Edit button is clicked (edit mode)
-            ==========================================
-        -->
-        <div class="tasks-input" id="TasksForm" style="display:none;">
-          <!-- Task title input -->
-          <input type="text" id="taskTitle" placeholder="Task title">
-          <!-- Due date picker -->
-          <input type="date" id="plannerDueDate" />
-          <!-- Task type dropdown -->
-          <select id="taskType" placeholder="Task Type">
-            <option value="School">School</option>
-            <option value="Personal">Personal</option>
-            <option value="House">House</option>
-            <option value="Work">Work</option>
-          </select>
-          <!-- Progress status dropdown -->
-          <select id="taskProgress">
-            <option value="Not Started">Not Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
-          <!-- Save button (adds new or updates existing task) -->
-          <button class="add-btn" id="saveTaskBtn">Save Task</button>
-          <!-- Cancel button (hides form without saving) -->
-          <button class="add-btn" id="cancelTaskBtn">Cancel</button>
-        </div>
 
     <!-- 
         ==========================================

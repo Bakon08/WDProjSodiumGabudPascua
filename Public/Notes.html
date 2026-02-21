@@ -118,9 +118,23 @@
       <div class="main-content">
         <h2>📓 Notes</h2>
 
-        <!-- Action bar with add button -->
-        <div class="action-bar">
-          <button class="add-btn" id="addNewNoteBtn">+ New Note</button>
+        <!-- Note Entry Bar (Sticky) -->
+        <div class="entry-bar notes-entry-bar" id="notesForm">
+          <input type="text" id="noteTitle" placeholder="Note title" class="note-title-input">
+          <select id="noteType">
+            <option value="Reminder">Reminder</option>
+            <option value="Task">Task</option>
+            <option value="Idea">Idea</option>
+            <option value="Important">Important</option>
+          </select>
+          <select id="noteProgress">
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+          <textarea id="noteDescription" placeholder="Content (click to expand)" class="note-content-textarea"></textarea>
+          <button class="entry-bar-btn" id="saveNoteBtn">Add Note</button>
+          <button class="entry-bar-cancel" id="cancelNoteBtn" title="Clear">✕</button>
         </div>
 
         <!-- Responsive table wrapper with horizontal scroll on mobile -->
@@ -141,39 +155,6 @@
           </table>
         </div>
       </div>
-
-        <!-- 
-            ==========================================
-            NOTE FORM - ADD/EDIT NOTE
-            ==========================================
-            Hidden by default. Shows when:
-            - "+ New Note" button is clicked (add mode)
-            - Edit button is clicked (edit mode)
-            ==========================================
-        -->
-        <div class="notes-input" id="notesForm" style="display:none;">
-          <!-- Note title input -->
-          <input type="text" id="noteTitle" placeholder="Note title">
-          <!-- Note type dropdown -->
-          <select id="noteType">
-            <option value="Reminder">Reminder</option>
-            <option value="Task">Task</option>
-            <option value="Idea">Idea</option>
-            <option value="Important">Important</option>
-          </select>
-          <!-- Progress status dropdown -->
-          <select id="noteProgress">
-            <option value="Not Started">Not Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
-          <!-- Description textarea (multi-line) -->
-          <textarea id="noteDescription" placeholder="Description"></textarea>
-          <!-- Save button (adds new or updates existing note) -->
-          <button class="add-btn" id="saveNoteBtn">Save Note</button>
-          <!-- Cancel button (hides form without saving) -->
-          <button class="add-btn cancel" id="cancelNoteBtn">Cancel</button>
-        </div>
 
     <!-- 
         ==========================================

@@ -13,13 +13,11 @@
 // ==========================================
 // Get references to all HTML elements we'll interact with
 
-// Button to show the add task form
-const addNewTaskBtn = document.getElementById("addNewTaskBtn");
-// The form container for adding/editing tasks (hidden by default)
+// The entry bar container (always visible at top)
 const tasksForm = document.getElementById("TasksForm");
-// Save button in the form
+// Save button in the entry bar
 const saveTaskBtn = document.getElementById("saveTaskBtn");
-// Cancel button to hide the form
+// Cancel button to clear the form
 const cancelTaskBtn = document.getElementById("cancelTaskBtn");
 
 // Form input fields
@@ -47,30 +45,18 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let editIndex = null;
 
 // ========================================
-// FORM DISPLAY FUNCTIONS
+// FORM CANCEL FUNCTION
 // ========================================
 
 /**
- * Shows the task form for adding a new task
- * Clears any previous input values
+ * Clears the entry bar fields and resets to add mode
+ * Called when user clicks Cancel (X) button
  */
-function showTaskForm() {
-  tasksForm.style.display = "flex";  // Make form visible
-  clearForm();  // Reset all input fields to default values
-}
-// Attach event listener to "+ New Task" button
-addNewTaskBtn.addEventListener("click", showTaskForm);
-
-/**
- * Hides the task form and resets it
- * Called when user clicks Cancel button
- */
-function hideTaskForm() {
-  tasksForm.style.display = "none";  // Hide the form
-  clearForm();  // Reset all input fields
+function cancelForm() {
+  clearForm();  // Reset all input fields and mode
 }
 // Attach event listener to Cancel button
-cancelTaskBtn.addEventListener("click", hideTaskForm);
+cancelTaskBtn.addEventListener("click", cancelForm);
 
 // ========================================
 // SAVE TASK FUNCTION
@@ -113,8 +99,8 @@ function saveTask() {
   // Save updated tasks array to localStorage (converts to JSON string)
   localStorage.setItem("tasks", JSON.stringify(tasks));
   
-  // Hide form and refresh the display
-  hideTaskForm();
+  // Clear form and refresh the display
+  clearForm();
   renderTasks();
 }
 
@@ -298,7 +284,7 @@ function restoreTask(index) {
 
 /**
  * Edits an existing task
- * Loads task data into form and switches to edit mode
+ * Loads task data into the top entry bar and switches to edit mode
  * @param {number} index - Index of task in tasks array
  */
 function editTask(index) {
@@ -313,8 +299,11 @@ function editTask(index) {
   // Set edit mode (saveTask function will update instead of adding)
   editIndex = index;
   
-  // Show the form
-  tasksForm.style.display = "flex";
+  // Change button text to indicate edit mode
+  saveTaskBtn.textContent = "Update Task";
+  
+  // Scroll to top so user can see the populated entry bar
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /**
@@ -346,7 +335,7 @@ function deleteTask(index) {
 
 /**
  * Clears all form input fields and resets to default values
- * Also resets edit mode
+ * Also resets edit mode and button text
  */
 function clearForm() {
   taskTitle.value = "";  // Clear title input
@@ -354,6 +343,7 @@ function clearForm() {
   taskProgress.value = "Not Started";  // Reset to default progress
   taskType.value = "School";  // Reset to default type
   editIndex = null;  // Exit edit mode
+  saveTaskBtn.textContent = "Add Task";  // Reset button text to add mode
 }
 
 /**
