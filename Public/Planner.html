@@ -1,28 +1,55 @@
+<!-- 
+    ============================================
+    PLANNER PAGE - Task Management System
+    ============================================
+    Main task management interface with:
+    - Active tasks table (incomplete)
+    - Archive section (completed tasks)
+    - Add/edit task functionality
+    - Soft delete (complete) vs hard delete
+    ============================================
+-->
 <!DOCTYPE html>
 <html lang ="en">
 <head>
+  <!-- Character encoding for proper text display -->
   <meta charset="UTF-8">
+  <!-- Responsive viewport settings for mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Link to main stylesheet -->
   <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- Font Awesome icons library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Page title shown in browser tab -->
   <title>Lockin</title>
+  <!-- Favicon (logo shown in browser tab) -->
   <link rel="icon" type="image/png" href="../Assets/Logo.png">
 </head>
 
 <body> 
-    <!-- Sidebar Navigation -->
+    <!-- 
+        ==========================================
+        SIDEBAR NAVIGATION (Desktop/Tablet)
+        ==========================================
+        Visible on desktop and tablet screens.
+        Hidden on mobile (replaced by bottom nav).
+        ==========================================
+    -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <img src="../Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
             <h1 class="sidebar-title">Lockin</h1>
         </div>
 
+        <!-- Navigation links with icons -->
         <nav class="sidebar-nav">
+            <!-- Dashboard link -->
             <a href="../dashboard.html" class="nav-item">
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
                 <div class="nav-indicator"></div>
             </a>
+            <!-- Planner link (currently active page) -->
             <a href="Planner.html" class="nav-item active">
                 <i class="fas fa-calendar-alt"></i>
                 <span>Planner</span>
@@ -45,11 +72,19 @@
             </a>
         </nav>
 
+        <!-- Sidebar footer with copyright -->
         <div class="sidebar-footer">
             <p>&copy; 2026 Lockin</p>
         </div>
     </aside>
 
+    <!-- 
+        ==========================================
+        ABOUT SECTION
+        ==========================================
+        Collapsible description of Planner page.
+        ==========================================
+    -->
     <div class="main-content">
        <details>
          <summary>About</summary>
@@ -73,48 +108,125 @@
       </details>
     </div>
 
+    <!-- 
+        ==========================================
+        TASKS TABLE - ACTIVE TASKS
+        ==========================================
+        Displays all incomplete tasks with:
+        - Task title
+        - Due date
+        - Progress status
+        - Task type (School/Personal/House/Work)
+        - Action buttons (Complete/Edit/Delete)
+        ==========================================
+    -->
     <div class="main-content">
       <h2>📅 Planner</h2>
 
+      <!-- Responsive table wrapper with horizontal scroll on mobile -->
       <div class="table-wrapper">
         <table class="tasks-table">
           <thead>
             <tr>
+              <!-- Task title column with add button -->
               <th>
                 Tasks
                 <button class="add-btn" id="addNewTaskBtn">+ New Task</button>
               </th>
+              <!-- Due date column -->
               <th>Due Date</th>
-              <th>progress</th>
-              <th style="word-break: break-all;">task type</th>
+              <!-- Progress status column -->
+              <th>Progress</th>
+              <!-- Task type/category column -->
+              <th style="word-break: break-all;">Task Type</th>
+              <!-- Action buttons column (Complete/Edit/Delete) -->
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody id="tasksBody">
-            <!-- tasks will appear here -->
+            <!-- Active tasks populated by planner.js -->
           </tbody>
         </table>
       </div>
+
+      <!-- 
+        ==========================================
+        ARCHIVE SECTION - COMPLETED TASKS
+        ==========================================
+        Collapsible section showing completed tasks.
+        Tasks marked as "complete" move here but
+        remain in localStorage for statistics.
+        Users can restore or permanently delete.
+        ==========================================
+      -->
+      <div class="archive-section" style="margin-top: 30px;">
+        <!-- Collapsible header with toggle arrow and count badge -->
+        <h3 style="cursor: pointer; user-select: none; display: flex; align-items: center; gap: 10px;" id="archiveToggle">
+          <span id="archiveIcon">▶</span> Recently Completed
+          <span style="font-size: 14px; color: var(--stone-gray); font-weight: normal;" id="archiveCount">(0)</span>
+        </h3>
+        <!-- Archive content (hidden by default, toggles on click) -->
+        <div id="archiveContent" style="display: none; margin-top: 15px;">
+          <div class="table-wrapper">
+            <table class="tasks-table">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Completed Date</th>
+                  <th>Type</th>
+                  <!-- Restore or permanently delete -->
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="completedTasksBody">
+                <!-- Completed tasks populated by planner.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
-        <!-- Hidden form forremm adding/editing tasks -->
+        <!-- 
+            ==========================================
+            TASK FORM - ADD/EDIT TASK
+            ==========================================
+            Hidden by default. Shows when:
+            - "+ New Task" button is clicked (add mode)
+            - Edit button is clicked (edit mode)
+            ==========================================
+        -->
         <div class="tasks-input" id="TasksForm" style="display:none;">
+          <!-- Task title input -->
           <input type="text" id="taskTitle" placeholder="Task title">
+          <!-- Due date picker -->
           <input type="date" id="plannerDueDate" />
+          <!-- Task type dropdown -->
           <select id="taskType" placeholder="Task Type">
             <option value="School">School</option>
             <option value="Personal">Personal</option>
             <option value="House">House</option>
             <option value="Work">Work</option>
           </select>
+          <!-- Progress status dropdown -->
           <select id="taskProgress">
             <option value="Not Started">Not Started</option>
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
           </select>
+          <!-- Save button (adds new or updates existing task) -->
           <button class="add-btn" id="saveTaskBtn">Save Task</button>
+          <!-- Cancel button (hides form without saving) -->
           <button class="add-btn" id="cancelTaskBtn">Cancel</button>
         </div>
 
+    <!-- 
+        ==========================================
+        FOOTER
+        ==========================================
+        Copyright and attribution links.
+        ==========================================
+    -->
     <footer>
       &copy GABUD; PASCUA
       <p> 
@@ -132,7 +244,14 @@
       </p>
     </footer>
 
-    <!-- Bottom Navigation (Mobile) -->
+    <!-- 
+        ==========================================
+        BOTTOM NAVIGATION (Mobile Only)
+        ==========================================
+        Visible only on mobile screens.
+        Touch-friendly navigation bar at bottom.
+        ==========================================
+    -->
     <nav class="bottom-nav">
         <a href="../dashboard.html" class="bottom-nav-item">
             <i class="fas fa-home"></i>
@@ -151,6 +270,7 @@
         </a>
     </nav>
 
+    <!-- Link to planner.js for task CRUD functionality -->
     <script src="planner.js"></script>
 </body>
 </html>

@@ -319,10 +319,80 @@ ul li:last-child {
 
 .complete-btn {
     color: green;
+    background: rgba(40, 167, 69, 0.1);
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.complete-btn:hover {
+    background: rgba(40, 167, 69, 0.2);
+    transform: scale(1.1);
+}
+
+.restore-btn {
+    color: var(--forest-green);
+    background: rgba(45, 90, 61, 0.1);
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.restore-btn:hover {
+    background: rgba(45, 90, 61, 0.2);
+    transform: scale(1.1);
 }
 
 .delete-btn {
     color: red;
+    background: rgba(220, 53, 69, 0.1);
+    border-radius: 4px;
+    padding: 6px 10px;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: rgba(220, 53, 69, 0.2);
+    transform: scale(1.1);
+}
+
+.edit-btn {
+    color: var(--earthy-brown);
+    background: rgba(139, 111, 71, 0.1);
+    border-radius: 4px;
+    padding: 6px 10px;
+    transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+    background: rgba(139, 111, 71, 0.2);
+    transform: scale(1.1);
+}
+
+/* Archive Section */
+.archive-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(122, 155, 127, 0.2);
+}
+
+.archive-section h3 {
+    font-family: var(--font-heading);
+    color: var(--forest-dark);
+    margin: 0;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.archive-section h3:hover {
+    background: rgba(122, 155, 127, 0.1);
 }
 
 .add-btn {
@@ -354,30 +424,77 @@ ul li:last-child {
     background: white;
 }
 
-/* Notes section */
+/* Notes section - Optimized Responsive Table */
 .notes-table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: separate;
     border-spacing: 0;
     margin: 0;
-    min-width: 600px;
     border-radius: 20px;
     overflow: hidden;
+    font-family: var(--font-main);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Dynamic column widths for notes */
+.notes-table th:nth-child(1), /* Title */
+.notes-table td:nth-child(1) {
+    width: 25%;
+}
+
+.notes-table th:nth-child(2), /* Type */
+.notes-table td:nth-child(2) {
+    width: 12%;
+}
+
+.notes-table th:nth-child(3), /* Progress */
+.notes-table td:nth-child(3) {
+    width: 12%;
+}
+
+.notes-table th:nth-child(4), /* Description */
+.notes-table td:nth-child(4) {
+    width: 36%;
+}
+
+.notes-table th:nth-child(5), /* Actions */
+.notes-table td:nth-child(5) {
+    width: 15%;
+    min-width: 120px;
 }
 
 .notes-table th,
 .notes-table td {
     border: none;
-    padding: 12px;
+    padding: clamp(10px, 1.5vw, 16px);
     text-align: left;
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-break: break-all;
+    vertical-align: middle;
     color: var(--forest-dark);
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    line-height: 1.5;
 }
 
-.notes-table th:nth-child(4) {
-    width: 50%;
+/* Apply ellipsis to title and description */
+.notes-table td:nth-child(1),
+.notes-table td:nth-child(4) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 0;
+}
+
+/* Other cells with nowrap */
+.notes-table td:nth-child(2),
+.notes-table td:nth-child(3) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Actions column */
+.notes-table td:nth-child(5) {
+    white-space: nowrap;
 }
 
 .notes-table th {
@@ -385,6 +502,8 @@ ul li:last-child {
     color: white;
     font-weight: 600;
     font-family: var(--font-heading);
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    letter-spacing: 0.3px;
 }
 
 .notes-table th:first-child {
@@ -393,6 +512,17 @@ ul li:last-child {
 
 .notes-table th:last-child {
     border-radius: 0 20px 0 0;
+}
+
+.notes-table tbody tr {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(122, 155, 127, 0.1);
+    transition: all 0.3s ease;
+}
+
+.notes-table tbody tr:last-child {
+    border-bottom: none;
 }
 
 .notes-table tbody tr:last-child td:first-child {
@@ -404,7 +534,25 @@ ul li:last-child {
 }
 
 .notes-table tbody tr:hover {
-    background-color: rgba(45, 90, 61, 0.05);
+    background: rgba(122, 155, 127, 0.15);
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(45, 90, 61, 0.1);
+}
+
+/* Touch-friendly action buttons in notes table */
+.notes-table button {
+    margin: 0 clamp(2px, 0.5vw, 4px);
+    padding: clamp(8px, 1.2vw, 12px);
+    font-size: clamp(14px, 2vw, 16px);
+    min-width: clamp(32px, 5vw, 40px);
+    min-height: clamp(32px, 5vw, 40px);
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .notes-input {
@@ -482,30 +630,77 @@ ul li:last-child {
     align-items: center;
 }
 
-/* Tasks section */
+/* Tasks section - Optimized Responsive Table */
 .tasks-table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: separate;
     border-spacing: 0;
     margin: 0;
-    min-width: 600px;
     border-radius: 20px;
     overflow: hidden;
+    font-family: var(--font-main);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Dynamic column widths for optimal space usage */
+.tasks-table th:nth-child(1), /* Task title */
+.tasks-table td:nth-child(1) {
+    width: 40%;
+}
+
+.tasks-table th:nth-child(2), /* Due Date */
+.tasks-table td:nth-child(2) {
+    width: 15%;
+}
+
+.tasks-table th:nth-child(3), /* Progress */
+.tasks-table td:nth-child(3) {
+    width: 15%;
+}
+
+.tasks-table th:nth-child(4), /* Task Type */
+.tasks-table td:nth-child(4) {
+    width: 15%;
+}
+
+.tasks-table th:nth-child(5), /* Actions */
+.tasks-table td:nth-child(5) {
+    width: 15%;
+    min-width: 120px;
 }
 
 .tasks-table th,
 .tasks-table td {
     border: none;
-    padding: 12px;
+    padding: clamp(10px, 1.5vw, 16px);
     text-align: left;
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-break: break-all;
+    vertical-align: middle;
     color: var(--forest-dark);
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    line-height: 1.5;
 }
 
-.tasks-table th:nth-child(4) {
-    width: 50%;
+/* Task cell with ellipsis for overflow */
+.tasks-table td:nth-child(1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 0; /* Required for ellipsis to work with table-layout: fixed */
+}
+
+/* Other text cells with word wrap */
+.tasks-table td:nth-child(2),
+.tasks-table td:nth-child(3),
+.tasks-table td:nth-child(4) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Actions column - prevent wrapping */
+.tasks-table td:nth-child(5) {
+    white-space: nowrap;
 }
 
 .tasks-table th {
@@ -513,6 +708,8 @@ ul li:last-child {
     color: white;
     font-weight: 600;
     font-family: var(--font-heading);
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    letter-spacing: 0.3px;
 }
 
 .tasks-table th:first-child {
@@ -521,6 +718,17 @@ ul li:last-child {
 
 .tasks-table th:last-child {
     border-radius: 0 20px 0 0;
+}
+
+.tasks-table tbody tr {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(122, 155, 127, 0.1);
+    transition: all 0.3s ease;
+}
+
+.tasks-table tbody tr:last-child {
+    border-bottom: none;
 }
 
 .tasks-table tbody tr:last-child td:first-child {
@@ -532,7 +740,57 @@ ul li:last-child {
 }
 
 .tasks-table tbody tr:hover {
-    background-color: rgba(45, 90, 61, 0.05);
+    background: rgba(122, 155, 127, 0.15);
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(45, 90, 61, 0.1);
+}
+
+/* Touch-friendly action buttons */
+.tasks-table button {
+    margin: 0 clamp(2px, 0.5vw, 4px);
+    padding: clamp(8px, 1.2vw, 12px);
+    font-size: clamp(14px, 2vw, 16px);
+    min-width: clamp(32px, 5vw, 40px);
+    min-height: clamp(32px, 5vw, 40px);
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Table wrapper for horizontal scroll on small screens */
+.table-wrapper {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    padding: 0;
+    margin: 20px 0;
+    box-shadow: var(--shadow-soft);
+}
+
+/* Custom scrollbar for the table wrapper */
+.table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: rgba(156, 169, 152, 0.2);
+    border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: var(--sage-green);
+    border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--forest-green);
 }
 
 .tasks-input {
@@ -800,23 +1058,48 @@ ul li:last-child {
         max-width: 150px;
     }
 
-    /* Tables on mobile */
+    /* Tables on mobile - Enhanced touch-friendly design */
+    .table-wrapper {
+        margin: 15px -10px; /* Extend to edges for better scroll experience */
+        border-radius: 16px;
+    }
+    
     .notes-table,
     .tasks-table {
-        font-size: 12px;
+        min-width: 600px; /* Force horizontal scroll on small screens */
     }
 
     .notes-table th,
     .notes-table td,
     .tasks-table th,
     .tasks-table td {
-        padding: 6px;
+        padding: clamp(12px, 2vw, 16px); /* Larger touch targets */
+        font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    /* Touch-friendly action buttons on mobile */
+    .tasks-table button,
+    .notes-table button {
+        min-width: 44px !important; /* WCAG minimum touch target */
+        min-height: 44px !important;
+        padding: 12px !important;
+        margin: 4px !important;
+        font-size: 18px;
+    }
+
+    /* Increase hit area for complete/delete buttons */
+    .complete-btn,
+    .delete-btn,
+    .restore-btn,
+    .edit-btn {
+        padding: 14px 16px !important;
+        border-radius: 10px;
     }
 
     .notes-input,
     .tasks-input {
         flex-direction: column;
-        gap: 8px;
+        gap: 12px;
         max-width: 100%;
         padding: 0 10px;
     }
@@ -827,8 +1110,9 @@ ul li:last-child {
     .tasks-input input,
     .tasks-input select,
     .tasks-input textarea {
-        padding: 10px;
-        font-size: 16px;
+        padding: 14px; /* Larger for touch */
+        font-size: 16px; /* Prevents iOS zoom on focus */
+        min-height: 48px;
     }
 
     /* Dropdowns on mobile */

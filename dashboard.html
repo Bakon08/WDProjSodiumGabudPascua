@@ -1,44 +1,74 @@
+<!-- 
+    ============================================
+    DASHBOARD PAGE - Lockin Productivity App
+    ============================================
+    This is the main landing page after login.
+    Shows task summaries, deadlines, progress reminders,
+    and habit checklist for quick overview.
+    ============================================
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Character encoding for proper text display -->
     <meta charset="UTF-8">
+    <!-- Responsive viewport settings for mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link to main stylesheet -->
     <link rel="stylesheet" type="text/css" href="Public/style.css">
+    <!-- Font Awesome icons library for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js library for creating charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Page title shown in browser tab -->
     <title>Dashboard - Lockin</title>
+    <!-- Favicon (logo shown in browser tab) -->
     <link rel="icon" type="image/png" href="Assets/Logo.png">
 </head>
 
 <body>
-    <!-- Sidebar Navigation -->
+    <!-- 
+        ==========================================
+        SIDEBAR NAVIGATION (Desktop/Tablet)
+        ==========================================
+        Visible on desktop and tablet screens.
+        Hidden on mobile (replaced by bottom navigation).
+        ==========================================
+    -->
     <aside class="sidebar">
+        <!-- Sidebar header with logo and app name -->
         <div class="sidebar-header">
             <img src="Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
             <h1 class="sidebar-title">Lockin</h1>
         </div>
 
+        <!-- Navigation links with icons -->
         <nav class="sidebar-nav">
+            <!-- Dashboard link (currently active page) -->
             <a href="dashboard.html" class="nav-item active">
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
                 <div class="nav-indicator"></div>
             </a>
+            <!-- Planner page link (task management) -->
             <a href="Public/Planner.html" class="nav-item">
                 <i class="fas fa-calendar-alt"></i>
                 <span>Planner</span>
                 <div class="nav-indicator"></div>
             </a>
+            <!-- Goals page link (5-tier goal tracking) -->
             <a href="Public/Goals.html" class="nav-item">
                 <i class="fas fa-star"></i>
                 <span>Goals</span>
                 <div class="nav-indicator"></div>
             </a>
+            <!-- Notes page link (note-taking system) -->
             <a href="Public/Notes.html" class="nav-item">
                 <i class="fas fa-sticky-note"></i>
                 <span>Notes</span>
                 <div class="nav-indicator"></div>
             </a>
+            <!-- Statistics page link (charts and insights) -->
             <a href="Public/Stats.html" class="nav-item">
                 <i class="fas fa-chart-bar"></i>
                 <span>Stats</span>
@@ -46,12 +76,22 @@
             </a>
         </nav>
 
+        <!-- Sidebar footer with copyright -->
         <div class="sidebar-footer">
             <p>&copy; 2026 Lockin</p>
         </div>
     </aside>
 
+    <!-- 
+        ==========================================
+        MAIN CONTENT AREA
+        ==========================================
+        Contains the dashboard content with
+        collapsible About section.
+        ==========================================
+    -->
     <div class="main-content">
+        <!-- Collapsible About section with page description -->
         <details>
             <summary>About</summary>
             <div style="background-color: white; padding: 1px; border: 1px solid #ccc; border-radius: 15px;">
@@ -74,33 +114,61 @@
         </details>
     </div>
 
+    <!-- 
+        ==========================================
+        DASHBOARD WIDGETS CONTAINER
+        ==========================================
+        Four main dashboard boxes displaying:
+        1. Tasks Left (ring chart)
+        2. Upcoming Deadlines (list)
+        3. Progress Reminders (incomplete goals)
+        4. Habit Checklist (daily habits)
+        ==========================================
+    -->
     <div class="container">
+        <!-- Box 1: Tasks Left with ring chart visualization -->
         <div class="box">
             <h2>📊 Tasks Left</h2>
+            <!-- Canvas for drawing ring chart -->
             <canvas id="tasksLeftChart" width="200" height="200"></canvas>
+            <!-- Legend showing total, completed, and remaining tasks -->
             <div id="tasksLeftLegend"></div>
         </div>
 
+        <!-- Box 2: Upcoming Deadlines (next 5 tasks sorted by due date) -->
         <div class="box">
             <h2>⏰ Upcoming Deadlines</h2>
+            <!-- List populated by JavaScript from tasks data -->
             <ul id="upcomingDeadlinesList"></ul>
         </div>
 
+        <!-- Box 3: Progress Reminders (incomplete goals from all categories) -->
         <div class="box">
             <h2>⏳ Progress Reminders</h2>
+            <!-- List populated by JavaScript from goals data -->
             <ul id="progressRemindersList"></ul>
         </div>
 
+        <!-- Box 4: Habit Checklist (add/edit/delete daily habits) -->
         <div class="box">
             <h2>✅ Habit Checklist</h2>
+            <!-- Input form to add new habits -->
             <div class="habit-input">
                 <input type="text" id="habitInput" placeholder="Add a new habit">
                 <button class="habit-add-btn" id="addHabitBtn">Add</button>
             </div>
+            <!-- List of habits with edit/delete buttons -->
             <ul id="habitChecklist"></ul>
         </div>
     </div>
 
+    <!-- 
+        ==========================================
+        FOOTER
+        ==========================================
+        Copyright and attribution links.
+        ==========================================
+    -->
     <footer>
         &copy GABUD; PASCUA
         <p>
@@ -118,25 +186,38 @@
         </p>
     </footer>
 
-    <!-- Bottom Navigation (Mobile) -->
+    <!-- 
+        ==========================================
+        BOTTOM NAVIGATION (Mobile Only)
+        ==========================================
+        Visible only on mobile screens.
+        Replaces sidebar navigation for touch devices.
+        ==========================================
+    -->
     <nav class="bottom-nav">
+        <!-- Dashboard navigation (active) -->
         <a href="dashboard.html" class="bottom-nav-item active">
             <i class="fas fa-home"></i>
         </a>
+        <!-- Planner navigation -->
         <a href="Public/Planner.html" class="bottom-nav-item">
             <i class="fas fa-calendar-alt"></i>
         </a>
+        <!-- Goals navigation -->
         <a href="Public/Goals.html" class="bottom-nav-item">
             <i class="fas fa-star"></i>
         </a>
+        <!-- Notes navigation -->
         <a href="Public/Notes.html" class="bottom-nav-item">
             <i class="fas fa-sticky-note"></i>
         </a>
+        <!-- Stats navigation -->
         <a href="Public/Stats.html" class="bottom-nav-item">
             <i class="fas fa-chart-bar"></i>
         </a>
     </nav>
 
+    <!-- Link to index.js for dashboard functionality (charts, habits, deadlines) -->
     <script src="Public/index.js"></script>
 </body>
 </html>
