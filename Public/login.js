@@ -40,7 +40,7 @@ loginForm.addEventListener('submit', function(event) {
     const userIn = document.getElementById('username').value;
     const passIn = document.getElementById('password').value;
 
-    let users = JSON.parse(localStorage.getItem("lockin_users"));
+    let users = JSON.parse(localStorage.getItem("lockin_users")) || [];
 
     if (isLoginMode) {
         // checks for matching username/email and password
@@ -54,7 +54,7 @@ loginForm.addEventListener('submit', function(event) {
             // persist logged-in user so Public pages detect auth
             localStorage.setItem('lockinUser', foundUser.username);
             setTimeout(() => {
-                window.location.href = "Public/dashboard.html";
+                window.location.href = "./Public/dashboard.html";
             }, 800);
         } else {
             messageDisplay.style.color = "darkred";
