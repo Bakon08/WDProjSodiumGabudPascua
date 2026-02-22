@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
 
+/* ==========================
+    GLOBAL STYLES
+    - CSS Variables, Resets, and Base styles used across all pages
+    ========================== */
+
 :root {
     /* Navigation */
     --nav-height: 50px;
@@ -33,17 +38,21 @@
     --link-green: #5fae83;
 }
 
-/* Mobile-first responsive design */
+/* Mobile-first responsive design (global reset & base rules) */
 * {
     box-sizing: border-box;
 }
 
+/* HTML / base typographic settings (global) */
 html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
 }
 
-/* Global Styles */
+/* --------------------------
+    Global Styles
+    General elements used by multiple pages (links, body, containers)
+    -------------------------- */
 a {
     color: var(--link-green);
     text-decoration: none;
@@ -218,6 +227,8 @@ footer p {
     margin: 3px 0;
 }
 
+/* ================== PAGE-SPECIFIC: GOALS ================== */
+/* Styles for the Goals tab/page */
 /* Goals section */
 .goal-trackers-container {
     display: flex;
@@ -234,7 +245,7 @@ footer p {
 }
 
 .dropdown-content {
-    display: none;
+    /* hidden by default but present in layout so we can animate opacity/transform */
     position: absolute;
     background-color: #ffffff;
     min-width: 250px;
@@ -242,11 +253,21 @@ footer p {
     z-index: 10;
     padding: 10px;
     border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
 }
 
+/* show dropdown on hover/focus with smooth animation */
 .dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content,
 .dropdown-content:hover {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .input-area {
@@ -255,12 +276,52 @@ footer p {
     margin-bottom: 10px;
 }
 
+/* --------------------------
+    Form controls (global)
+    Inputs, buttons, and small form-related helpers used across pages
+    -------------------------- */
 input {
     flex-grow: 1;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
     min-height: 40px;
+}
+
+/* Password input wrapper and eye toggle */
+.password-wrapper {
+    position: relative;
+}
+.password-wrapper input {
+    width: 100%;
+    padding-right: 44px; /* space for the eye button */
+}
+.toggle-password {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--stone-gray);
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+.toggle-password:hover {
+    background: rgba(0,0,0,0.04);
+}
+.toggle-password svg {
+    width: 18px;
+    height: 18px;
+}
+.toggle-password.visible {
+    color: var(--link-green);
 }
 
 .dropbtn {
@@ -534,6 +595,8 @@ ul li:last-child {
     transform: scale(0.95);
 }
 
+/* ================== PAGE-SPECIFIC: NOTES ================== */
+/* Styles for the Notes tab/page */
 /* Notes-specific entry bar adjustments */
 .notes-entry-bar .note-title-input {
     flex: 1 1 200px;
@@ -1677,6 +1740,8 @@ ul li:last-child {
     font-size: 16px;
 }
 
+/* ================== PAGE-SPECIFIC: DASHBOARD ================== */
+/* Styles for the Dashboard tab/page */
 /* Dashboard Grid */
 .dashboard-grid {
     display: grid;
@@ -2510,4 +2575,53 @@ body.login-page-theme {
 
 .toggle-text a:hover {
     border-bottom: 1px solid #3d634d;
+}
+
+/* ================== ANIMATIONS: COLLAPSIBLE ABOUT SECTIONS ================== */
+details > div {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: max-height 260ms ease, opacity 200ms ease, transform 200ms ease;
+}
+
+details[open] > div {
+    max-height: 1000px; /* large enough for content */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+details summary {
+    cursor: pointer;
+}
+
+details summary {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #2f6b3a;
+    user-select: none;
+}
+
+/* hide native marker for WebKit browsers */
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* caret after the summary text */
+details summary::after {
+    content: '▾';
+    display: inline-block;
+    margin-left: 8px;
+    transition: transform 220ms ease, opacity 200ms ease;
+    transform-origin: center;
+    opacity: 0.95;
+}
+
+/* rotate caret when open */
+details[open] summary::after {
+    transform: rotate(180deg);
 }

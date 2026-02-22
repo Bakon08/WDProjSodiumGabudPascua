@@ -3,6 +3,8 @@ const messageDisplay = document.getElementById('message');
 const formTitle = document.getElementById('form-title');
 const submitBtn = document.getElementById('submit-btn');
 const toggleLink = document.getElementById('toggle-link');
+const togglePassword = document.getElementById('togglePassword');
+const passwordInput = document.getElementById('password');
 
 let isLoginMode = true;
 
@@ -33,6 +35,16 @@ toggleLink.addEventListener('click', (e) => {
     }
     messageDisplay.textContent = ""; 
 });
+
+// show/hide password toggle (eye icon)
+if (togglePassword && passwordInput) {
+    togglePassword.addEventListener('click', () => {
+        const isVisible = passwordInput.type === 'text';
+        passwordInput.type = isVisible ? 'password' : 'text';
+        togglePassword.setAttribute('aria-label', isVisible ? 'Show password' : 'Hide password');
+        togglePassword.classList.toggle('visible', !isVisible);
+    });
+}
 
 // form submission logic
 loginForm.addEventListener('submit', function(event) {
