@@ -117,7 +117,7 @@ saveTaskBtn.addEventListener("click", saveTask);
  */
 function renderTasks() {
   tasksBody.innerHTML = "";  // Clear existing table rows
-  
+
   // Filter to get only active tasks (where completed flag is false)
   const activeTasks = tasks.filter(task => !task.completed);
 
