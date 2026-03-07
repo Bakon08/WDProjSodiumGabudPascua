@@ -2625,3 +2625,361 @@ details summary::after {
 details[open] summary::after {
     transform: rotate(180deg);
 }
+/* ================== PAGE-SPECIFIC: NOTES CARD GRID ================== */
+
+/* Page header row (title + New Note button side by side) */
+.notes-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.notes-page-header h2 {
+    margin: 0;
+}
+
+/* Responsive card grid */
+.notes-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+/* Individual note card */
+.note-card {
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1.5px solid rgba(100, 140, 100, 0.15);
+    box-shadow: var(--shadow-soft);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.note-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+}
+
+/* Card header: title + action buttons */
+.note-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.note-card-title {
+    font-weight: 700;
+    font-family: var(--font-heading);
+    font-size: 15px;
+    color: var(--forest-dark);
+    word-break: break-word;
+    flex: 1;
+}
+
+.note-card-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.note-card-btn {
+    background: rgba(255, 255, 255, 0.75);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 14px;
+    transition: background 0.2s ease, transform 0.15s ease;
+    line-height: 1;
+}
+
+.note-card-btn:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: scale(1.1);
+}
+
+/* Progress + Type tags */
+.note-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.note-tag {
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--font-main);
+}
+
+.type-tag {
+    background: rgba(255, 255, 255, 0.65);
+    color: var(--forest-green);
+    border: 1px solid rgba(45, 90, 61, 0.25);
+}
+
+/* Preview text */
+.note-card-preview {
+    font-size: 13px;
+    color: var(--forest-dark);
+    opacity: 0.8;
+    font-family: var(--font-main);
+    line-height: 1.6;
+}
+
+/* Full rich-text content (expanded) */
+.note-card-full {
+    font-size: 13px;
+    color: var(--forest-dark);
+    font-family: var(--font-main);
+    line-height: 1.7;
+}
+
+.note-card-full ul,
+.note-card-full ol {
+    padding-left: 20px;
+    margin: 4px 0;
+}
+
+/* Expand / collapse toggle */
+.note-expand-btn {
+    background: none;
+    border: none;
+    color: var(--forest-green);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    font-family: var(--font-main);
+    align-self: flex-start;
+    transition: opacity 0.2s;
+}
+
+.note-expand-btn:hover { opacity: 0.7; }
+
+/* Empty state inside grid */
+.notes-empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--stone-gray);
+}
+
+.notes-empty-state .empty-state-icon   { font-size: 48px; margin-bottom: 12px; }
+.notes-empty-state .empty-state-text   { font-size: 17px; font-weight: 600; }
+.notes-empty-state .empty-state-subtext{ font-size: 13px; margin-top: 4px; opacity: 0.75; }
+
+/* ── Modal overlay ─────────────────────────────────────────────────────── */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 61, 42, 0.4);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+/* Modal dialog box */
+.note-modal {
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px 26px 22px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: var(--shadow-hover);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Modal header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header span {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--forest-dark);
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--stone-gray);
+    transition: color 0.2s;
+}
+
+.modal-close-btn:hover { color: var(--forest-dark); }
+
+/* Title input */
+.modal-title-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1.5px solid var(--light-stone);
+    font-family: var(--font-main);
+    font-size: 15px;
+    color: var(--forest-dark);
+    transition: border-color 0.2s;
+}
+
+.modal-title-input:focus {
+    outline: none;
+    border-color: var(--forest-green);
+    box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1);
+}
+
+/* Selects row */
+.modal-selects-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.modal-select {
+    flex: 1 1 140px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1.5px solid var(--light-stone);
+    font-family: var(--font-main);
+    font-size: 13px;
+    color: var(--forest-dark);
+    background: #f7faf7;
+    cursor: pointer;
+}
+
+.modal-select:focus {
+    outline: none;
+    border-color: var(--forest-green);
+}
+
+/* Rich text toolbar */
+.rich-toolbar {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 6px 8px;
+    background: #f0f5f0;
+    border: 1px solid var(--light-stone);
+    border-radius: 8px 8px 0 0;
+}
+
+.rich-btn {
+    padding: 3px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--light-stone);
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: var(--font-main);
+    color: var(--forest-dark);
+    transition: background 0.15s;
+}
+
+.rich-btn:hover { background: #e8f5e9; }
+
+/* Rich text editable area */
+.rich-editor {
+    min-height: 110px;
+    padding: 10px 12px;
+    border: 1px solid var(--light-stone);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: var(--forest-dark);
+    line-height: 1.6;
+    outline: none;
+    background: #fff;
+}
+
+.rich-editor:empty::before {
+    content: attr(data-placeholder);
+    color: var(--stone-gray);
+    pointer-events: none;
+}
+
+.rich-editor:focus {
+    border-color: var(--forest-green);
+    box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.08);
+}
+
+/* Color picker */
+.modal-color-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.modal-color-label {
+    font-size: 13px;
+    color: var(--stone-gray);
+    font-family: var(--font-main);
+    white-space: nowrap;
+}
+
+.color-picker-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s;
+}
+
+.color-swatch:hover { transform: scale(1.15); }
+.color-swatch.selected { border: 3px solid var(--forest-green); }
+
+/* Modal footer */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* ── Responsive tweaks for notes grid ─────────────────────────────────── */
+@media (max-width: 768px) {
+    .notes-card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
+    }
+
+    .note-modal {
+        padding: 20px 16px 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .notes-card-grid {
+        grid-template-columns: 1fr;
+    }
+}
