@@ -2,38 +2,24 @@
     ============================================
     NOTES PAGE - Personal Note-Taking System
     ============================================
-    Allows users to create and manage notes with:
-    - Note title
-    - Note type (Reminder/Task/Idea/Important)
-    - Progress status
-    - Description/details
+    Card grid layout with modal dialog and rich text editor
     ============================================
 -->
 <!DOCTYPE html>
-<html lang ="en">
+<html lang="en">
 <head>
-  <!-- Character encoding for proper text display -->
   <meta charset="UTF-8">
-  <!-- Responsive viewport settings for mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Link to main stylesheet -->
   <link rel="stylesheet" type="text/css" href="style.css">
-  <!-- Font Awesome icons library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Page title shown in browser tab -->
   <title>Lockin</title>
-  <!-- Favicon (logo shown in browser tab) -->
   <link rel="icon" type="image/png" href="../Assets/Logo.png">
 </head>
 
-<body> 
-    <!-- 
-        ==========================================
-        SIDEBAR NAVIGATION (Desktop/Tablet)
-        ==========================================
-        Navigation bar for larger screens.
-        ==========================================
-    -->
+<body>
+    <!-- ==========================================
+         SIDEBAR NAVIGATION
+         ========================================== -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <img src="../Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
@@ -71,142 +57,133 @@
           <button id="authBtn" class="auth-btn">Logout</button>
           <div id="userGreeting" class="user-greeting">Hello, <span id="usernameDisplay"></span></div>
         </div>
-
         <div class="sidebar-footer">
           <p>&copy; 2026 Lockin</p>
         </div>
     </aside>
 
-    <!-- 
-        ==========================================
-        ABOUT SECTION
-        ==========================================
-        Explains note-taking functionality.
-        ==========================================
-    -->
+    <!-- ==========================================
+         ABOUT SECTION
+         ========================================== -->
     <div class="main-content">
-       <!--Write paragraph here-->
         <details>
           <summary>About</summary>
             <div style="background-color: white; padding: 1px; border: 1px solid #ccc; border-radius: 15px;">
             <p>
-              This page is where you can put your personal notes and reminders. This will be 
-              a table where you can write a note and put additional information on it like note type,
-              progress and description.
+              This page is where you can put your personal notes and reminders. Each note
+              becomes its own card that you can colour-code, tag with a type and progress
+              status, and write rich formatted content inside.
             </p>
             <p>
-              This webpage is mainly to help the users personalize their experience. This also helps you set personal 
-              reminders that you might forget in the future like noting down what task to prioritize or if the task 
-              needs any materials/preparation in advanced.
+              Click <strong>+ New Note</strong> to open the note editor. You can bold, italicise,
+              and add lists to your content. Edit or delete any card at any time using the
+              buttons on the card.
             </p>
             </div>
         </details>
-      </div>
+    </div>
 
-      <!-- 
-        ==========================================
-        NOTES TABLE
-        ==========================================
-        Displays all notes with columns:
-        - Note Name (title)
-        - Progress status
-        - Note Type
-        - Description (full details)
-        - Actions (Edit/Delete buttons)
-        ==========================================
-      -->
-      <div class="main-content">
-        <h2>📓 Notes</h2>
+    <!-- ==========================================
+         NOTES SECTION
+         ========================================== -->
+    <div class="main-content">
 
-        <!-- Note Entry Bar (Sticky) -->
-        <div class="entry-bar notes-entry-bar" id="notesForm">
-          <input type="text" id="noteTitle" placeholder="Note title" class="note-title-input">
-          <select id="noteType">
-            <option value="Reminder">Reminder</option>
-            <option value="Task">Task</option>
-            <option value="Idea">Idea</option>
-            <option value="Important">Important</option>
-          </select>
-          <select id="noteProgress">
-            <option value="Not Started">Not Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
-          <textarea id="noteDescription" placeholder="Content (click to expand)" class="note-content-textarea"></textarea>
-          <button class="entry-bar-btn" id="saveNoteBtn">Add Note</button>
-          <button class="entry-bar-cancel" id="cancelNoteBtn" title="Clear">✕</button>
+        <!-- Page header row -->
+        <div class="notes-page-header">
+            <h2>📓 Notes</h2>
+            <button class="entry-bar-btn" id="openModalBtn">+ New Note</button>
         </div>
 
-        <!-- Responsive table wrapper with horizontal scroll on mobile -->
-        <div class="table-wrapper">
-          <table class="notes-table">
-            <thead>
-              <tr>
-                <th>Note Name</th>
-                <th>Progress</th>
-                <th>Note Type</th>
-                <th style="word-break: break-all;">Description</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="notesBody">
-              <!-- Notes populated by notes.js -->
-            </tbody>
-          </table>
-        </div>
-      </div>
+        <!-- Card grid — populated by notes.js -->
+        <div class="notes-card-grid" id="notesGrid"></div>
 
-    <!-- 
-        ==========================================
-        FOOTER
-        ==========================================
-        Copyright and attribution links.
-        ==========================================
-    -->
+    </div><!-- /.main-content -->
+
+    <!-- ==========================================
+         MODAL OVERLAY + DIALOG
+         ========================================== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="note-modal" id="noteModal">
+
+            <!-- Modal header -->
+            <div class="modal-header">
+                <span id="modalTitle">📝 New Note</span>
+                <button class="modal-close-btn" id="modalClose" title="Close">×</button>
+            </div>
+
+            <!-- Title input -->
+            <input type="text" id="noteTitle" placeholder="Note title…" class="modal-title-input">
+
+            <!-- Type + Progress row -->
+            <div class="modal-selects-row">
+                <select id="noteType" class="modal-select">
+                    <option value="Reminder">Reminder</option>
+                    <option value="Task">Task</option>
+                    <option value="Idea">Idea</option>
+                    <option value="Important">Important</option>
+                </select>
+                <select id="noteProgress" class="modal-select">
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+
+            <!-- Rich text toolbar -->
+            <div class="rich-toolbar">
+                <button class="rich-btn" data-cmd="bold"           title="Bold"><b>B</b></button>
+                <button class="rich-btn" data-cmd="italic"         title="Italic"><i>I</i></button>
+                <button class="rich-btn" data-cmd="underline"      title="Underline"><u>U</u></button>
+                <button class="rich-btn" data-cmd="insertUnorderedList" title="Bullet list">• List</button>
+                <button class="rich-btn" data-cmd="insertOrderedList"   title="Numbered list">1. List</button>
+            </div>
+
+            <!-- Rich text editor -->
+            <div class="rich-editor" id="richEditor" contenteditable="true"
+                 data-placeholder="Write your note here…"></div>
+
+            <!-- Color picker -->
+            <div class="modal-color-section">
+                <span class="modal-color-label">Card colour</span>
+                <div class="color-picker-row" id="colorPicker"></div>
+            </div>
+
+            <!-- Footer buttons -->
+            <div class="modal-footer">
+                <button class="entry-bar-cancel" id="modalCancel">Cancel</button>
+                <button class="entry-bar-btn"    id="modalSave">Add Note</button>
+            </div>
+
+        </div><!-- /.note-modal -->
+    </div><!-- /.modal-overlay -->
+
+    <!-- ==========================================
+         FOOTER
+         ========================================== -->
     <footer>
-      &copy GABUD; PASCUA
-      <p> 
-        W3Schools.com. (n.d.). 
-        <a href="https://www.w3schools.com/" target="_blank">
-          https://www.w3schools.com/
-        </a>
+      &copy; GABUD; PASCUA
+      <p>
+        W3Schools.com. (n.d.).
+        <a href="https://www.w3schools.com/" target="_blank">https://www.w3schools.com/</a>
       </p>
-
       <p>
         GeeksforGeeks. (n.d.). GeeksforGeeks.
-        <a href="https://www.geeksforgeeks.org/" target="_blank">
-          https://www.geeksforgeeks.org/
-        </a>
+        <a href="https://www.geeksforgeeks.org/" target="_blank">https://www.geeksforgeeks.org/</a>
       </p>
     </footer>
 
-    <!-- 
-        ==========================================
-        BOTTOM NAVIGATION (Mobile Only)
-        ==========================================
-        Touch-friendly bottom navigation bar.
-        ==========================================
-    -->
+    <!-- ==========================================
+         BOTTOM NAV (Mobile)
+         ========================================== -->
     <nav class="bottom-nav">
-        <a href="dashboard.html" class="bottom-nav-item">
-            <i class="fas fa-home"></i>
-        </a>
-        <a href="Planner.html" class="bottom-nav-item">
-            <i class="fas fa-calendar-alt"></i>
-        </a>
-        <a href="Goals.html" class="bottom-nav-item">
-            <i class="fas fa-star"></i>
-        </a>
-        <a href="Notes.html" class="bottom-nav-item active">
-            <i class="fas fa-sticky-note"></i>
-        </a>
-        <a href="Stats.html" class="bottom-nav-item">
-            <i class="fas fa-chart-bar"></i>
-        </a>
+        <a href="dashboard.html" class="bottom-nav-item"><i class="fas fa-home"></i></a>
+        <a href="Planner.html"   class="bottom-nav-item"><i class="fas fa-calendar-alt"></i></a>
+        <a href="Goals.html"     class="bottom-nav-item"><i class="fas fa-star"></i></a>
+        <a href="Notes.html"     class="bottom-nav-item active"><i class="fas fa-sticky-note"></i></a>
+        <a href="Stats.html"     class="bottom-nav-item"><i class="fas fa-chart-bar"></i></a>
     </nav>
 
     <script src="index.js"></script>
-    <!-- Link to notes.js for note CRUD functionality -->
     <script src="notes.js"></script>
-    </body>
+</body>
 </html>
