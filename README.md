@@ -4,7 +4,7 @@
 ## 2-sentence description
 - This website helps you build healthy habits through listing of tasks, knowing deadlines, seeing data about your performance, and so much more! Our goal is to not only provide the user an efficient experience, but also one that is satisying and easy to navigate.
 ## Features (Min. 3)
--  Our tabs provide features such as a planner and notes tab that saves your input. We also have a goals tab that offers an efficient way for you to remember goals that you set yourself. Lastly, we also have a statistics tab that shows your progress throughout the days, streaks, tasks completed, and overall data that is stored in our website.
+-  Our tabs provide features such as a planner and notes tab that saves your input. We also have a goals tab that offers an efficient way for you to remember goals that you set yourself. A statistics tab is also present to show your progress throughout the days, streaks, tasks completed, and overall data that is stored in our website. Finally, to support all devices, we added code to make our website mobile friendly/ 
 ## Definition of done
 - Our group will consider our website finished once we complete all the neccersary features of each tab, and when we are satisfied with the overall design.
 ---
