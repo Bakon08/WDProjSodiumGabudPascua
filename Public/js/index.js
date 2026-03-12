@@ -109,8 +109,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
           // If user is not logged in, send them to the main login page
           // Detect if on a Public page (works on both local files and web paths)
-          const isPublicPage = window.location.href.includes('/Public/') || window.location.href.includes('\\Public\\');
-          const redirectPath = isPublicPage ? '../index.html' : 'index.html';
+          const isPublicPage = window.location.href.includes('/Public/pages/') || window.location.href.includes('\\Public\\pages\\');
+          const redirectPath = isPublicPage ? '../../index.html' : 'index.html';
           window.location.href = redirectPath;
         }
       }
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (confirm('Are you sure you want to log out?')) {
             localStorage.removeItem('lockinUser');
             // All pages in Public folder redirect up one level to root index.html
-            window.location.href = '../index.html';
+            window.location.href = '../../index.html';
           }
         } else {
           const name = prompt('Enter your name to login:');
