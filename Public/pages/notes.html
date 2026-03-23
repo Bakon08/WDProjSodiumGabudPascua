@@ -58,7 +58,11 @@
           <div id="userGreeting" class="user-greeting">Hello, <span id="usernameDisplay"></span></div>
         </div>
         <div class="sidebar-footer">
-          <p>&copy; 2026 Lockin</p>
+            <a href="settings.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <p>&copy; 2026 Lockin</p>
         </div>
     </aside>
 
@@ -89,101 +93,4 @@
     <div class="main-content">
 
         <!-- Page header row -->
-        <div class="notes-page-header">
-            <h2>📓 Notes</h2>
-            <button class="entry-bar-btn" id="openModalBtn">+ New Note</button>
-        </div>
-
-        <!-- Card grid — populated by notes.js -->
-        <div class="notes-card-grid" id="notesGrid"></div>
-
-    </div><!-- /.main-content -->
-
-    <!-- ==========================================
-         MODAL OVERLAY + DIALOG
-         ========================================== -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="note-modal" id="noteModal">
-
-            <!-- Modal header -->
-            <div class="modal-header">
-                <span id="modalTitle">📝 New Note</span>
-                <button class="modal-close-btn" id="modalClose" title="Close">×</button>
-            </div>
-
-            <!-- Title input -->
-            <input type="text" id="noteTitle" placeholder="Note title…" class="modal-title-input">
-
-            <!-- Type + Progress row -->
-            <div class="modal-selects-row">
-                <select id="noteType" class="modal-select">
-                    <option value="Reminder">Reminder</option>
-                    <option value="Task">Task</option>
-                    <option value="Idea">Idea</option>
-                    <option value="Important">Important</option>
-                </select>
-                <select id="noteProgress" class="modal-select">
-                    <option value="Not Started">Not Started</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Completed">Completed</option>
-                </select>
-            </div>
-
-            <!-- Rich text toolbar -->
-            <div class="rich-toolbar">
-                <button class="rich-btn" data-cmd="bold"           title="Bold"><b>B</b></button>
-                <button class="rich-btn" data-cmd="italic"         title="Italic"><i>I</i></button>
-                <button class="rich-btn" data-cmd="underline"      title="Underline"><u>U</u></button>
-                <button class="rich-btn" data-cmd="insertUnorderedList" title="Bullet list">• List</button>
-                <button class="rich-btn" data-cmd="insertOrderedList"   title="Numbered list">1. List</button>
-            </div>
-
-            <!-- Rich text editor -->
-            <div class="rich-editor" id="richEditor" contenteditable="true"
-                 data-placeholder="Write your note here…"></div>
-
-            <!-- Color picker -->
-            <div class="modal-color-section">
-                <span class="modal-color-label">Card colour</span>
-                <div class="color-picker-row" id="colorPicker"></div>
-            </div>
-
-            <!-- Footer buttons -->
-            <div class="modal-footer">
-                <button class="entry-bar-cancel" id="modalCancel">Cancel</button>
-                <button class="entry-bar-btn"    id="modalSave">Add Note</button>
-            </div>
-
-        </div><!-- /.note-modal -->
-    </div><!-- /.modal-overlay -->
-
-    <!-- ==========================================
-         FOOTER
-         ========================================== -->
-    <footer>
-      &copy; GABUD; PASCUA
-      <p>
-        W3Schools.com. (n.d.).
-        <a href="https://www.w3schools.com/" target="_blank">https://www.w3schools.com/</a>
-      </p>
-      <p>
-        GeeksforGeeks. (n.d.). GeeksforGeeks.
-        <a href="https://www.geeksforgeeks.org/" target="_blank">https://www.geeksforgeeks.org/</a>
-      </p>
-    </footer>
-
-    <!-- ==========================================
-         BOTTOM NAV (Mobile)
-         ========================================== -->
-    <nav class="bottom-nav">
-        <a href="dashboard.html" class="bottom-nav-item"><i class="fas fa-home"></i></a>
-        <a href="planner.html"   class="bottom-nav-item"><i class="fas fa-calendar-alt"></i></a>
-        <a href="goals.html"     class="bottom-nav-item"><i class="fas fa-star"></i></a>
-        <a href="notes.html"     class="bottom-nav-item active"><i class="fas fa-sticky-note"></i></a>
-        <a href="stats.html"     class="bottom-nav-item"><i class="fas fa-chart-bar"></i></a>
-    </nav>
-
-    <script src="../js/index.js"></script>
-    <script src="../js/notes.js"></script>
-</body>
-</html>
+        <div class="notes-page
