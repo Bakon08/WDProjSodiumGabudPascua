@@ -82,10 +82,6 @@
 
         <!-- Sidebar footer with copyright -->
         <div class="sidebar-footer">
-            <a href="settings.html" class="nav-item">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
             <p>&copy; 2026 Lockin</p>
         </div>
     </aside>
@@ -202,4 +198,33 @@
         Replaces sidebar navigation for touch devices.
         ==========================================
     -->
-    <nav class="bottom-nav
+    <nav class="bottom-nav">
+        <!-- Dashboard navigation (active) -->
+        <a href="dashboard.html" class="bottom-nav-item active">
+            <i class="fas fa-home"></i>
+        </a>
+        <!-- Planner navigation -->
+        <a href="planner.html" class="bottom-nav-item">
+            <i class="fas fa-calendar-alt"></i>
+        </a>
+        <!-- Goals navigation -->
+        <a href="goals.html" class="bottom-nav-item">
+            <i class="fas fa-star"></i>
+        </a>
+        <!-- Notes navigation -->
+        <a href="notes.html" class="bottom-nav-item">
+            <i class="fas fa-sticky-note"></i>
+        </a>
+        <!-- Stats navigation -->
+        <a href="stats.html" class="bottom-nav-item">
+            <i class="fas fa-chart-bar"></i>
+        </a>
+    </nav>
+
+    <!-- Link to index.js for auth and shared functionality -->
+    <script src="../js/index.js"></script>
+    <script src="../js/settings.js"></script>
+    <!-- Link to dashboard.js for dashboard functionality (charts, habits, deadlines) -->
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

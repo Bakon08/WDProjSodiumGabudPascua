@@ -2,204 +2,291 @@
     ============================================
     SETTINGS PAGE - Lockin Productivity App
     ============================================
-    This is the main landing page after login.
-    Shows task summaries, deadlines, progress reminders,
-    and habit checklist for quick overview.
+    Basic settings overlay page for account,
+    notifications, and appearance preferences.
     ============================================
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Character encoding for proper text display -->
     <meta charset="UTF-8">
-    <!-- Responsive viewport settings for mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link to main stylesheet -->
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <!-- Font Awesome icons library for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js library for creating charts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Page title shown in browser tab -->
-    <title>Dashboard - Lockin</title>
-    <!-- Favicon (logo shown in browser tab) -->
+    <title>Settings - Lockin</title>
     <link rel="icon" type="image/png" href="../../Assets/Logo.png">
+    <style>
+        .settings-overlay {
+            width: 80vw;
+            margin: 0 auto 40px;
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+        }
+
+        .settings-overlay h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .settings-overlay p {
+            margin-top: 0;
+            color: var(--forest-green);
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .settings-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(122, 155, 127, 0.3);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: left;
+        }
+
+        .settings-card h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .settings-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-row label {
+            font-weight: 600;
+            color: var(--forest-dark);
+        }
+
+        .settings-row input,
+        .settings-row select {
+            max-width: 170px;
+            min-height: 34px;
+            padding: 6px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(122, 155, 127, 0.4);
+            font-family: var(--font-main);
+        }
+
+        .settings-actions {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .settings-btn {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(122, 155, 127, 0.35);
+            background: rgba(122, 155, 127, 0.18);
+            color: var(--forest-dark);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .settings-btn:hover {
+            background: rgba(122, 155, 127, 0.35);
+        }
+
+        .settings-btn.link {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .settings-overlay {
+                width: calc(100vw - 24px);
+                margin-bottom: 90px;
+                padding: 16px;
+            }
+
+            .settings-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .settings-row input,
+            .settings-row select {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- 
-        ==========================================
-        SIDEBAR NAVIGATION (Desktop/Tablet)
-        ==========================================
-        Visible on desktop and tablet screens.
-        Hidden on mobile (replaced by bottom navigation).
-        ==========================================
-    -->
     <aside class="sidebar">
-        <!-- Sidebar header with logo and app name -->
         <div class="sidebar-header">
             <img src="../../Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
             <h1 class="sidebar-title">Lockin</h1>
         </div>
 
-        <!-- Navigation links with icons -->
         <nav class="sidebar-nav">
-            <!-- Dashboard link (currently active page) -->
-            <a href="dashboard.html" class="nav-item active">
+            <a href="dashboard.html" class="nav-item">
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
                 <div class="nav-indicator"></div>
             </a>
-            <!-- Planner page link (task management) -->
             <a href="planner.html" class="nav-item">
                 <i class="fas fa-calendar-alt"></i>
                 <span>Planner</span>
                 <div class="nav-indicator"></div>
             </a>
-            <!-- Goals page link (5-tier goal tracking) -->
             <a href="goals.html" class="nav-item">
                 <i class="fas fa-star"></i>
                 <span>Goals</span>
                 <div class="nav-indicator"></div>
             </a>
-            <!-- Notes page link (note-taking system) -->
             <a href="notes.html" class="nav-item">
                 <i class="fas fa-sticky-note"></i>
                 <span>Notes</span>
                 <div class="nav-indicator"></div>
             </a>
-            <!-- Statistics page link (charts and insights) -->
             <a href="stats.html" class="nav-item">
                 <i class="fas fa-chart-bar"></i>
                 <span>Stats</span>
                 <div class="nav-indicator"></div>
             </a>
         </nav>
+
         <div class="sidebar-login">
             <button id="authBtn" class="auth-btn">Logout</button>
             <div id="userGreeting" class="user-greeting">Hello, <span id="usernameDisplay"></span></div>
         </div>
 
-        <!-- Sidebar footer with copyright -->
         <div class="sidebar-footer">
-            <a href="settings.html" class="nav-item">
+            <a href="settings.html" class="nav-item active">
                 <i class="fas fa-cog"></i>
                 <span>Settings</span>
+                <div class="nav-indicator"></div>
             </a>
             <p>&copy; 2026 Lockin</p>
         </div>
     </aside>
 
-    <!-- 
-        ==========================================
-        MAIN CONTENT AREA
-        ==========================================
-        Contains the dashboard content with
-        collapsible About section.
-        ==========================================
-    -->
     <div class="main-content">
-        <!-- Collapsible About section with page description -->
         <details>
             <summary>About</summary>
             <div style="background-color: white; padding: 1px; border: 1px solid #ccc; border-radius: 15px;">
                 <p>
-                    This is our website home page. You will be able to see a bit of everything
-                    on this page. You will be able to see the number of tasks left, your progress reminders
-                    your deadlines and your checklists. The number of tasks left to do will consist of a ring chart,
-                    a legend and all the number of tasks you have left. There will also be a deadline updater that
-                    notifies you on your requirement deadlienes.
-                </p>
-
-                <p>
-                    This site will also have some progress reminders which notifies you your time left
-                    to accomplish a goal. And finally there is a habit checklist to make sure you are doing
-                    all your good habits and letting go of your old ones. This web page is mainly so that you
-                    can see the information you want to see quickly so that you don't have to navigate through
-                    the website to find basic information.
+                    This page contains your basic app settings. Use these controls to set your display style,
+                    notification behavior, and default planner preferences.
                 </p>
             </div>
         </details>
     </div>
 
-    <!-- 
-        ==========================================
-        DASHBOARD WIDGETS CONTAINER
-        ==========================================
-        Four main dashboard boxes displaying:
-        1. Tasks Left (ring chart)
-        2. Upcoming Deadlines (list)
-        3. Progress Reminders (incomplete goals)
-        4. Habit Checklist (daily habits)
-        ==========================================
-    -->
-    <div class="container">
-        <!-- Box 1: Tasks Left with ring chart visualization -->
-        <div class="box">
-            <h2>📊 Tasks Left</h2>
-            <!-- Canvas for drawing ring chart -->
-            <canvas id="tasksLeftChart" width="200" height="200"></canvas>
-            <!-- Legend showing total, completed, and remaining tasks -->
-            <div id="tasksLeftLegend"></div>
+    <section class="settings-overlay">
+        <h2><i class="fas fa-sliders-h"></i> Settings Overlay</h2>
+        <p>Rough version for now. You can wire these controls to localStorage later.</p>
+
+        <div class="settings-grid">
+            <article class="settings-card">
+                <h3>Account</h3>
+                <div class="settings-row">
+                    <label for="displayName">Display Name</label>
+                    <input id="displayName" type="text" placeholder="Your name">
+                </div>
+                <div class="settings-row">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" placeholder="name@email.com">
+                </div>
+            </article>
+
+            <article class="settings-card">
+                <h3>Notifications</h3>
+                <div class="settings-row">
+                    <label for="deadlineAlerts">Deadline Alerts</label>
+                    <input id="deadlineAlerts" type="checkbox" checked>
+                </div>
+                <div class="settings-row">
+                    <label for="dailyReminder">Daily Reminder</label>
+                    <input id="dailyReminder" type="checkbox" checked>
+                </div>
+            </article>
+
+            <article class="settings-card">
+                <h3>Appearance</h3>
+                <div class="settings-row">
+                    <label for="density">Layout Density</label>
+                    <select id="density">
+                        <option>Comfortable</option>
+                        <option>Compact</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="startPage">Start Page</label>
+                    <select id="startPage">
+                        <option>Dashboard</option>
+                        <option>Planner</option>
+                        <option>Goals</option>
+                    </select>
+                </div>
+            </article>
         </div>
 
-        <!-- Box 2: Upcoming Deadlines (next 5 tasks sorted by due date) -->
-        <div class="box">
-            <h2>⏰ Upcoming Deadlines</h2>
-            <!-- List populated by JavaScript from tasks data -->
-            <ul id="upcomingDeadlinesList"></ul>
+        <div class="settings-actions">
+            <button class="settings-btn" type="button">Save Changes</button>
+            <button class="settings-btn" type="button">Reset Defaults</button>
+            <a href="dashboard.html" class="settings-btn link" aria-label="Go back to dashboard">
+                Go to Dashboard
+            </a>
         </div>
+    </section>
 
-        <!-- Box 3: Progress Reminders (incomplete goals from all categories) -->
-        <div class="box">
-            <h2>⏳ Progress Reminders</h2>
-            <!-- List populated by JavaScript from goals data -->
-            <ul id="progressRemindersList"></ul>
-        </div>
-
-        <!-- Box 4: Habit Checklist (add/edit/delete daily habits) -->
-        <div class="box">
-            <h2>✅ Habit Checklist</h2>
-            <!-- Input form to add new habits -->
-            <div class="habit-input">
-                <input type="text" id="habitInput" placeholder="Add a new habit">
-                <button class="habit-add-btn" id="addHabitBtn">Add</button>
-            </div>
-            <!-- List of habits with edit/delete buttons -->
-            <ul id="habitChecklist"></ul>
-        </div>
-    </div>
-
-    <!-- 
-        ==========================================
-        FOOTER
-        ==========================================
-        Copyright and attribution links.
-        ==========================================
-    -->
     <footer>
         &copy; 2026 Lockin
         <p>
             W3Schools.com. (n.d.).
-            <a href="https://www.w3schools.com/" target="_blank">
-                https://www.w3schools.com/
-            </a>
+            <a href="https://www.w3schools.com/" target="_blank">https://www.w3schools.com/</a>
         </p>
-
         <p>
             GeeksforGeeks. (n.d.). GeeksforGeeks.
-            <a href="https://www.geeksforgeeks.org/" target="_blank">
-                https://www.geeksforgeeks.org/
-            </a>
+            <a href="https://www.geeksforgeeks.org/" target="_blank">https://www.geeksforgeeks.org/</a>
         </p>
     </footer>
 
-    <!-- 
-        ==========================================
-        BOTTOM NAVIGATION (Mobile Only)
-        ==========================================
-        Visible only on mobile screens.
-        Replaces sidebar navigation for touch devices.
-        ==========================================
-    -->
-    <nav class="bottom-nav
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="bottom-nav-item">
+            <i class="fas fa-home"></i>
+        </a>
+        <a href="planner.html" class="bottom-nav-item">
+            <i class="fas fa-calendar-alt"></i>
+        </a>
+        <a href="goals.html" class="bottom-nav-item">
+            <i class="fas fa-star"></i>
+        </a>
+        <a href="notes.html" class="bottom-nav-item">
+            <i class="fas fa-sticky-note"></i>
+        </a>
+        <a href="stats.html" class="bottom-nav-item">
+            <i class="fas fa-chart-bar"></i>
+        </a>
+        <a href="settings.html" class="bottom-nav-item active">
+            <i class="fas fa-cog"></i>
+        </a>
+    </nav>
+
+    <script src="../js/index.js"></script>
+    <script src="../js/settings.js"></script>
+</body>
+</html>

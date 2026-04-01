@@ -74,11 +74,7 @@
         </div>
 
         <div class="sidebar-footer">
-            <a href="settings.html" class="nav-item">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
-            <p>&copy; 2026 Lockin</p>
+          <p>&copy; 2026 Lockin</p>
         </div>
     </aside>
 
@@ -123,4 +119,122 @@
         - Complete/Delete buttons for each goal
         ==========================================
     -->
-    <div class="goal-track
+    <div class="goal-trackers-container">
+      <!-- Annual Goals Dropdown (yearly objectives) -->
+      <div class="dropdown">
+        <button class="dropbtn">Annual Goals</button>
+          <div class="dropdown-content">
+            <!-- Input area to add new annual goal -->
+            <div class="input-area">
+              <input type="text" id="annualGoalInput" placeholder="Add an annual goal...">
+              <button type="button" onclick="addGoal(event, 'annual')" class="add-btn">+</button>
+            </div>
+            <!-- List of annual goals populated by goals.js -->
+            <ul id="annualGoalUL"></ul>
+          </div>
+      </div>
+      
+      <!-- Quarterly Goals Dropdown (3-month objectives) -->
+      <div class="dropdown">
+        <button class="dropbtn">Quarterly Goals</button>
+          <div class="dropdown-content">
+            <div class="input-area">
+              <input type="text" id="quarterlyGoalInput" placeholder="Add a quarterly goal...">
+              <button type="button" onclick="addGoal(event, 'quarterly')" class="add-btn">+</button>
+            </div>
+            <ul id="quarterlyGoalUL"></ul>
+          </div>
+      </div>
+
+      <!-- Monthly Goals Dropdown (30-day objectives) -->
+      <div class="dropdown">
+        <button class="dropbtn">Monthly Goals</button>
+          <div class="dropdown-content">
+            <div class="input-area">
+              <input type="text" id="monthlyGoalInput" placeholder="Add a monthly goal...">
+              <button type="button" onclick="addGoal(event, 'monthly')" class="add-btn">+</button>
+            </div>
+            <ul id="monthlyGoalUL"></ul>
+          </div>
+      </div>
+
+      <!-- Weekly Goals Dropdown (7-day objectives) -->
+      <div class="dropdown">
+        <button class="dropbtn">Weekly Goals</button>
+        <div class="dropdown-content">
+          <div class="input-area">
+            <input type="text" id="weeklyGoalInput" placeholder="Add a weekly goal...">
+            <button type="button" onclick="addGoal(event, 'weekly')" class="add-btn">+</button>
+          </div>
+          <ul id="weeklyGoalUL"></ul>
+        </div>
+      </div>
+
+      <!-- Daily Goals Dropdown (today's objectives) -->
+      <div class="dropdown">
+        <button class="dropbtn">Daily Goals</button>
+        <div class="dropdown-content">
+          <div class="input-area">
+            <input type="text" id="dailyGoalInput" placeholder="Add a daily goal...">
+            <button type="button" onclick="addGoal(event, 'daily')" class="add-btn">+</button>
+          </div>
+          <ul id="dailyGoalUL"></ul>
+        </div>
+      </div>
+   </div>
+   
+    <!-- 
+        ==========================================
+        FOOTER
+        ==========================================
+        Copyright and attribution links.
+        ==========================================
+    -->
+    <footer>
+      &copy GABUD; PASCUA
+      <p> 
+        W3Schools.com. (n.d.). 
+        <a href="https://www.w3schools.com/" target="_blank">
+          https://www.w3schools.com/
+        </a>
+      </p>
+
+      <p>
+        GeeksforGeeks. (n.d.). GeeksforGeeks.
+        <a href="https://www.geeksforgeeks.org/" target="_blank">
+          https://www.geeksforgeeks.org/
+        </a>
+      </p>
+    </footer>
+
+    <!-- 
+        ==========================================
+        BOTTOM NAVIGATION (Mobile Only)
+        ==========================================
+        Touch-friendly bottom navigation bar.
+        ==========================================
+    -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="bottom-nav-item">
+            <i class="fas fa-home"></i>
+        </a>
+        <a href="planner.html" class="bottom-nav-item">
+            <i class="fas fa-calendar-alt"></i>
+        </a>
+        <a href="goals.html" class="bottom-nav-item active">
+            <i class="fas fa-star"></i>
+        </a>
+        <a href="notes.html" class="bottom-nav-item">
+            <i class="fas fa-sticky-note"></i>
+        </a>
+        <a href="stats.html" class="bottom-nav-item">
+            <i class="fas fa-chart-bar"></i>
+        </a>
+    </nav>
+
+    <script src="../js/index.js"></script>
+  <script src="../js/settings.js"></script>
+    <!-- Link to goals.js for goal CRUD functionality -->
+    <script src="../js/goals.js" defer></script>
+</body>
+</html>
