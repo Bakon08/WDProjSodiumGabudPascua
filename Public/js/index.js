@@ -266,4 +266,5 @@ document.addEventListener('DOMContentLoaded', function() {
       renderProgressReminders();
       //-----------------------------------------------
     } // close if (tasksLeftChart && upcomingDeadlinesList && progressRemindersList)
+
 });
