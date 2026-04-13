@@ -57,6 +57,22 @@
             font-size: 18px;
         }
 
+        .settings-maintenance-card {
+            border-style: dashed;
+        }
+
+        .settings-maintenance-note {
+            margin: 0 0 12px;
+            color: var(--stone-gray);
+            font-size: 0.95rem;
+        }
+
+        .settings-maintenance-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
         .settings-row {
             display: flex;
             justify-content: space-between;
@@ -242,11 +258,20 @@
                     </select>
                 </div>
             </article>
+
+            <article class="settings-card settings-maintenance-card">
+                <h3>Maintenance</h3>
+                <p class="settings-maintenance-note">Generate demo content or wipe all saved app data.</p>
+                <div class="settings-maintenance-actions">
+                    <button id="generateSampleDataBtn" class="settings-btn settings-btn-sage" type="button">Generate Sample Data</button>
+                    <button id="clearAllDataBtn" class="settings-btn settings-btn-danger" type="button">Clear All Data</button>
+                </div>
+            </article>
         </div>
 
         <div class="settings-actions">
-            <button class="settings-btn" type="button">Save Changes</button>
-            <button class="settings-btn" type="button">Reset Defaults</button>
+            <button id="saveSettingsBtn" class="settings-btn" type="button">Save Changes</button>
+            <button id="resetSettingsBtn" class="settings-btn" type="button">Reset Defaults</button>
             <a href="dashboard.html" class="settings-btn link" aria-label="Go back to dashboard">
                 Go to Dashboard
             </a>
@@ -287,6 +312,7 @@
     </nav>
 
     <script src="../js/index.js"></script>
+    <script src="../js/sample-data.js"></script>
     <script src="../js/settings.js"></script>
 </body>
 </html>

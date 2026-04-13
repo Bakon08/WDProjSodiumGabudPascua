@@ -373,3 +373,16 @@ function showNotification(message, type = "info") {
 // ========================================
 // Render tasks when page loads
 renderTasks();
+
+function refreshPlannerView() {
+  tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  renderTasks();
+}
+
+window.LockinPlannerRefresh = refreshPlannerView;
+window.addEventListener("lockin:data-updated", refreshPlannerView);
+window.addEventListener("storage", function(event) {
+  if (!event.key || ["tasks", "plannerData", "habits"].includes(event.key)) {
+    refreshPlannerView();
+  }
+});

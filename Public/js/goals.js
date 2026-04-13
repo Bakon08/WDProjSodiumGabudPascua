@@ -175,3 +175,22 @@ function deleteGoal(event, type, index) {
  * Ensures goals from localStorage are displayed immediately
  */
 window.onload = renderGoals;
+
+function refreshGoalsView() {
+  goals = JSON.parse(localStorage.getItem("allGoals")) || {
+    annual: [],
+    quarterly: [],
+    monthly: [],
+    weekly: [],
+    daily: []
+  };
+  renderGoals();
+}
+
+window.LockinGoalsRefresh = refreshGoalsView;
+window.addEventListener("lockin:data-updated", refreshGoalsView);
+window.addEventListener("storage", function(event) {
+  if (!event.key || ["allGoals", "tasks", "notes", "plannerData", "habits"].includes(event.key)) {
+    refreshGoalsView();
+  }
+});

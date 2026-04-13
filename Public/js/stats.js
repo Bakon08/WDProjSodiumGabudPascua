@@ -3,15 +3,15 @@
 // ============================================
 
 // Load data from localStorage
-const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-const goals = JSON.parse(localStorage.getItem("allGoals")) || {
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let goals = JSON.parse(localStorage.getItem("allGoals")) || {
     annual: [],
     quarterly: [],
     monthly: [],
     weekly: [],
     daily: []
 };
-const notes = JSON.parse(localStorage.getItem("notes")) || [];
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
 // ============================================
 // CALCULATE KEY METRICS
@@ -268,6 +268,18 @@ function generateInsights() {
     }
 }
 
+function syncStatsData() {
+    tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    goals = JSON.parse(localStorage.getItem("allGoals")) || {
+        annual: [],
+        quarterly: [],
+        monthly: [],
+        weekly: [],
+        daily: []
+    };
+    notes = JSON.parse(localStorage.getItem("notes")) || [];
+}
+
 // ============================================
 // CHART.JS INITIALIZATION
 // ============================================
@@ -457,9 +469,7 @@ function initCharts() {
 // ============================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    updateMetrics();
-    generateInsights();
-    initCharts();
+    refreshStatsView();
 
     // Add visual feedback
     console.log("📊 Statistics Dashboard Loaded");
@@ -467,10 +477,17 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(`🎖️ Total Goals: ${Object.values(goals).reduce((sum, arr) => sum + arr.length, 0)}`);
 });
 
-// Optional: Auto-refresh stats every 30 seconds if data changes
-setInterval(() => {
-    const updatedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    if (updatedTasks.length !== tasks.length) {
-        location.reload(); // Refresh page if data changes
+function refreshStatsView() {
+    syncStatsData();
+    updateMetrics();
+    generateInsights();
+    initCharts();
+}
+
+window.LockinStatsRefresh = refreshStatsView;
+window.addEventListener("lockin:data-updated", refreshStatsView);
+window.addEventListener("storage", function(event) {
+    if (!event.key || ["tasks", "notes", "allGoals", "plannerData", "habits"].includes(event.key)) {
+        refreshStatsView();
     }
-}, 30000);
+});

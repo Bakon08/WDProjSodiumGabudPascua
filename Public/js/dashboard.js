@@ -96,21 +96,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //--------------DATA LOADING FROM LOCALSTORAGE--------------
     // Load all data needed for the dashboard widgets
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    const goals = JSON.parse(localStorage.getItem('allGoals')) || { annual: [], quarterly: [], monthly: [], weekly: [], daily: [] };
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    let tasks = [];
+    let goals = { annual: [], quarterly: [], monthly: [], weekly: [], daily: [] };
+    let notes = [];
+    let tasksLeft = 0;
+    let upcomingDeadlines = [];
+    let progressReminders = [];
 
-    // Calculate number of incomplete tasks
-    const tasksLeft = tasks.filter(task => task.progress !== 'Completed').length;
-
-    // Get next 5 upcoming deadlines (future dates only, sorted chronologically)
-    const upcomingDeadlines = tasks
-      .filter(task => task.dueDate && new Date(task.dueDate) > new Date()) // Only future dates
-      .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))          // Sort by date ascending
-      .slice(0, 5);                                                         // Take first 5
-
-    // Get incomplete goals from all categories (up to 5 total)
-    const progressReminders = Object.values(goals).flat().filter(goal => !goal.completed).slice(0, 5);
+    function syncDashboardData() {
+      tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      goals = JSON.parse(localStorage.getItem('allGoals')) || { annual: [], quarterly: [], monthly: [], weekly: [], daily: [] };
+      notes = JSON.parse(localStorage.getItem('notes')) || [];
+      tasksLeft = tasks.filter(task => task.progress !== 'Completed').length;
+      upcomingDeadlines = tasks
+        .filter(task => task.dueDate && new Date(task.dueDate) > new Date())
+        .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+        .slice(0, 5);
+      progressReminders = Object.values(goals).flat().filter(goal => !goal.completed).slice(0, 5);
+    }
     //---------------------------------------------------------
 
     //--------------TASKS LEFT WIDGET--------------
@@ -205,10 +208,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     //----------------------------------------------------
 
+    function refreshDashboardView() {
+      syncDashboardData();
+      renderTasksLeft();
+      renderUpcomingDeadlines();
+      renderProgressReminders();
+    }
+
+    window.LockinDashboardRefresh = refreshDashboardView;
+
+    window.addEventListener('lockin:data-updated', refreshDashboardView);
+    window.addEventListener('storage', function(event) {
+      if (!event.key || ['tasks', 'notes', 'allGoals', 'plannerData', 'habits'].includes(event.key)) {
+        refreshDashboardView();
+      }
+    });
+
     //--------------WIDGET INITIALIZATION--------------
     // Call all render functions to populate dashboard widgets
-    renderTasksLeft();
-    renderUpcomingDeadlines();
-    renderProgressReminders();
+    refreshDashboardView();
     //-----------------------------------------------
 });

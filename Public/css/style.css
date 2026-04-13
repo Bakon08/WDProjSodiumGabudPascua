@@ -2744,6 +2744,44 @@ details[open] summary::after {
 }
 
 .settings-fab:active {
+    background: rgba(122, 155, 127, 0.18);
+    border-color: rgba(122, 155, 127, 0.45);
+}
+
+.settings-btn-sage {
+    background: rgba(122, 155, 127, 0.18);
+    border-color: rgba(122, 155, 127, 0.45);
+}
+
+.settings-btn-sage:hover {
+    background: rgba(122, 155, 127, 0.32);
+}
+
+.settings-btn-danger {
+    background: rgba(139, 111, 71, 0.16);
+    border-color: rgba(139, 111, 71, 0.45);
+    color: var(--earthy-brown);
+}
+
+.settings-btn-danger:hover {
+    background: rgba(139, 111, 71, 0.28);
+}
+
+.settings-maintenance-card {
+    border: 1px dashed rgba(139, 111, 71, 0.45);
+    background: linear-gradient(180deg, rgba(245, 243, 240, 0.98), rgba(255, 255, 255, 0.9));
+}
+
+.settings-maintenance-note {
+    margin: 0 0 12px;
+    color: var(--stone-gray);
+    font-size: 0.95rem;
+}
+
+.settings-maintenance-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
     transform: translateY(0);
 }
 
@@ -2799,7 +2837,7 @@ details[open] summary::after {
     gap: 12px;
 }
 
-.settings-modal-close {
+.settings-actions .settings-btn.link {
     background: transparent;
     border: none;
     font-size: 24px;
@@ -2807,16 +2845,27 @@ details[open] summary::after {
     color: var(--stone-gray);
     padding: 0;
     width: 40px;
-    height: 40px;
+}
+
+.settings-overlay .settings-maintenance-actions .settings-btn-sage {
+    background: rgba(122, 155, 127, 0.18);
+    border-color: rgba(122, 155, 127, 0.45);
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    transition: all 0.2s ease;
+}
+
+.settings-overlay .settings-maintenance-actions .settings-btn-sage:hover {
+    background: rgba(122, 155, 127, 0.32);
 }
 
 .settings-modal-close:hover {
-    background: rgba(122, 155, 127, 0.1);
+}
+
+.settings-overlay .settings-maintenance-actions .settings-btn-danger {
+    background: rgba(139, 111, 71, 0.16);
+    border-color: rgba(139, 111, 71, 0.45);
     color: var(--forest-dark);
 }
 
@@ -2824,10 +2873,17 @@ details[open] summary::after {
     padding: 24px;
 }
 
+.settings-overlay .settings-maintenance-actions .settings-btn-danger:hover {
+    background: rgba(139, 111, 71, 0.28);
+}
+
 .settings-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
+}
+
+.settings-overlay .settings-grid .settings-card.settings-maintenance-card {
+    border: 1px dashed rgba(139, 111, 71, 0.45);
+    background: linear-gradient(180deg, rgba(245, 243, 240, 0.98), rgba(255, 255, 255, 0.9));
     margin-bottom: 24px;
 }
 
