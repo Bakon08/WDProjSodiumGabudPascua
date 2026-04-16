@@ -240,3 +240,120 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+/* document.addEventListener('DOMContentLoaded', function () {
+  const settingsFields = [
+    'displayName',
+    'email',
+    'deadlineAlerts',
+    'dailyReminder',
+    'density',
+    'startPage',
+  ];
+
+  // Load settings from localStorage and apply them
+  function loadSettings() {
+    const savedSettings = JSON.parse(localStorage.getItem('lockinSettings') || '{}');
+    settingsFields.forEach((fieldId) => {
+      const field = document.getElementById(fieldId);
+      if (!field || savedSettings[fieldId] === undefined) return;
+
+      if (field.type === 'checkbox') {
+        field.checked = !!savedSettings[fieldId];
+      } else {
+        field.value = savedSettings[fieldId];
+      }
+
+      // Apply appearance settings dynamically
+      if (fieldId === 'density') {
+        applyDensity(savedSettings[fieldId]);
+      }
+    });
+
+    // Update the user greeting with the display name
+    const userGreeting = document.getElementById('userGreeting');
+    if (userGreeting && savedSettings.displayName) {
+      userGreeting.innerHTML = `Hello, <span id="usernameDisplay">${savedSettings.displayName}</span>`;
+    }
+  }
+
+  // Save settings to localStorage
+  function saveSettings() {
+    const settingsPayload = {};
+    settingsFields.forEach((fieldId) => {
+      const field = document.getElementById(fieldId);
+      if (!field) return;
+
+      if (field.type === 'checkbox') {
+        settingsPayload[fieldId] = field.checked;
+      } else {
+        settingsPayload[fieldId] = field.value;
+      }
+    });
+
+    localStorage.setItem('lockinSettings', JSON.stringify(settingsPayload));
+
+    // Apply appearance settings dynamically
+    applyDensity(settingsPayload.density);
+
+    // Update the user greeting with the display name
+    const userGreeting = document.getElementById('userGreeting');
+    if (userGreeting && settingsPayload.displayName) {
+      userGreeting.innerHTML = `Hello, <span id="usernameDisplay">${settingsPayload.displayName}</span>`;
+    }
+  }
+
+  // Apply layout density dynamically
+  function applyDensity(density) {
+    const body = document.body;
+    if (density === 'Compact') {
+      body.classList.add('compact-layout');
+      body.classList.remove('comfortable-layout');
+    } else {
+      body.classList.add('comfortable-layout');
+      body.classList.remove('compact-layout');
+    }
+  }
+
+  // Reset settings to defaults
+  function resetSettings() {
+    localStorage.removeItem('lockinSettings');
+    settingsFields.forEach((fieldId) => {
+      const field = document.getElementById(fieldId);
+      if (!field) return;
+
+      if (field.type === 'checkbox') {
+        field.checked = true;
+      } else if (fieldId === 'density') {
+        field.value = 'Comfortable';
+        applyDensity('Comfortable');
+      } else if (fieldId === 'startPage') {
+        field.value = 'Dashboard';
+      } else {
+        field.value = '';
+      }
+    });
+
+    // Reset user greeting
+    const userGreeting = document.getElementById('userGreeting');
+    if (userGreeting) {
+      userGreeting.innerHTML = 'Hello, <span id="usernameDisplay"></span>';
+    }
+  }
+
+  // Event listeners for Save and Reset buttons
+  const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+  const resetSettingsBtn = document.getElementById('resetSettingsBtn');
+
+  if (saveSettingsBtn) {
+    saveSettingsBtn.addEventListener('click', saveSettings);
+  }
+
+  if (resetSettingsBtn) {
+    resetSettingsBtn.addEventListener('click', resetSettings);
+  }
+
+  // Load settings on page load
+  loadSettings();
+});
+*/ 
