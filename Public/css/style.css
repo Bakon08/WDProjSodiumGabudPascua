@@ -2784,6 +2784,15 @@ details[open] summary::after {
     flex-wrap: wrap;
     transform: translateY(0);
 }
+body.compact-layout {
+    font-size: 14px;
+    line-height: 1.2;
+  }
+  
+body.comfortable-layout {
+    font-size: 16px;
+    line-height: 1.5;
+}
 
 @keyframes fadeIn {
     from {
