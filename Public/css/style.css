@@ -2869,8 +2869,8 @@ body.comfortable-layout {
     background: rgba(122, 155, 127, 0.32);
 }
 
-.settings-modal-close:hover {
-}
+/*.settings-modal-close:hover {
+}*/
 
 .settings-overlay .settings-maintenance-actions .settings-btn-danger {
     background: rgba(139, 111, 71, 0.16);
