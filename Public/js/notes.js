@@ -208,3 +208,20 @@ function escHtml(str) {
 }
 
 renderNotes();
+
+function refreshNotesView() {
+    notes = JSON.parse(localStorage.getItem("notes") || "[]");
+    notes = notes.map((n, i) => ({
+        color: CARD_COLORS[i % CARD_COLORS.length],
+        ...n
+    }));
+    renderNotes();
+}
+
+window.LockinNotesRefresh = refreshNotesView;
+window.addEventListener("lockin:data-updated", refreshNotesView);
+window.addEventListener("storage", function(event) {
+    if (!event.key || ["notes", "tasks", "allGoals", "plannerData", "habits"].includes(event.key)) {
+        refreshNotesView();
+    }
+});

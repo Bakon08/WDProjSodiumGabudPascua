@@ -5,6 +5,8 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+  const hasStaticSettingsPage = !!document.querySelector('.settings-overlay');
+
   function ensureSettingsOverlay() {
     if (!document.getElementById('settingsTrigger')) {
       const triggerBtn = document.createElement('button');
@@ -71,6 +73,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   </select>
                 </div>
               </article>
+
+              <article class="settings-card settings-maintenance-card">
+                <h3>Maintenance</h3>
+                <p class="settings-maintenance-note">Seed demo data or wipe app storage from one place.</p>
+                <div class="settings-maintenance-actions" id="maintenanceActions">
+                  <button id="generateSampleDataBtn" class="settings-btn settings-btn-sage" type="button">Generate Sample Data</button>
+                  <button id="clearAllDataBtn" class="settings-btn settings-btn-danger" type="button">Clear All Data</button>
+                </div>
+              </article>
             </div>
           </div>
           <div class="settings-modal-footer">
@@ -83,7 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  ensureSettingsOverlay();
+  if (!hasStaticSettingsPage) {
+    ensureSettingsOverlay();
+  }
 
   const settingsModal = document.getElementById('settingsModal');
   const settingsTrigger = document.getElementById('settingsTrigger');
@@ -91,6 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const closeSettingsBtn2 = document.getElementById('closeSettingsBtn2');
   const saveSettingsBtn = document.getElementById('saveSettingsBtn');
   const resetSettingsBtn = document.getElementById('resetSettingsBtn');
+  const generateSampleDataBtn = document.getElementById('generateSampleDataBtn');
+  const clearAllDataBtn = document.getElementById('clearAllDataBtn');
 
   const settingsFields = [
     'displayName',
@@ -100,6 +115,27 @@ document.addEventListener('DOMContentLoaded', function() {
     'density',
     'startPage'
   ];
+
+  const sampleDataService = window.LockinSampleDataService || null;
+  const refreshEventName = sampleDataService?.getRefreshEventName?.() || 'lockin:data-updated';
+  const refreshableStorageKeys = sampleDataService?.getRefreshableStorageKeys?.() || [
+    'tasks',
+    'notes',
+    'allGoals',
+    'goals',
+    'plannerData',
+    'habits',
+    'lockinSettings',
+    'lockinUser',
+    'lockin_users',
+    'user',
+    'token',
+    'session'
+  ];
+
+  function emitDataRefresh() {
+    window.dispatchEvent(new CustomEvent(refreshEventName, { detail: { source: 'settings' } }));
+  }
 
   if (settingsTrigger && settingsModal) {
     settingsTrigger.addEventListener('click', function(e) {
@@ -163,6 +199,32 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
+
+  if (generateSampleDataBtn) {
+    generateSampleDataBtn.addEventListener('click', function() {
+      if (sampleDataService?.generateSampleData) {
+        sampleDataService.generateSampleData();
+      } else {
+        console.warn('Sample data service is not available.');
+      }
+    });
+  }
+
+  if (clearAllDataBtn) {
+    clearAllDataBtn.addEventListener('click', function() {
+      if (sampleDataService?.clearSampleData) {
+        sampleDataService.clearSampleData();
+      } else {
+        console.warn('Sample data service is not available.');
+      }
+    });
+  }
+
+  window.addEventListener('storage', function(event) {
+    if (!event.key || refreshableStorageKeys.includes(event.key)) {
+      emitDataRefresh();
+    }
+  });
 
   const savedSettings = JSON.parse(localStorage.getItem('lockinSettings') || '{}');
   if (savedSettings && typeof savedSettings === 'object') {
