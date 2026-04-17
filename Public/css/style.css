@@ -19,5 +19,7 @@
 @import url("./pages/notes.css");
 @import url("./pages/stats.css");
 
-/* 6) Remaining legacy rules (not yet extracted) */
-@import url("./legacy.css");
+/* 6) Remaining shared modules extracted from legacy */
+@import url("./legacy-core.css");
+@import url("./legacy-spa.css");
+@import url("./legacy-overlays.css");
