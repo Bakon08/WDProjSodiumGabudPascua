@@ -26,7 +26,7 @@
     <link rel="icon" type="image/png" href="../../Assets/Logo.png">
 </head>
 
-<body>
+<body class="dashboard-page">
     <!-- 
         ==========================================
         SIDEBAR NAVIGATION (Desktop/Tablet)
@@ -125,9 +125,9 @@
         4. Habit Checklist (daily habits)
         ==========================================
     -->
-    <div class="container">
+    <div class="container dashboard-grid">
         <!-- Box 1: Tasks Left with ring chart visualization -->
-        <div class="box">
+        <div class="box tasks-box">
             <h2>📊 Tasks Left</h2>
             <!-- Canvas for drawing ring chart -->
             <canvas id="tasksLeftChart" width="200" height="200"></canvas>
@@ -136,21 +136,21 @@
         </div>
 
         <!-- Box 2: Upcoming Deadlines (next 5 tasks sorted by due date) -->
-        <div class="box">
+        <div class="box deadlines-box">
             <h2>⏰ Upcoming Deadlines</h2>
             <!-- List populated by JavaScript from tasks data -->
             <ul id="upcomingDeadlinesList"></ul>
         </div>
 
         <!-- Box 3: Progress Reminders (incomplete goals from all categories) -->
-        <div class="box">
+        <div class="box reminders-box">
             <h2>⏳ Progress Reminders</h2>
             <!-- List populated by JavaScript from goals data -->
             <ul id="progressRemindersList"></ul>
         </div>
 
         <!-- Box 4: Habit Checklist (add/edit/delete daily habits) -->
-        <div class="box">
+        <div class="box habits-box">
             <h2>✅ Habit Checklist</h2>
             <!-- Input form to add new habits -->
             <div class="habit-input">
@@ -161,7 +161,7 @@
             <ul id="habitChecklist"></ul>
         </div>
 
-        <div class="box">
+        <div class="box goal-progress-box">
             <h2>🎯 Goal Progress</h2>
             <ul id="goalTaskProgressSummary" class="goal-task-progress-summary"></ul>
         </div>

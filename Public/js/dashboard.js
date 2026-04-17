@@ -10,6 +10,80 @@
 
 // Wait for DOM to load before running script
 document.addEventListener('DOMContentLoaded', function() {
+    const GOAL_TYPES = ['annual', 'quarterly', 'monthly', 'weekly', 'daily'];
+
+    function makeId(prefix) {
+      return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    }
+
+    function normalizeGoalStore(rawGoals) {
+      const normalized = { annual: [], quarterly: [], monthly: [], weekly: [], daily: [] };
+
+      if (Array.isArray(rawGoals)) {
+        rawGoals.forEach(goal => {
+          const rawType = String(goal?.type || goal?.period || '').toLowerCase();
+          const type = GOAL_TYPES.includes(rawType) ? rawType : 'monthly';
+
+          if (typeof goal === 'string') {
+            normalized[type].push({
+              id: makeId('goal'),
+              text: goal,
+              completed: false,
+              linkedTaskIds: []
+            });
+            return;
+          }
+
+          normalized[type].push({
+            id: goal?.id || makeId('goal'),
+            text: goal?.text || goal?.title || 'Untitled goal',
+            completed: !!goal?.completed,
+            linkedTaskIds: Array.isArray(goal?.linkedTaskIds) ? goal.linkedTaskIds : []
+          });
+        });
+
+        return normalized;
+      }
+
+      GOAL_TYPES.forEach(type => {
+        const goalsForType = Array.isArray(rawGoals?.[type]) ? rawGoals[type] : [];
+        normalized[type] = goalsForType.map(goal => {
+          if (typeof goal === 'string') {
+            return {
+              id: makeId('goal'),
+              text: goal,
+              completed: false,
+              linkedTaskIds: []
+            };
+          }
+
+          return {
+            id: goal?.id || makeId('goal'),
+            text: goal?.text || 'Untitled goal',
+            completed: !!goal?.completed,
+            linkedTaskIds: Array.isArray(goal?.linkedTaskIds) ? goal.linkedTaskIds : []
+          };
+        });
+      });
+
+      return normalized;
+    }
+
+    function normalizeTasks(rawTasks) {
+      if (!Array.isArray(rawTasks)) {
+        return [];
+      }
+
+      return rawTasks.map(task => ({
+        id: task.id || makeId('task'),
+        title: task.title || 'Untitled task',
+        dueDate: task.dueDate || '',
+        progress: task.progress || 'Not Started',
+        completed: !!task.completed || task.progress === 'Completed',
+        goalId: task.goalId || null
+      }));
+    }
+
     //--------------HABIT CHECKLIST SECTION--------------
     // Get DOM elements for habit checklist
     const habitInput = document.getElementById('habitInput');      // Input field for new habit
@@ -89,8 +163,10 @@ document.addEventListener('DOMContentLoaded', function() {
     renderHabits();
     // Initial render of habits
     renderHabits();
-    // Initialize auth UI on load
-    updateAuthUI();
+    // index.js manages auth UI; guard this call to avoid stopping dashboard render.
+    if (typeof updateAuthUI === 'function') {
+      updateAuthUI();
+    }
     //-----------------------------------------------
     //-------------------------------------------------
 
@@ -104,8 +180,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let progressReminders = [];
 
     function syncDashboardData() {
-      tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-      goals = JSON.parse(localStorage.getItem('allGoals')) || { annual: [], quarterly: [], monthly: [], weekly: [], daily: [] };
+      tasks = normalizeTasks(JSON.parse(localStorage.getItem('tasks')) || []);
+      goals = normalizeGoalStore(JSON.parse(localStorage.getItem('allGoals')) || {});
       notes = JSON.parse(localStorage.getItem('notes')) || [];
       tasksLeft = tasks.filter(task => task.progress !== 'Completed').length;
       upcomingDeadlines = tasks
@@ -221,9 +297,17 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       allGoals.forEach(goal => {
-        const linkedTasks = tasks.filter(task => task.goalId && goal.id && task.goalId === goal.id);
+        let linkedTasks = tasks.filter(task => task.goalId && goal.id && task.goalId === goal.id);
+
+        if (linkedTasks.length === 0 && Array.isArray(goal.linkedTaskIds) && goal.linkedTaskIds.length > 0) {
+          const linkedIds = new Set(goal.linkedTaskIds);
+          linkedTasks = tasks.filter(task => task.id && linkedIds.has(task.id));
+        }
+
         const completedCount = linkedTasks.filter(task => task.completed || task.progress === 'Completed').length;
-        const percent = linkedTasks.length ? Math.round((completedCount / linkedTasks.length) * 100) : 0;
+        const percent = linkedTasks.length
+          ? Math.round((completedCount / linkedTasks.length) * 100)
+          : (goal.completed ? 100 : 0);
 
         const li = document.createElement('li');
         li.innerHTML = `

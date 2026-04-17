@@ -1,4 +1,140 @@
 /* Dashboard page specific styles */
+.dashboard-page .main-content {
+    width: min(1120px, calc(100vw - 330px));
+    margin: 28px auto 18px;
+    padding: 20px 24px;
+}
+
+.dashboard-page .container.dashboard-grid {
+    width: min(1120px, calc(100vw - 330px));
+    margin: 0 auto 24px;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+}
+
+.dashboard-page .container.dashboard-grid .box {
+    margin: 0;
+    text-align: left;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-page .container.dashboard-grid .box h2 {
+    margin: 0 0 14px;
+}
+
+.dashboard-page .tasks-box,
+.dashboard-page .deadlines-box,
+.dashboard-page .reminders-box {
+    grid-column: span 4;
+}
+
+.dashboard-page .habits-box,
+.dashboard-page .goal-progress-box {
+    grid-column: span 6;
+}
+
+.dashboard-page .tasks-box {
+    align-items: center;
+    text-align: center;
+}
+
+.dashboard-page #tasksLeftChart {
+    width: min(220px, 100%);
+    height: auto;
+}
+
+.dashboard-page #tasksLeftLegend {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.dashboard-page #upcomingDeadlinesList,
+.dashboard-page #progressRemindersList,
+.dashboard-page #goalTaskProgressSummary,
+.dashboard-page #habitChecklist {
+    flex: 1;
+}
+
+.dashboard-page #upcomingDeadlinesList,
+.dashboard-page #progressRemindersList,
+.dashboard-page #goalTaskProgressSummary {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.dashboard-page .habit-input {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.dashboard-page footer {
+    position: relative;
+    left: auto;
+    width: auto;
+    margin: 24px auto 10px;
+    line-height: 1.35;
+}
+
+@media (max-width: 1100px) {
+    .dashboard-page .main-content,
+    .dashboard-page .container.dashboard-grid {
+        width: min(980px, calc(100vw - 280px));
+    }
+
+    .dashboard-page .tasks-box,
+    .dashboard-page .deadlines-box,
+    .dashboard-page .reminders-box,
+    .dashboard-page .habits-box,
+    .dashboard-page .goal-progress-box {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-page .main-content,
+    .dashboard-page .container.dashboard-grid {
+        width: 95vw;
+    }
+
+    .dashboard-page .main-content {
+        margin-top: 12px;
+        margin-bottom: 12px;
+        padding: 14px;
+    }
+
+    .dashboard-page .container.dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .dashboard-page .tasks-box,
+    .dashboard-page .deadlines-box,
+    .dashboard-page .reminders-box,
+    .dashboard-page .habits-box,
+    .dashboard-page .goal-progress-box {
+        grid-column: 1 / -1;
+    }
+
+    .dashboard-page .container.dashboard-grid .box {
+        min-height: 0;
+        padding: 12px;
+    }
+
+    .dashboard-page #tasksLeftChart {
+        width: min(180px, 100%);
+    }
+
+    .dashboard-page footer {
+        margin: 10px 0 70px;
+        text-align: center;
+    }
+}
+
 .goal-task-progress-summary {
     list-style: none;
     margin: 0;
