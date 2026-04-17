@@ -1,152 +1,234 @@
 // ============================================
 // PLANNER.JS - Task Management System
 // ============================================
-// Handles all task CRUD operations with:
-// - Soft delete (complete) - keeps in localStorage
-// - Hard delete (permanent) - removes from localStorage
-// - Archive/restore functionality
-// - Form validation and rendering
-// ============================================
 
-// ==========================================
-// GET DOM ELEMENTS
-// ==========================================
-// Get references to all HTML elements we'll interact with
-
-// The entry bar container (always visible at top)
-const tasksForm = document.getElementById("TasksForm");
-// Save button in the entry bar
 const saveTaskBtn = document.getElementById("saveTaskBtn");
-// Cancel button to clear the form
 const cancelTaskBtn = document.getElementById("cancelTaskBtn");
-
-// Form input fields
 const taskTitle = document.getElementById("taskTitle");
 const taskType = document.getElementById("taskType");
 const taskProgress = document.getElementById("taskProgress");
 const plannerDueDate = document.getElementById("plannerDueDate");
+const relatedGoal = document.getElementById("relatedGoal");
+const goalFilter = document.getElementById("goalFilter");
 
-// Table body elements for rendering tasks
-const tasksBody = document.getElementById("tasksBody"); // Active tasks
-const completedTasksBody = document.getElementById("completedTasksBody"); // Completed tasks
+const tasksBody = document.getElementById("tasksBody");
+const completedTasksBody = document.getElementById("completedTasksBody");
+const archiveToggle = document.getElementById("archiveToggle");
+const archiveContent = document.getElementById("archiveContent");
+const archiveIcon = document.getElementById("archiveIcon");
+const archiveCount = document.getElementById("archiveCount");
 
-// Archive section elements
-const archiveToggle = document.getElementById("archiveToggle"); // Clickable header
-const archiveContent = document.getElementById("archiveContent"); // Collapsible content
-const archiveIcon = document.getElementById("archiveIcon"); // Arrow icon (▶/▼)
-const archiveCount = document.getElementById("archiveCount"); // Count badge (0)
-
-// ==========================================
-// INITIALIZE DATA
-// ==========================================
-// Load tasks from localStorage or create empty array if none exist
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-// Track which task is being edited (null = adding new task)
+let tasks = [];
 let editIndex = null;
+let activeGoalFilter = "";
+let goalLookup = new Map();
 
-// ========================================
-// FORM CANCEL FUNCTION
-// ========================================
-
-/**
- * Clears the entry bar fields and resets to add mode
- * Called when user clicks Cancel (X) button
- */
-function cancelForm() {
-  clearForm();  // Reset all input fields and mode
+function makeId(prefix) {
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 }
-// Attach event listener to Cancel button
-cancelTaskBtn.addEventListener("click", cancelForm);
 
-// ========================================
-// SAVE TASK FUNCTION
-// ========================================
+function normalizeGoalStore(rawGoals) {
+  const fallback = { annual: [], quarterly: [], monthly: [], weekly: [], daily: [] };
+  const source = rawGoals && typeof rawGoals === "object" && !Array.isArray(rawGoals) ? rawGoals : fallback;
+  const normalized = {};
+  let changed = false;
 
-/**
- * Saves a new task or updates an existing task
- * Validates input and updates localStorage
- */
-function saveTask() {
-  // Validation: Ensure task title is not empty
-  if (taskTitle.value.trim() === "") {
-    alert("Please enter a task title!");
-    return;  // Stop execution if validation fails
+  Object.keys(fallback).forEach(type => {
+    const goalsForType = Array.isArray(source[type]) ? source[type] : [];
+    normalized[type] = goalsForType.map(goal => {
+      const normalizedGoal = {
+        id: goal.id || makeId("goal"),
+        text: goal.text || "Untitled goal",
+        completed: !!goal.completed,
+        linkedTaskIds: Array.isArray(goal.linkedTaskIds) ? goal.linkedTaskIds : []
+      };
+      if (!goal.id || !Array.isArray(goal.linkedTaskIds)) {
+        changed = true;
+      }
+      return normalizedGoal;
+    });
+  });
+
+  return { normalized, changed };
+}
+
+function loadGoalsStore() {
+  const raw = JSON.parse(localStorage.getItem("allGoals")) || {};
+  const { normalized, changed } = normalizeGoalStore(raw);
+  if (changed) {
+    localStorage.setItem("allGoals", JSON.stringify(normalized));
+  }
+  return normalized;
+}
+
+function buildGoalLookup() {
+  const goalsStore = loadGoalsStore();
+  goalLookup = new Map();
+
+  Object.entries(goalsStore).forEach(([type, goalsForType]) => {
+    goalsForType.forEach(goal => {
+      goalLookup.set(goal.id, {
+        ...goal,
+        type
+      });
+    });
+  });
+
+  return goalsStore;
+}
+
+function getGoalLabel(goal) {
+  const typeLabel = goal.type ? goal.type.charAt(0).toUpperCase() + goal.type.slice(1) : "Goal";
+  return `${typeLabel}: ${goal.text}`;
+}
+
+function renderGoalSelectors() {
+  const currentRelatedSelection = relatedGoal ? relatedGoal.value : "";
+  const currentFilterSelection = goalFilter ? goalFilter.value : activeGoalFilter;
+  const goalsStore = buildGoalLookup();
+
+  if (relatedGoal) {
+    relatedGoal.innerHTML = `<option value="">Related Goal (Optional)</option>`;
+    Object.entries(goalsStore).forEach(([type, goalsForType]) => {
+      goalsForType
+        .filter(goal => !goal.completed)
+        .forEach(goal => {
+          const option = document.createElement("option");
+          option.value = goal.id;
+          option.textContent = `${type.charAt(0).toUpperCase() + type.slice(1)}: ${goal.text}`;
+          relatedGoal.appendChild(option);
+        });
+    });
+    relatedGoal.value = currentRelatedSelection && goalLookup.has(currentRelatedSelection)
+      ? currentRelatedSelection
+      : "";
   }
 
-  // Create task data object from form inputs
-  const taskData = {
-    title: taskTitle.value,
-    dueDate: plannerDueDate.value,
-    progress: taskProgress.value,
-    type: taskType.value,
-    completed: false,  // Soft delete flag - false means task is active
-    completedDate: null  // Stores date when task was completed
+  if (goalFilter) {
+    goalFilter.innerHTML = `<option value="">All Goals</option><option value="__unlinked">Unlinked Tasks</option>`;
+    Object.values(goalsStore).flat().forEach(goal => {
+      const option = document.createElement("option");
+      option.value = goal.id;
+      option.textContent = getGoalLabel({ ...goal, type: goalLookup.get(goal.id)?.type });
+      goalFilter.appendChild(option);
+    });
+
+    goalFilter.value = currentFilterSelection;
+    if (!["", "__unlinked"].includes(goalFilter.value) && !goalLookup.has(goalFilter.value)) {
+      goalFilter.value = "";
+    }
+    activeGoalFilter = goalFilter.value;
+  }
+}
+
+function normalizeTask(task) {
+  const normalizedTask = {
+    id: task.id || makeId("task"),
+    title: task.title || "",
+    dueDate: task.dueDate || "",
+    progress: task.progress || "Not Started",
+    type: task.type || "School",
+    completed: !!task.completed,
+    completedDate: task.completedDate || null,
+    goalId: task.goalId || null
   };
 
-  // Determine if we're adding a new task or editing an existing one
-  if (editIndex === null) {
-    // Adding new task: push to end of tasks array
-    tasks.push(taskData);
-  } else {
-    // Editing existing task:
-    // Preserve completion status and date (don't reset when editing)
-    taskData.completed = tasks[editIndex].completed;
-    taskData.completedDate = tasks[editIndex].completedDate;
-    tasks[editIndex] = taskData;  // Replace task at edit index
-    editIndex = null;  // Reset edit mode
+  if (!task.id || task.goalId === undefined) {
+    normalizedTask.__changed = true;
   }
 
-  // Save updated tasks array to localStorage (converts to JSON string)
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  
-  // Clear form and refresh the display
-  clearForm();
-  renderTasks();
+  return normalizedTask;
 }
 
-// Attach event listener to Save button
-saveTaskBtn.addEventListener("click", saveTask);
+function saveTasksAndSyncGoals() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  syncGoalTaskLinks();
+  window.dispatchEvent(new CustomEvent("lockin:data-updated", { detail: { source: "planner" } }));
+}
 
-// ========================================
-// RENDER ACTIVE TASKS FUNCTION
-// ========================================
+function syncGoalTaskLinks() {
+  const goalsStore = loadGoalsStore();
+  const linkedByGoalId = {};
 
-/**
- * Renders the active (non-completed) tasks in the main table
- * Uses soft delete approach: tasks with completed=false are shown
- */
+  tasks.forEach(task => {
+    if (task.goalId) {
+      if (!linkedByGoalId[task.goalId]) {
+        linkedByGoalId[task.goalId] = [];
+      }
+      linkedByGoalId[task.goalId].push(task.id);
+    }
+  });
+
+  let changed = false;
+  Object.keys(goalsStore).forEach(type => {
+    goalsStore[type].forEach(goal => {
+      const nextLinks = linkedByGoalId[goal.id] || [];
+      const prev = Array.isArray(goal.linkedTaskIds) ? goal.linkedTaskIds : [];
+      if (JSON.stringify(prev) !== JSON.stringify(nextLinks)) {
+        goal.linkedTaskIds = nextLinks;
+        changed = true;
+      }
+    });
+  });
+
+  if (changed) {
+    localStorage.setItem("allGoals", JSON.stringify(goalsStore));
+  }
+  buildGoalLookup();
+}
+
+function getGoalProgressChip(task) {
+  if (!task.goalId) {
+    return `<span class="goal-progress-chip unlinked">Unlinked</span>`;
+  }
+
+  const goal = goalLookup.get(task.goalId);
+  if (!goal) {
+    return `<span class="goal-progress-chip missing">Missing Goal</span>`;
+  }
+
+  return `<span class="goal-progress-chip">${goal.text}</span>`;
+}
+
+function applyGoalFilter(task) {
+  if (!activeGoalFilter) {
+    return true;
+  }
+  if (activeGoalFilter === "__unlinked") {
+    return !task.goalId;
+  }
+  return task.goalId === activeGoalFilter;
+}
+
 function renderTasks() {
-  tasksBody.innerHTML = "";  // Clear existing table rows
+  tasksBody.innerHTML = "";
 
-  // Filter to get only active tasks (where completed flag is false)
-  const activeTasks = tasks.filter(task => !task.completed);
+  const activeTasks = tasks
+    .map((task, index) => ({ task, index }))
+    .filter(item => !item.task.completed)
+    .filter(item => applyGoalFilter(item.task));
 
-  // Show empty state message if no active tasks exist
   if (activeTasks.length === 0) {
     tasksBody.innerHTML = `
       <tr>
-        <td colspan="5">
+        <td colspan="6">
           <div class="empty-state">
             <div class="empty-state-icon">📭</div>
             <div class="empty-state-text">No active tasks</div>
-            <div class="empty-state-subtext">Click "+ New Task" to get started!</div>
+            <div class="empty-state-subtext">Try changing your goal filter or add a new task.</div>
           </div>
         </td>
       </tr>
     `;
   } else {
-    // Loop through each active task and create a table row
-    activeTasks.forEach((task, originalIndex) => {
-      // Find the original index in the full tasks array (needed for edit/delete/complete)
-      const taskIndex = tasks.findIndex(t => t === task);
-      const row = document.createElement("tr");  // Create new table row
-
-      // Populate row with task data and action buttons
+    activeTasks.forEach(({ task, index }) => {
+      const row = document.createElement("tr");
       row.innerHTML = `
         <td>${task.title}</td>
-        <td>${task.dueDate || "-"}</td>  <!-- Show "-" if no due date -->
+        <td>${task.dueDate || "-"}</td>
         <td>${task.progress}</td>
         <td>${task.type}</td>
+        <td>${getGoalProgressChip(task)}</td>
         <td>
           <button class="complete-btn" title="Mark as Complete">✓</button>
           <button class="edit-btn" title="Edit">✏️</button>
@@ -154,47 +236,30 @@ function renderTasks() {
         </td>
       `;
 
-      // Attach event listeners to action buttons
-      // Complete button: Soft delete (marks as completed, keeps in localStorage for stats)
-      row.querySelector(".complete-btn").addEventListener("click", () => completeTask(taskIndex));
-      
-      // Edit button: Loads task data into form for editing
-      row.querySelector(".edit-btn").addEventListener("click", () => editTask(taskIndex));
-      
-      // Delete button: Hard delete (permanently removes from localStorage)
-      row.querySelector(".delete-btn").addEventListener("click", () => deleteTask(taskIndex));
-
-      // Add the populated row to the table body
+      row.querySelector(".complete-btn").addEventListener("click", () => completeTask(index));
+      row.querySelector(".edit-btn").addEventListener("click", () => editTask(index));
+      row.querySelector(".delete-btn").addEventListener("click", () => deleteTask(index));
       tasksBody.appendChild(row);
     });
   }
 
-  // Also render the completed tasks in archive section
   renderCompletedTasks();
 }
 
-// ========================================
-// RENDER COMPLETED TASKS (ARCHIVE)
-// ========================================
-
-/**
- * Renders completed tasks in the archive section
- * Shows tasks with completed=true flag
- */
 function renderCompletedTasks() {
-  completedTasksBody.innerHTML = "";  // Clear existing archived tasks
-  
-  // Filter to get only completed tasks (where completed flag is true)
-  const completedTasks = tasks.filter(task => task.completed);
-  
-  // Update the count badge in archive header
+  completedTasksBody.innerHTML = "";
+
+  const completedTasks = tasks
+    .map((task, index) => ({ task, index }))
+    .filter(item => item.task.completed)
+    .filter(item => applyGoalFilter(item.task));
+
   archiveCount.textContent = `(${completedTasks.length})`;
 
-  // Show empty state message if no completed tasks exist
   if (completedTasks.length === 0) {
     completedTasksBody.innerHTML = `
       <tr>
-        <td colspan="4">
+        <td colspan="5">
           <div class="empty-state">
             <div class="empty-state-icon">🎯</div>
             <div class="empty-state-text">No completed tasks yet</div>
@@ -204,185 +269,171 @@ function renderCompletedTasks() {
       </tr>
     `;
   } else {
-    // Loop through each completed task and create a table row
-    completedTasks.forEach((task) => {
-      // Find the original index in the full tasks array (needed for restore/delete)
-      const taskIndex = tasks.findIndex(t => t === task);
-      const row = document.createElement("tr");  // Create new table row
-
-      // Populate row with completed task data (strikethrough styling applied)
+    completedTasks.forEach(({ task, index }) => {
+      const row = document.createElement("tr");
       row.innerHTML = `
         <td style="text-decoration: line-through; opacity: 0.7;">${task.title}</td>
-        <td>${task.completedDate || task.dueDate || "-"}</td>  <!-- Show completion date, or due date, or "-" -->
+        <td>${task.completedDate || task.dueDate || "-"}</td>
         <td>${task.type}</td>
+        <td>${getGoalProgressChip(task)}</td>
         <td>
           <button class="restore-btn" title="Restore to Active">↩️</button>
           <button class="delete-btn" title="Permanently Delete">🗑️</button>
         </td>
       `;
 
-      // Attach event listeners to action buttons
-      // Restore button: Moves task back to active list (sets completed=false)
-      row.querySelector(".restore-btn").addEventListener("click", () => restoreTask(taskIndex));
-      
-      // Delete button: Hard delete (permanently removes from localStorage, affects stats)
-      row.querySelector(".delete-btn").addEventListener("click", () => deleteTask(taskIndex));
-
-      // Add the populated row to the archive table body
+      row.querySelector(".restore-btn").addEventListener("click", () => restoreTask(index));
+      row.querySelector(".delete-btn").addEventListener("click", () => deleteTask(index));
       completedTasksBody.appendChild(row);
     });
   }
 }
 
-// ========================================
-// TASK ACTION FUNCTIONS
-// ========================================
+function saveTask() {
+  if (taskTitle.value.trim() === "") {
+    alert("Please enter a task title!");
+    return;
+  }
 
-/**
- * Completes a task (SOFT DELETE)
- * Sets completed flag to true but keeps task in localStorage for statistics
- * @param {number} index - Index of task in tasks array
- */
-function completeTask(index) {
-  const today = new Date().toISOString().split('T')[0];  // Get current date in YYYY-MM-DD format
-  
-  // Update task properties to mark as completed
-  tasks[index].completed = true;  // Soft delete flag
-  tasks[index].completedDate = today;  // Record when it was completed
-  tasks[index].progress = "Completed";  // Update progress status
-  
-  // Save updated tasks array to localStorage
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  
-  // Refresh the display (moves task from active to archive)
+  const targetProgress = taskProgress.value;
+  const completed = targetProgress === "Completed";
+  const taskData = {
+    id: editIndex === null ? makeId("task") : tasks[editIndex].id,
+    title: taskTitle.value.trim(),
+    dueDate: plannerDueDate.value,
+    progress: targetProgress,
+    type: taskType.value,
+    completed,
+    completedDate: completed ? (editIndex !== null ? tasks[editIndex].completedDate || new Date().toISOString().split("T")[0] : new Date().toISOString().split("T")[0]) : null,
+    goalId: relatedGoal?.value || null
+  };
+
+  if (editIndex === null) {
+    tasks.push(taskData);
+  } else {
+    tasks[editIndex] = taskData;
+    editIndex = null;
+  }
+
+  saveTasksAndSyncGoals();
+  clearForm();
+  renderGoalSelectors();
   renderTasks();
-  
-  // Show success feedback to user
+}
+
+function completeTask(index) {
+  const today = new Date().toISOString().split("T")[0];
+  tasks[index].completed = true;
+  tasks[index].completedDate = today;
+  tasks[index].progress = "Completed";
+
+  saveTasksAndSyncGoals();
+  renderTasks();
   showNotification("✓ Task completed!", "success");
 }
 
-/**
- * Restores a completed task back to active list
- * Sets completed flag back to false
- * @param {number} index - Index of task in tasks array
- */
 function restoreTask(index) {
-  // Update task properties to mark as active again
-  tasks[index].completed = false;  // Reset soft delete flag
-  tasks[index].completedDate = null;  // Clear completion date
-  tasks[index].progress = "In Progress";  // Reset progress status
-  
-  // Save updated tasks array to localStorage
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  
-  // Refresh the display (moves task from archive to active)
+  tasks[index].completed = false;
+  tasks[index].completedDate = null;
+  tasks[index].progress = "In Progress";
+
+  saveTasksAndSyncGoals();
   renderTasks();
-  
-  // Show info feedback to user
   showNotification("↩️ Task restored to active list", "info");
 }
 
-/**
- * Edits an existing task
- * Loads task data into the top entry bar and switches to edit mode
- * @param {number} index - Index of task in tasks array
- */
 function editTask(index) {
-  const task = tasks[index];  // Get the task to edit
-
-  // Populate form fields with existing task data
+  const task = tasks[index];
   taskTitle.value = task.title;
   plannerDueDate.value = task.dueDate;
   taskProgress.value = task.progress;
   taskType.value = task.type;
+  if (relatedGoal) {
+    relatedGoal.value = task.goalId || "";
+  }
 
-  // Set edit mode (saveTask function will update instead of adding)
   editIndex = index;
-  
-  // Change button text to indicate edit mode
   saveTaskBtn.textContent = "Update Task";
-  
-  // Scroll to top so user can see the populated entry bar
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-/**
- * Deletes a task permanently (HARD DELETE)
- * Removes task from localStorage entirely, affecting statistics
- * Shows different warnings for active vs completed tasks
- * @param {number} index - Index of task in tasks array
- */
 function deleteTask(index) {
-  const task = tasks[index];  // Get the task to delete
-  
-  // Create appropriate warning message based on task status
-  const confirmMessage = task.completed 
+  const task = tasks[index];
+  const confirmMessage = task.completed
     ? `Permanently delete "${task.title}"? This will remove it from statistics.`
     : `Permanently delete "${task.title}"? Consider completing it instead to keep it in statistics.`;
-  
-  // Show confirmation dialog before deleting
+
   if (confirm(confirmMessage)) {
-    tasks.splice(index, 1);  // Remove task from array (hard delete)
-    localStorage.setItem("tasks", JSON.stringify(tasks));  // Save updated array
-    renderTasks();  // Refresh display
+    tasks.splice(index, 1);
+    saveTasksAndSyncGoals();
+    renderTasks();
     showNotification("🗑️ Task permanently deleted", "warning");
   }
 }
 
-// ========================================
-// UTILITY FUNCTIONS
-// ========================================
-
-/**
- * Clears all form input fields and resets to default values
- * Also resets edit mode and button text
- */
 function clearForm() {
-  taskTitle.value = "";  // Clear title input
-  plannerDueDate.value = "";  // Clear date picker
-  taskProgress.value = "Not Started";  // Reset to default progress
-  taskType.value = "School";  // Reset to default type
-  editIndex = null;  // Exit edit mode
-  saveTaskBtn.textContent = "Add Task";  // Reset button text to add mode
+  taskTitle.value = "";
+  plannerDueDate.value = "";
+  taskProgress.value = "Not Started";
+  taskType.value = "School";
+  if (relatedGoal) {
+    relatedGoal.value = "";
+  }
+  editIndex = null;
+  saveTaskBtn.textContent = "Add Task";
 }
 
-/**
- * Toggles the archive section visibility
- * Switches between expanded (▼) and collapsed (▶) states
- */
-archiveToggle.addEventListener("click", () => {
-  const isHidden = archiveContent.style.display === "none";  // Check current state
-  archiveContent.style.display = isHidden ? "block" : "none";  // Toggle visibility
-  archiveIcon.textContent = isHidden ? "▼" : "▶";  // Update arrow icon
-});
-
-/**
- * Shows a notification message to the user
- * Currently logs to console, can be enhanced with UI notifications
- * @param {string} message - The notification message
- * @param {string} type - Type of notification (info, success, warning)
- */
 function showNotification(message, type = "info") {
-  // Simple console logging for now
-  // TODO: Could be enhanced with toast notifications or alert banners
   console.log(`[${type.toUpperCase()}] ${message}`);
 }
 
-// ========================================
-// INITIALIZATION
-// ========================================
-// Render tasks when page loads
-renderTasks();
+function cancelForm() {
+  clearForm();
+}
 
 function refreshPlannerView() {
-  tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const rawTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  let migrated = false;
+  tasks = rawTasks.map(task => {
+    const normalized = normalizeTask(task);
+    if (normalized.__changed) {
+      migrated = true;
+      delete normalized.__changed;
+    }
+    return normalized;
+  });
+
+  if (migrated) {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+
+  syncGoalTaskLinks();
+  renderGoalSelectors();
   renderTasks();
 }
+
+saveTaskBtn.addEventListener("click", saveTask);
+cancelTaskBtn.addEventListener("click", cancelForm);
+
+if (goalFilter) {
+  goalFilter.addEventListener("change", function() {
+    activeGoalFilter = goalFilter.value;
+    renderTasks();
+  });
+}
+
+archiveToggle.addEventListener("click", () => {
+  const isHidden = archiveContent.style.display === "none";
+  archiveContent.style.display = isHidden ? "block" : "none";
+  archiveIcon.textContent = isHidden ? "▼" : "▶";
+});
 
 window.LockinPlannerRefresh = refreshPlannerView;
 window.addEventListener("lockin:data-updated", refreshPlannerView);
 window.addEventListener("storage", function(event) {
-  if (!event.key || ["tasks", "plannerData", "habits"].includes(event.key)) {
+  if (!event.key || ["tasks", "allGoals", "plannerData", "habits"].includes(event.key)) {
     refreshPlannerView();
   }
 });
+
+refreshPlannerView();

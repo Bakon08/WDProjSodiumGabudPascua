@@ -1,0 +1,81 @@
+/* Shared card-like surfaces replace repeated dark/light declarations */
+:is(
+    .main-content,
+    .box,
+    .widget,
+    .content-container,
+    .chart-wrapper,
+    .stat-card,
+    .stats-page-chart-wrapper,
+    .stats-page-insights-container,
+    .settings-overlay,
+    .settings-card,
+    .table-wrapper,
+    .archive-section,
+    .entry-bar,
+    .dropdown-content,
+    .note-card,
+    .settings-modal-content,
+    .settings-modal-header,
+    .settings-modal-footer,
+    .notes-table tbody tr,
+    .tasks-table tbody tr
+) {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+/* Generic text targets that repeated dark-mode color rules in legacy CSS */
+:is(
+    .main-content h1,
+    .main-content h2,
+    .widget-header h3,
+    .chart-title,
+    .settings-card h3,
+    .settings-row label,
+    .stats-page-chart-title,
+    .stats-page-insights-title,
+    .stats-page-insight-label,
+    .notes-table td,
+    .tasks-table td,
+    .notes-table th,
+    .tasks-table th,
+    .deadline-item,
+    .goal-text,
+    .stat-label,
+    .empty-state-text,
+    .note-card-title,
+    .note-card-preview,
+    .note-card-full,
+    .settings-modal-header h2,
+    .settings-btn,
+    .user-greeting
+) {
+    color: var(--color-text);
+}
+
+/* Form controls */
+:is(input, select, textarea, .notes-input input, .notes-input select, .notes-input textarea, .tasks-input input, .tasks-input select, .tasks-input textarea, .modal-title-input, .modal-select, .rich-editor) {
+    background: var(--color-input-bg);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+.auth-btn {
+    background-color: var(--color-surface-strong);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+/* Existing visual behavior preserved */
+.box {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    transition: transform var(--dur-normal) var(--ease-standard), box-shadow var(--dur-normal) var(--ease-standard), background var(--dur-normal) var(--ease-standard);
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}

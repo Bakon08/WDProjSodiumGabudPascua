@@ -1,0 +1,25 @@
+/* Global reset and base document styles */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+a {
+    color: var(--link-green);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+body {
+    background: var(--page-bg);
+    padding-bottom: 50px;
+    margin: 0;
+    margin-left: 250px;
+    font-family: var(--font-main);
+    color: var(--forest-dark);
+    line-height: 1.6;
+}

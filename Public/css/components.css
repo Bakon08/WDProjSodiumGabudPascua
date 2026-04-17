@@ -1,0 +1,123 @@
+/* Consolidated shared surfaces and text colors */
+:is(
+    .main-content,
+    .box,
+    .widget,
+    .content-container,
+    .chart-wrapper,
+    .stat-card,
+    .stats-page-chart-wrapper,
+    .stats-page-insights-container,
+    .settings-overlay,
+    .settings-card,
+    .table-wrapper,
+    .archive-section,
+    .entry-bar,
+    .dropdown-content,
+    .note-card,
+    .settings-modal-content,
+    .settings-modal-header,
+    .settings-modal-footer,
+    .notes-table tbody tr,
+    .tasks-table tbody tr
+) {
+    color: var(--surface-text);
+    border-color: var(--surface-border);
+}
+
+body.dark-mode :is(
+    .main-content,
+    .box,
+    .widget,
+    .content-container,
+    .chart-wrapper,
+    .stat-card,
+    .stats-page-chart-wrapper,
+    .stats-page-insights-container,
+    .settings-overlay,
+    .settings-card,
+    .table-wrapper,
+    .archive-section,
+    .entry-bar,
+    .dropdown-content,
+    .note-card,
+    .settings-modal-content,
+    .settings-modal-header,
+    .settings-modal-footer,
+    .notes-table tbody tr,
+    .tasks-table tbody tr
+) {
+    background: var(--surface-bg);
+}
+
+:is(
+    .main-content h1,
+    .main-content h2,
+    .widget-header h3,
+    .chart-title,
+    .settings-card h3,
+    .settings-row label,
+    .stats-page-chart-title,
+    .stats-page-insights-title,
+    .stats-page-insight-label,
+    .notes-table td,
+    .tasks-table td,
+    .notes-table th,
+    .tasks-table th,
+    .deadline-item,
+    .goal-text,
+    .stat-label,
+    .empty-state-text,
+    .note-card-title,
+    .note-card-preview,
+    .note-card-full,
+    .settings-modal-header h2,
+    .settings-btn,
+    .user-greeting
+) {
+    color: var(--surface-text);
+}
+
+body.dark-mode :is(input, select, textarea) {
+    background: var(--input-bg);
+    color: var(--surface-text);
+    border-color: var(--input-border);
+}
+
+body.dark-mode .auth-btn {
+    background-color: var(--surface-bg-strong);
+    color: var(--surface-text);
+    border-color: var(--surface-border);
+}
+
+body.high-contrast-text,
+body.high-contrast-text .main-content,
+body.high-contrast-text .box,
+body.high-contrast-text .widget,
+body.high-contrast-text .settings-card,
+body.high-contrast-text .note-card,
+body.high-contrast-text .stats-page-insight-item,
+body.high-contrast-text .deadline-item,
+body.high-contrast-text .goal-text,
+body.high-contrast-text .note-card-preview,
+body.high-contrast-text .note-card-full {
+    color: var(--contrast-text-light) !important;
+}
+
+body.dark-mode.high-contrast-text,
+body.dark-mode.high-contrast-text .main-content,
+body.dark-mode.high-contrast-text .box,
+body.dark-mode.high-contrast-text .widget,
+body.dark-mode.high-contrast-text .settings-card,
+body.dark-mode.high-contrast-text .note-card,
+body.dark-mode.high-contrast-text .stats-page-insight-item,
+body.dark-mode.high-contrast-text .deadline-item,
+body.dark-mode.high-contrast-text .goal-text,
+body.dark-mode.high-contrast-text .note-card-preview,
+body.dark-mode.high-contrast-text .note-card-full,
+body.dark-mode.high-contrast-text .main-content h1,
+body.dark-mode.high-contrast-text .main-content h2,
+body.dark-mode.high-contrast-text .settings-row label,
+body.dark-mode.high-contrast-text .settings-btn {
+    color: var(--contrast-text-dark) !important;
+}

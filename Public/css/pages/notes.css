@@ -1,0 +1,196 @@
+/* Notes page specific styles */
+.notes-entry-bar .note-title-input {
+    flex: 1 1 200px;
+}
+
+.notes-entry-bar .note-content-textarea {
+    flex: 1 1 100%;
+}
+
+.notes-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    font-family: var(--font-main);
+    box-shadow: var(--shadow-soft);
+}
+
+.notes-table th:nth-child(1),
+.notes-table td:nth-child(1) {
+    width: 25%;
+}
+
+.notes-table th:nth-child(2),
+.notes-table td:nth-child(2) {
+    width: 12%;
+}
+
+.notes-table th:nth-child(3),
+.notes-table td:nth-child(3) {
+    width: 12%;
+}
+
+.notes-table th:nth-child(4),
+.notes-table td:nth-child(4) {
+    width: 36%;
+}
+
+.notes-table th:nth-child(5),
+.notes-table td:nth-child(5) {
+    width: 15%;
+    min-width: 120px;
+}
+
+.notes-table th,
+.notes-table td {
+    border: none;
+    padding: clamp(10px, 1.5vw, 16px);
+    text-align: left;
+    vertical-align: middle;
+    color: var(--forest-dark);
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    line-height: 1.5;
+}
+
+.notes-table td:nth-child(1),
+.notes-table td:nth-child(4) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 0;
+}
+
+.notes-table td:nth-child(2),
+.notes-table td:nth-child(3) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.notes-table td:nth-child(5) {
+    white-space: nowrap;
+}
+
+.notes-table th {
+    background: linear-gradient(135deg, var(--forest-green), var(--sage-green));
+    color: white;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    letter-spacing: 0.3px;
+}
+
+.notes-table th:first-child {
+    border-radius: 20px 0 0 0;
+}
+
+.notes-table th:last-child {
+    border-radius: 0 20px 0 0;
+}
+
+.notes-table tbody tr {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(122, 155, 127, 0.1);
+    transition: all 0.3s ease;
+}
+
+.notes-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.notes-table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 20px;
+}
+
+.notes-table tbody tr:last-child td:last-child {
+    border-radius: 0 0 20px 0;
+}
+
+.notes-table tbody tr:hover {
+    background: rgba(122, 155, 127, 0.15);
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(45, 90, 61, 0.1);
+}
+
+.notes-table button {
+    margin: 0 clamp(2px, 0.5vw, 4px);
+    padding: clamp(8px, 1.2vw, 12px);
+    font-size: clamp(14px, 2vw, 16px);
+    min-width: clamp(32px, 5vw, 40px);
+    min-height: clamp(32px, 5vw, 40px);
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notes-input {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.notes-input input,
+.notes-input select,
+.notes-input textarea {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--light-stone);
+    font-family: var(--font-main);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--forest-dark);
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.notes-input input:focus,
+.notes-input select:focus,
+.notes-input textarea:focus {
+    outline: none;
+    border-color: var(--forest-green);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1);
+}
+
+.notes-input textarea {
+    flex: 1;
+    min-height: 40px;
+    resize: vertical;
+    min-width: 200px;
+}
+
+.notes-input input[type="text"],
+.notes-input input[type="date"] {
+    flex: 1;
+    min-width: 150px;
+}
+
+.notes-add-btn {
+    background: linear-gradient(135deg, var(--earthy-brown), #a0804a);
+    color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    font-family: var(--font-main);
+    transition: all 0.3s ease;
+}
+
+.notes-add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+}

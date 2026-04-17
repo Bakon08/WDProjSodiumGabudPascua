@@ -26,7 +26,7 @@
   <link rel="icon" type="image/png" href="../../Assets/Logo.png">
 </head>
 
-<body> 
+<body class="planner-page"> 
     <!-- 
         ==========================================
         SIDEBAR NAVIGATION (Desktop/Tablet)
@@ -139,8 +139,18 @@
           <option value="In Progress">In Progress</option>
           <option value="Completed">Completed</option>
         </select>
+        <select id="relatedGoal" title="Related Goal">
+          <option value="">Related Goal (Optional)</option>
+        </select>
         <button class="entry-bar-btn" id="saveTaskBtn">Add Task</button>
         <button class="entry-bar-cancel" id="cancelTaskBtn" title="Clear">✕</button>
+      </div>
+
+      <div class="planner-goal-filter-bar">
+        <label for="goalFilter">Filter by Goal:</label>
+        <select id="goalFilter">
+          <option value="">All Goals</option>
+        </select>
       </div>
 
     <!-- 
@@ -157,7 +167,7 @@
     -->
       <!-- Responsive table wrapper with horizontal scroll on mobile -->
       <div class="table-wrapper">
-        <table class="tasks-table">
+        <table class="tasks-table active-tasks-table">
           <thead>
             <tr>
               <!-- Task title column -->
@@ -168,6 +178,7 @@
               <th>Progress</th>
               <!-- Task type/category column -->
               <th style="word-break: break-all;">Task Type</th>
+              <th>Goal Progress</th>
               <!-- Action buttons column (Complete/Edit/Delete) -->
               <th>Actions</th>
             </tr>
@@ -197,12 +208,13 @@
         <!-- Archive content (hidden by default, toggles on click) -->
         <div id="archiveContent" style="display: none; margin-top: 15px;">
           <div class="table-wrapper">
-            <table class="tasks-table">
+            <table class="tasks-table completed-tasks-table">
               <thead>
                 <tr>
                   <th>Task</th>
                   <th>Completed Date</th>
                   <th>Type</th>
+                  <th>Goal Progress</th>
                   <!-- Restore or permanently delete -->
                   <th>Actions</th>
                 </tr>

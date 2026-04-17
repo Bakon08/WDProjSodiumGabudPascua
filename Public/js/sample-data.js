@@ -88,23 +88,35 @@
     return date.toISOString().split('T')[0];
   }
 
-  function buildSampleTasks() {
+  function normalizeTasksWithIds(rawTasks) {
+    if (!Array.isArray(rawTasks)) {
+      return [];
+    }
+
+    return rawTasks.map(task => ({
+      ...task,
+      id: task.id || makeSampleId('task'),
+      goalId: task.goalId || null
+    }));
+  }
+
+  function buildSampleTasks(goalIdsByType) {
     const taskTemplates = [
-      { title: 'Review algebra notes', offset: -7, progress: 'Completed', type: 'School', completed: true, completedDateOffset: -7 },
-      { title: 'Water indoor plants', offset: -6, progress: 'Completed', type: 'House', completed: true, completedDateOffset: -6 },
-      { title: 'Plan project outline', offset: -5, progress: 'Completed', type: 'Work', completed: true, completedDateOffset: -5 },
-      { title: 'Finish science slides', offset: -4, progress: 'Completed', type: 'School', completed: true, completedDateOffset: -4 },
-      { title: 'Fold laundry', offset: -3, progress: 'Completed', type: 'House', completed: true, completedDateOffset: -3 },
-      { title: 'Email group members', offset: -2, progress: 'In Progress', type: 'Work', completed: false, completedDate: null },
-      { title: 'Clean study desk', offset: -1, progress: 'Completed', type: 'Personal', completed: true, completedDateOffset: -1 },
-      { title: 'Draft book summary', offset: 0, progress: 'In Progress', type: 'School', completed: false, completedDate: null },
-      { title: 'Weekend reflection', offset: 1, progress: 'Not Started', type: 'Personal', completed: false, completedDate: null },
-      { title: 'Prepare weekly review', offset: 2, progress: 'In Progress', type: 'Personal', completed: false, completedDate: null },
-      { title: 'Pack study materials', offset: 3, progress: 'Not Started', type: 'School', completed: false, completedDate: null },
-      { title: 'Call project teammates', offset: 4, progress: 'In Progress', type: 'Work', completed: false, completedDate: null },
-      { title: 'Finalize weekend schedule', offset: 5, progress: 'Not Started', type: 'Personal', completed: false, completedDate: null },
-      { title: 'Organize revision folder', offset: 6, progress: 'In Progress', type: 'School', completed: false, completedDate: null },
-      { title: 'Sunday reflection journal', offset: 7, progress: 'Not Started', type: 'Personal', completed: false, completedDate: null }
+      { title: 'Review algebra notes', offset: -7, progress: 'Completed', type: 'School', completed: true, completedDateOffset: -7, goalType: 'annual' },
+      { title: 'Water indoor plants', offset: -6, progress: 'Completed', type: 'House', completed: true, completedDateOffset: -6, goalType: 'daily' },
+      { title: 'Plan project outline', offset: -5, progress: 'Completed', type: 'Work', completed: true, completedDateOffset: -5, goalType: 'quarterly' },
+      { title: 'Finish science slides', offset: -4, progress: 'Completed', type: 'School', completed: true, completedDateOffset: -4, goalType: 'monthly' },
+      { title: 'Fold laundry', offset: -3, progress: 'Completed', type: 'House', completed: true, completedDateOffset: -3, goalType: 'weekly' },
+      { title: 'Email group members', offset: -2, progress: 'In Progress', type: 'Work', completed: false, completedDate: null, goalType: 'quarterly' },
+      { title: 'Clean study desk', offset: -1, progress: 'Completed', type: 'Personal', completed: true, completedDateOffset: -1, goalType: 'daily' },
+      { title: 'Draft book summary', offset: 0, progress: 'In Progress', type: 'School', completed: false, completedDate: null, goalType: 'annual' },
+      { title: 'Weekend reflection', offset: 1, progress: 'Not Started', type: 'Personal', completed: false, completedDate: null, goalType: 'weekly' },
+      { title: 'Prepare weekly review', offset: 2, progress: 'In Progress', type: 'Personal', completed: false, completedDate: null, goalType: 'monthly' },
+      { title: 'Pack study materials', offset: 3, progress: 'Not Started', type: 'School', completed: false, completedDate: null, goalType: 'quarterly' },
+      { title: 'Call project teammates', offset: 4, progress: 'In Progress', type: 'Work', completed: false, completedDate: null, goalType: 'annual' },
+      { title: 'Finalize weekend schedule', offset: 5, progress: 'Not Started', type: 'Personal', completed: false, completedDate: null, goalType: 'daily' },
+      { title: 'Organize revision folder', offset: 6, progress: 'In Progress', type: 'School', completed: false, completedDate: null, goalType: 'monthly' },
+      { title: 'Sunday reflection journal', offset: 7, progress: 'Not Started', type: 'Personal', completed: false, completedDate: null, goalType: 'weekly' }
     ];
 
     return taskTemplates.map(function(task) {
@@ -116,7 +128,8 @@
         progress: task.progress,
         type: task.type,
         completed: task.completed,
-        completedDate: task.completed ? getRelativeDate(task.completedDateOffset ?? task.offset) : null
+        completedDate: task.completed ? getRelativeDate(task.completedDateOffset ?? task.offset) : null,
+        goalId: goalIdsByType?.[task.goalType] || null
       };
     });
   }
@@ -172,43 +185,86 @@
   }
 
   function buildSampleGoals() {
+    const annualId = makeSampleId('sample-goal');
+    const quarterlyId = makeSampleId('sample-goal');
+    const monthlyId = makeSampleId('sample-goal');
+    const weeklyId = makeSampleId('sample-goal');
+    const dailyId = makeSampleId('sample-goal');
+
     return {
-      annual: [
-        { id: makeSampleId('sample-goal'), text: 'Finish the capstone project with clean documentation.', completed: false, isSample: true }
-      ],
-      quarterly: [
-        { id: makeSampleId('sample-goal'), text: 'Improve grades in all core subjects before the next quarter ends.', completed: false, isSample: true }
-      ],
-      monthly: [
-        { id: makeSampleId('sample-goal'), text: 'Submit every major assignment at least one day early.', completed: true, isSample: true }
-      ],
-      weekly: [
-        { id: makeSampleId('sample-goal'), text: 'Review planner tasks every Sunday night.', completed: false, isSample: true }
-      ],
-      daily: [
-        { id: makeSampleId('sample-goal'), text: 'Plan the next three priorities before lunch.', completed: false, isSample: true }
-      ]
+      goals: {
+        annual: [
+          { id: annualId, text: 'Finish the capstone project with clean documentation.', completed: false, isSample: true, linkedTaskIds: [] }
+        ],
+        quarterly: [
+          { id: quarterlyId, text: 'Improve grades in all core subjects before the next quarter ends.', completed: false, isSample: true, linkedTaskIds: [] }
+        ],
+        monthly: [
+          { id: monthlyId, text: 'Submit every major assignment at least one day early.', completed: true, isSample: true, linkedTaskIds: [] }
+        ],
+        weekly: [
+          { id: weeklyId, text: 'Review planner tasks every Sunday night.', completed: false, isSample: true, linkedTaskIds: [] }
+        ],
+        daily: [
+          { id: dailyId, text: 'Plan the next three priorities before lunch.', completed: false, isSample: true, linkedTaskIds: [] }
+        ]
+      },
+      goalIdsByType: {
+        annual: annualId,
+        quarterly: quarterlyId,
+        monthly: monthlyId,
+        weekly: weeklyId,
+        daily: dailyId
+      }
     };
+  }
+
+  function syncGoalLinkedTaskIds(goalsObject, allTasks) {
+    const taskIdsByGoal = {};
+    allTasks.forEach(task => {
+      if (task.goalId) {
+        if (!taskIdsByGoal[task.goalId]) {
+          taskIdsByGoal[task.goalId] = [];
+        }
+        taskIdsByGoal[task.goalId].push(task.id);
+      }
+    });
+
+    Object.keys(goalsObject).forEach(type => {
+      goalsObject[type] = goalsObject[type].map(goal => ({
+        ...goal,
+        linkedTaskIds: taskIdsByGoal[goal.id] || []
+      }));
+    });
+
+    return goalsObject;
   }
 
   function generateSampleData() {
     const authSnapshot = getAuthSnapshot();
-    const existingTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    const existingTasks = normalizeTasksWithIds(JSON.parse(localStorage.getItem('tasks') || '[]'));
     const existingNotes = JSON.parse(localStorage.getItem('notes') || '[]');
     const existingGoals = readStoredGoals();
-    const sampleGoals = buildSampleGoals();
+    const sampleGoalBundle = buildSampleGoals();
+    const sampleGoals = sampleGoalBundle.goals;
     const safeTasks = Array.isArray(existingTasks) ? existingTasks : [];
     const safeNotes = Array.isArray(existingNotes) ? existingNotes : [];
+    const sampleTasks = buildSampleTasks(sampleGoalBundle.goalIdsByType);
+    const mergedTasks = [...safeTasks, ...sampleTasks];
 
-    localStorage.setItem('tasks', JSON.stringify([...safeTasks, ...buildSampleTasks()]));
-    localStorage.setItem('notes', JSON.stringify([...safeNotes, ...buildSampleNotes()]));
-    localStorage.setItem('allGoals', JSON.stringify({
+    const mergedGoals = {
       annual: [...existingGoals.annual, ...sampleGoals.annual],
       quarterly: [...existingGoals.quarterly, ...sampleGoals.quarterly],
       monthly: [...existingGoals.monthly, ...sampleGoals.monthly],
       weekly: [...existingGoals.weekly, ...sampleGoals.weekly],
       daily: [...existingGoals.daily, ...sampleGoals.daily]
-    }));
+    };
+
+    syncGoalLinkedTaskIds(mergedGoals, mergedTasks);
+
+    localStorage.setItem('tasks', JSON.stringify(mergedTasks));
+    localStorage.setItem('notes', JSON.stringify([...safeNotes, ...buildSampleNotes()]));
+    localStorage.setItem('allGoals', JSON.stringify(mergedGoals));
 
     const sessionIntact = ensureSessionPersistence(authSnapshot);
     if (!sessionIntact) {
@@ -225,25 +281,30 @@
     }
 
     const authSnapshot = getAuthSnapshot();
-    const existingTasks = readStoredArray('tasks');
+    const existingTasks = normalizeTasksWithIds(readStoredArray('tasks'));
     const existingNotes = readStoredArray('notes');
     const existingGoals = readStoredGoals();
 
-    localStorage.setItem('tasks', JSON.stringify(existingTasks.filter(function(task) {
+    const remainingTasks = existingTasks.filter(function(task) {
       return !task?.isSample;
-    })));
+    });
+
+    localStorage.setItem('tasks', JSON.stringify(remainingTasks));
 
     localStorage.setItem('notes', JSON.stringify(existingNotes.filter(function(note) {
       return !note?.isSample;
     })));
 
-    localStorage.setItem('allGoals', JSON.stringify({
+    const remainingGoals = {
       annual: existingGoals.annual.filter(function(goal) { return !goal?.isSample; }),
       quarterly: existingGoals.quarterly.filter(function(goal) { return !goal?.isSample; }),
       monthly: existingGoals.monthly.filter(function(goal) { return !goal?.isSample; }),
       weekly: existingGoals.weekly.filter(function(goal) { return !goal?.isSample; }),
       daily: existingGoals.daily.filter(function(goal) { return !goal?.isSample; })
-    }));
+    };
+
+    syncGoalLinkedTaskIds(remainingGoals, remainingTasks);
+    localStorage.setItem('allGoals', JSON.stringify(remainingGoals));
 
     const sessionIntact = ensureSessionPersistence(authSnapshot);
     if (!sessionIntact) {

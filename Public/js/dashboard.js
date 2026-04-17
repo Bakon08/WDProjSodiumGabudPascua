@@ -208,11 +208,43 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     //----------------------------------------------------
 
+    function renderGoalTaskProgressSummary() {
+      const list = document.getElementById('goalTaskProgressSummary');
+      if (!list) return;
+
+      const allGoals = Object.values(goals).flat();
+      list.innerHTML = '';
+
+      if (allGoals.length === 0) {
+        list.innerHTML = '<li>No goals yet</li>';
+        return;
+      }
+
+      allGoals.forEach(goal => {
+        const linkedTasks = tasks.filter(task => task.goalId && goal.id && task.goalId === goal.id);
+        const completedCount = linkedTasks.filter(task => task.completed || task.progress === 'Completed').length;
+        const percent = linkedTasks.length ? Math.round((completedCount / linkedTasks.length) * 100) : 0;
+
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <div class="goal-summary-row">
+            <span>${goal.text}</span>
+            <span>${percent}%</span>
+          </div>
+          <div class="goal-task-progress-bar">
+            <div class="goal-task-progress-fill" style="width: ${percent}%"></div>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    }
+
     function refreshDashboardView() {
       syncDashboardData();
       renderTasksLeft();
       renderUpcomingDeadlines();
       renderProgressReminders();
+      renderGoalTaskProgressSummary();
     }
 
     window.LockinDashboardRefresh = refreshDashboardView;

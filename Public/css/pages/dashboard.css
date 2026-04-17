@@ -1,0 +1,130 @@
+/* Dashboard page specific styles */
+.goal-task-progress-summary {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.goal-task-progress-summary li {
+    display: block;
+    border: 1px solid rgba(122, 155, 127, 0.18);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.65);
+    padding: 10px;
+}
+
+.goal-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: var(--forest-dark);
+}
+
+#habitChecklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#habitChecklist li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid var(--light-stone);
+    background: rgba(255, 255, 255, 0.4);
+    margin-bottom: 8px;
+    border-radius: 10px;
+}
+
+#habitChecklist li:last-child {
+    border-bottom: none;
+}
+
+.habit-item {
+    flex-grow: 1;
+    color: var(--forest-dark);
+    background: transparent;
+    border-radius: 10px;
+    padding: 0 10px;
+    font-weight: 500;
+}
+
+.habit-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 18px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    transition: all 0.3s;
+    min-width: 35px;
+    min-height: 35px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.habit-btn:hover {
+    background: rgba(45, 90, 61, 0.1);
+}
+
+.habit-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.habit-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid var(--light-stone);
+    border-radius: 10px;
+    font-family: var(--font-main);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--forest-dark);
+    min-width: 200px;
+    transition: all 0.3s ease;
+}
+
+.habit-input input:focus {
+    outline: none;
+    border-color: var(--forest-green);
+    box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1);
+}
+
+.habit-add-btn {
+    background: linear-gradient(135deg, var(--sage-green), var(--light-sage));
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-main);
+    transition: all 0.3s ease;
+}
+
+.habit-add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+}
+
+#upcomingDeadlinesList,
+#progressRemindersList,
+#tasksLeftLegend {
+    max-height: 200px;
+    overflow-y: auto;
+}

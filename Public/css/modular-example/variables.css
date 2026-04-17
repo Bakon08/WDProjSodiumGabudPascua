@@ -1,0 +1,35 @@
+/* Design tokens: one source of truth for colors, spacing, radius, shadows, and motion */
+:root {
+    --font-main: "Quicksand", "Montserrat", sans-serif;
+    --font-heading: "Montserrat", sans-serif;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 12px 35px rgba(0, 0, 0, 0.15);
+
+    --dur-fast: 120ms;
+    --dur-normal: 260ms;
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+    --color-bg: linear-gradient(135deg, #f5f3f0 0%, #eae8e8 100%);
+    --color-surface: rgba(255, 255, 255, 0.7);
+    --color-surface-strong: rgba(255, 255, 255, 0.9);
+    --color-text: #1a3d2a;
+    --color-text-muted: #9ca998;
+    --color-border: rgba(255, 255, 255, 0.3);
+    --color-accent: #2d5a3d;
+    --color-accent-soft: #5fae83;
+    --color-input-bg: #ffffff;
+
+    --sidebar-bg: linear-gradient(135deg, #2d5a3d 0%, #3d6b4d 100%);
+    --sidebar-border: 0.1px solid rgba(255, 255, 255, 0.2);
+}

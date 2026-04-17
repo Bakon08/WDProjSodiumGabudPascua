@@ -1,0 +1,438 @@
+/* Planner page specific styles */
+.archive-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(122, 155, 127, 0.2);
+}
+
+.archive-section h3 {
+    font-family: var(--font-heading);
+    color: var(--forest-dark);
+    margin: 0;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.archive-section h3:hover {
+    background: rgba(122, 155, 127, 0.1);
+}
+
+.entry-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--stone-gray);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease;
+}
+
+.entry-bar:focus-within {
+    border-color: var(--sage-green);
+    background: #a8afa8;
+    box-shadow: 0 0 0 4px rgba(122, 155, 127, 0.15), var(--shadow-medium);
+}
+
+.entry-bar input,
+.entry-bar select,
+.entry-bar textarea {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    font-family: var(--font-main);
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--forest-dark);
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.entry-bar input:focus,
+.entry-bar select:focus,
+.entry-bar textarea:focus {
+    outline: none;
+    border-color: var(--forest-green);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1);
+}
+
+.entry-bar input[type="text"],
+.entry-bar input[type="date"] {
+    flex: 1 1 150px;
+    min-width: 120px;
+}
+
+.entry-bar select {
+    flex: 0 1 auto;
+    min-width: 120px;
+}
+
+.entry-bar textarea {
+    flex: 1 1 100%;
+    min-height: 40px;
+    max-height: 40px;
+    resize: none;
+    transition: max-height 0.3s ease, min-height 0.3s ease;
+    overflow: hidden;
+}
+
+.entry-bar textarea:focus {
+    max-height: 120px;
+    min-height: 80px;
+    resize: vertical;
+}
+
+.entry-bar-btn {
+    background: linear-gradient(135deg, var(--forest-green), var(--sage-green));
+    color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: var(--font-main);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+.entry-bar-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+    background: linear-gradient(135deg, var(--sage-green), var(--forest-green));
+}
+
+.entry-bar-btn:active {
+    transform: translateY(0);
+}
+
+.entry-bar-cancel {
+    background: rgba(139, 111, 71, 0.2);
+    color: var(--earthy-brown);
+    border: 1px solid var(--earthy-brown);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: var(--font-main);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    flex: 0 0 auto;
+}
+
+.entry-bar-cancel:hover {
+    background: rgba(139, 111, 71, 0.3);
+    transform: scale(1.1);
+}
+
+.entry-bar-cancel:active {
+    transform: scale(0.95);
+}
+
+.planner-goal-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0 14px;
+    color: var(--forest-dark);
+    font-size: 14px;
+}
+
+.planner-goal-filter-bar select {
+    min-width: 230px;
+    max-width: 100%;
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(122, 155, 127, 0.4);
+    font-family: var(--font-main);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.goal-progress-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 220px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(122, 155, 127, 0.18);
+    color: var(--forest-dark);
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.goal-progress-chip.unlinked {
+    background: rgba(156, 169, 152, 0.2);
+    color: var(--stone-gray);
+}
+
+.goal-progress-chip.missing {
+    background: rgba(220, 53, 69, 0.15);
+    color: #9a2a2a;
+}
+
+.tasks-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    font-family: var(--font-main);
+    box-shadow: var(--shadow-soft);
+}
+
+.tasks-table th:nth-child(1),
+.tasks-table td:nth-child(1) {
+    width: 40%;
+}
+
+.tasks-table th:nth-child(2),
+.tasks-table td:nth-child(2) {
+    width: 15%;
+}
+
+.tasks-table th:nth-child(3),
+.tasks-table td:nth-child(3) {
+    width: 15%;
+}
+
+.tasks-table th:nth-child(4),
+.tasks-table td:nth-child(4) {
+    width: 15%;
+}
+
+.tasks-table th:nth-child(5),
+.tasks-table td:nth-child(5) {
+    width: 15%;
+    min-width: 120px;
+}
+
+.tasks-table th,
+.tasks-table td {
+    border: none;
+    padding: clamp(10px, 1.5vw, 16px);
+    text-align: left;
+    vertical-align: middle;
+    color: var(--forest-dark);
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    line-height: 1.5;
+}
+
+.tasks-table td:nth-child(1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 0;
+}
+
+.tasks-table td:nth-child(2),
+.tasks-table td:nth-child(3),
+.tasks-table td:nth-child(4) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tasks-table td:nth-child(5) {
+    white-space: nowrap;
+}
+
+.tasks-table th {
+    background: linear-gradient(135deg, var(--forest-green), var(--sage-green));
+    color: white;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    letter-spacing: 0.3px;
+}
+
+.tasks-table th:first-child {
+    border-radius: 20px 0 0 0;
+}
+
+.tasks-table th:last-child {
+    border-radius: 0 20px 0 0;
+}
+
+.tasks-table tbody tr {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(122, 155, 127, 0.1);
+    transition: all 0.3s ease;
+}
+
+.tasks-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.tasks-table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 20px;
+}
+
+.tasks-table tbody tr:last-child td:last-child {
+    border-radius: 0 0 20px 0;
+}
+
+.tasks-table tbody tr:hover {
+    background: rgba(122, 155, 127, 0.15);
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(45, 90, 61, 0.1);
+}
+
+.tasks-table button {
+    margin: 0 clamp(2px, 0.5vw, 4px);
+    padding: clamp(8px, 1.2vw, 12px);
+    font-size: clamp(14px, 2vw, 16px);
+    min-width: clamp(32px, 5vw, 40px);
+    min-height: clamp(32px, 5vw, 40px);
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tasks-input {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.tasks-input input,
+.tasks-input select,
+.tasks-input textarea {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--light-stone);
+    font-family: var(--font-main);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--forest-dark);
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.tasks-input input:focus,
+.tasks-input select:focus,
+.tasks-input textarea:focus {
+    outline: none;
+    border-color: var(--forest-green);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1);
+}
+
+.tasks-input textarea {
+    flex: 1;
+    min-height: 40px;
+    resize: vertical;
+    min-width: 200px;
+}
+
+.tasks-input input[type="text"],
+.tasks-input input[type="date"] {
+    flex: 1;
+    min-width: 150px;
+}
+
+.planner-page .active-tasks-table th:nth-child(1),
+.planner-page .active-tasks-table td:nth-child(1) {
+    width: 22%;
+}
+
+.planner-page .active-tasks-table th:nth-child(2),
+.planner-page .active-tasks-table td:nth-child(2) {
+    width: 13%;
+}
+
+.planner-page .active-tasks-table th:nth-child(3),
+.planner-page .active-tasks-table td:nth-child(3),
+.planner-page .active-tasks-table th:nth-child(4),
+.planner-page .active-tasks-table td:nth-child(4) {
+    width: 12%;
+}
+
+.planner-page .active-tasks-table th:nth-child(5),
+.planner-page .active-tasks-table td:nth-child(5) {
+    width: 24%;
+}
+
+.planner-page .active-tasks-table th:nth-child(6),
+.planner-page .active-tasks-table td:nth-child(6) {
+    width: 17%;
+    min-width: 120px;
+}
+
+.planner-page .completed-tasks-table th:nth-child(1),
+.planner-page .completed-tasks-table td:nth-child(1) {
+    width: 26%;
+}
+
+.planner-page .completed-tasks-table th:nth-child(2),
+.planner-page .completed-tasks-table td:nth-child(2) {
+    width: 16%;
+}
+
+.planner-page .completed-tasks-table th:nth-child(3),
+.planner-page .completed-tasks-table td:nth-child(3) {
+    width: 12%;
+}
+
+.planner-page .completed-tasks-table th:nth-child(4),
+.planner-page .completed-tasks-table td:nth-child(4) {
+    width: 28%;
+}
+
+.planner-page .completed-tasks-table th:nth-child(5),
+.planner-page .completed-tasks-table td:nth-child(5) {
+    width: 18%;
+    min-width: 120px;
+}
+
+@media (max-width: 768px) {
+    .planner-page .main-content {
+        overflow-x: visible;
+    }
+
+    .planner-page .table-wrapper {
+        width: 100%;
+        margin: 12px 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .planner-page .tasks-table {
+        width: max-content;
+        min-width: 680px;
+        table-layout: auto;
+    }
+
+    .planner-page .tasks-table th,
+    .planner-page .tasks-table td {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 567px) {
+    .planner-page .tasks-table {
+        min-width: 620px;
+    }
+}

@@ -1,0 +1,113 @@
+/* Theme + display preference controls driven by settings.js */
+body.dark-mode {
+    --page-bg: linear-gradient(135deg, #18261d 0%, #223329 100%);
+    --forest-dark: #e9f4ec;
+    --cream: #edf6ef;
+    --stone-gray: #b7c8bc;
+    --surface-bg: rgba(36, 56, 43, 0.92);
+    --surface-bg-strong: #2f4736;
+    --surface-border: rgba(133, 168, 145, 0.45);
+    --surface-text: #e9f4ec;
+    --input-bg: rgba(23, 39, 30, 0.9);
+    --input-border: rgba(133, 168, 145, 0.45);
+    background: var(--page-bg);
+    color: var(--surface-text);
+}
+
+body.font-scale-small {
+    font-size: 14px;
+}
+
+body.font-scale-normal {
+    font-size: 16px;
+}
+
+body.font-scale-large {
+    font-size: 18px;
+}
+
+body.no-animations *,
+body.no-animations *::before,
+body.no-animations *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+body.compact-cards .main-content,
+body.compact-cards .box,
+body.compact-cards .widget,
+body.compact-cards .content-container,
+body.compact-cards .settings-card,
+body.compact-cards .note-card,
+body.compact-cards .stats-page-card,
+body.compact-cards .chart-wrapper,
+body.compact-cards .stat-card {
+    padding: 12px;
+    border-radius: 12px;
+}
+
+body.sidebar-style-solid .sidebar {
+    background: #234732;
+    backdrop-filter: none;
+}
+
+body.sidebar-style-minimal .sidebar {
+    background: rgba(45, 90, 61, 0.75);
+    border-right-color: rgba(255, 255, 255, 0.2);
+    box-shadow: none;
+}
+
+body.sidebar-style-minimal .nav-item {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+body.content-width-wide .main-content,
+body.content-width-wide .settings-overlay {
+    width: 90vw;
+}
+
+body.content-width-compact .main-content,
+body.content-width-compact .settings-overlay {
+    width: 70vw;
+    max-width: 980px;
+}
+
+body.corners-sharp .main-content,
+body.corners-sharp .box,
+body.corners-sharp .widget,
+body.corners-sharp .settings-card,
+body.corners-sharp .note-card,
+body.corners-sharp .settings-modal-content,
+body.corners-sharp .stats-page-card,
+body.corners-sharp .stat-card {
+    border-radius: 6px;
+}
+
+body.corners-rounded .main-content,
+body.corners-rounded .box,
+body.corners-rounded .widget,
+body.corners-rounded .settings-card,
+body.corners-rounded .note-card,
+body.corners-rounded .settings-modal-content,
+body.corners-rounded .stats-page-card,
+body.corners-rounded .stat-card {
+    border-radius: 28px;
+}
+
+body.hide-footer footer {
+    display: none;
+}
+
+body.hide-footer {
+    padding-bottom: 16px;
+}
+
+@media (max-width: 1024px) {
+    body.content-width-wide .main-content,
+    body.content-width-compact .main-content,
+    body.content-width-wide .settings-overlay,
+    body.content-width-compact .settings-overlay {
+        width: 92vw;
+    }
+}

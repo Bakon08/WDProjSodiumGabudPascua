@@ -1,0 +1,42 @@
+/* Core design tokens shared by all modules */
+:root {
+    /* Navigation */
+    --nav-height: 50px;
+    --nav-border: 0.1px solid rgba(255, 255, 255, 0.2);
+    --nav-bg: linear-gradient(135deg, #2d5a3d 0%, #3d6b4d 100%);
+
+    /* Nature palette */
+    --forest-dark: #1a3d2a;
+    --forest-green: #2d5a3d;
+    --sage-green: #7a9b7f;
+    --light-sage: #a8c5a8;
+    --earthy-brown: #8b6f47;
+    --stone-gray: #9ca998;
+    --light-stone: #d4d4d0;
+    --cream: #f5f3f0;
+    --white: #ffffff;
+
+    /* Fonts */
+    --font-main: 'Quicksand', 'Montserrat', sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+
+    /* Typography */
+    --brand-font-size: 30px;
+    --page-bg: linear-gradient(135deg, #f5f3f0 0%, #eae8e8 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
+    --shadow-hover: 0 12px 35px rgba(0, 0, 0, 0.15);
+
+    /* Semantic tokens for consolidated theming */
+    --link-green: #5fae83;
+    --surface-bg: rgba(255, 255, 255, 0.8);
+    --surface-bg-strong: rgba(255, 255, 255, 0.9);
+    --surface-border: rgba(255, 255, 255, 0.3);
+    --surface-text: var(--forest-dark);
+    --input-bg: #ffffff;
+    --input-border: var(--light-stone);
+    --contrast-text-light: #111111;
+    --contrast-text-dark: #ffffff;
+}

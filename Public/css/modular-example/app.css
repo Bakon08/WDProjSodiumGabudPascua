@@ -1,23 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap");
 
-/* 1) Tokens */
 @import url("./variables.css");
-
-/* 2) Base document rules */
-@import url("./base.css");
-
-/* 3) Theme and user display preferences */
 @import url("./theme.css");
-
-/* 4) Shared component/theme consolidations */
+@import url("./layout.css");
+@import url("./navigation.css");
 @import url("./components.css");
+@import url("./utilities.css");
 
-/* 5) Page-level modules (Phase 2 extraction) */
+/* Page layers */
 @import url("./pages/dashboard.css");
 @import url("./pages/planner.css");
 @import url("./pages/goals.css");
 @import url("./pages/notes.css");
 @import url("./pages/stats.css");
 
-/* 6) Remaining legacy rules (not yet extracted) */
-@import url("./legacy.css");
+/* Last so media overrides win without !important */
+@import url("./responsive.css");
