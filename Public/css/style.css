@@ -135,6 +135,23 @@ body.dark-mode .settings-btn {
     color: #e9f4ec;
 }
 
+body.dark-mode .note-card .note-card-title,
+body.dark-mode .note-card .note-card-preview,
+body.dark-mode .note-card .note-card-full,
+body.dark-mode .note-card .type-tag,
+body.dark-mode .note-card .note-expand-btn {
+    color: #1f2a23 !important;
+}
+
+body.dark-mode .note-card .note-card-full * {
+    color: #1f2a23 !important;
+}
+
+body.dark-mode.high-contrast-text .note-card .note-card-full,
+body.dark-mode.high-contrast-text .note-card .note-card-full * {
+    color: #1f2a23 !important;
+}
+
 body.dark-mode input,
 body.dark-mode select,
 body.dark-mode textarea {
@@ -3277,17 +3294,31 @@ body.comfortable-layout {
 .note-card-preview {
     font-size: 13px;
     color: var(--forest-dark);
+    -webkit-text-fill-color: #1f2a23;
     opacity: 0.8;
     font-family: var(--font-main);
     line-height: 1.6;
 }
 
+.note-card-preview * {
+    color: #1f2a23 !important;
+    -webkit-text-fill-color: #1f2a23 !important;
+    opacity: 1 !important;
+}
+
 /* Full rich-text content (expanded) */
 .note-card-full {
     font-size: 13px;
-    color: var(--forest-dark);
+    color: #1f2a23;
+    -webkit-text-fill-color: #1f2a23;
     font-family: var(--font-main);
     line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.note-card-full * {
+    color: #1f2a23 !important;
+    -webkit-text-fill-color: #1f2a23 !important;
 }
 
 .note-card-full ul,

@@ -42,6 +42,51 @@ const noteProgress = document.getElementById("noteProgress");
 const richEditor   = document.getElementById("richEditor");
 const colorPicker  = document.getElementById("colorPicker");
 
+function stripInlineTextColor(html) {
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = html || "";
+
+    wrapper.querySelectorAll("*").forEach(el => {
+        // Drop inline styling from rich text so theme/CSS controls readability.
+        el.removeAttribute("style");
+        if (el.hasAttribute("color")) {
+            el.removeAttribute("color");
+        }
+    });
+
+    return wrapper.innerHTML;
+}
+
+function forceReadableNoteContentColor(card) {
+    const previewContent = card.querySelector(".note-card-preview");
+    const fullContent = card.querySelector(".note-card-full");
+    if (previewContent) {
+        previewContent.style.setProperty("color", "#1f2a23", "important");
+        previewContent.style.setProperty("-webkit-text-fill-color", "#1f2a23", "important");
+        previewContent.style.setProperty("opacity", "1", "important");
+        previewContent.querySelectorAll("*").forEach(el => {
+            el.style.setProperty("color", "#1f2a23", "important");
+            el.style.setProperty("-webkit-text-fill-color", "#1f2a23", "important");
+            el.style.setProperty("opacity", "1", "important");
+            el.style.setProperty("text-shadow", "none", "important");
+        });
+    }
+
+    if (!fullContent) {
+        return;
+    }
+
+    fullContent.style.setProperty("color", "#1f2a23", "important");
+    fullContent.style.setProperty("-webkit-text-fill-color", "#1f2a23", "important");
+    fullContent.style.setProperty("opacity", "1", "important");
+    fullContent.querySelectorAll("*").forEach(el => {
+        el.style.setProperty("color", "#1f2a23", "important");
+        el.style.setProperty("-webkit-text-fill-color", "#1f2a23", "important");
+        el.style.setProperty("opacity", "1", "important");
+        el.style.setProperty("text-shadow", "none", "important");
+    });
+}
+
 // ─── Build color swatches ──────────────────────────────────────────────────
 let selectedColor = CARD_COLORS[0];
 
@@ -119,7 +164,7 @@ modalSave.addEventListener("click", () => {
         title,
         type:        noteType.value,
         progress:    noteProgress.value,
-        description: richEditor.innerHTML,
+        description: stripInlineTextColor(richEditor.innerHTML),
         color:       selectedColor
     };
 
@@ -164,9 +209,14 @@ function renderNotes() {
         card.className = "note-card";
         card.style.background = note.color || CARD_COLORS[0];
 
+        const renderedDescription = stripInlineTextColor(note.description || "");
+
         const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = note.description || "";
+        tempDiv.innerHTML = renderedDescription;
         const plainText = tempDiv.textContent || tempDiv.innerText || "";
+        const fullTextHtml = plainText
+            ? escHtml(plainText).replace(/\n/g, "<br>")
+            : "<em>No content</em>";
 
         card.innerHTML = `
             <div class="note-card-header">
@@ -182,8 +232,10 @@ function renderNotes() {
             </div>
             <div class="note-card-preview">${plainText ? escHtml(plainText.substring(0, 120)) + (plainText.length > 120 ? "…" : "") : "<em>No content yet…</em>"}</div>
             <button class="note-expand-btn" onclick="toggleExpand(this, ${index})">▼ Show more</button>
-            <div class="note-card-full" style="display:none">${note.description || "<em>No content</em>"}</div>
+            <div class="note-card-full" style="display:none">${fullTextHtml}</div>
         `;
+
+        forceReadableNoteContentColor(card);
         notesGrid.appendChild(card);
     });
 }
@@ -193,6 +245,7 @@ function toggleExpand(btn, index) {
     const card    = btn.closest(".note-card");
     const preview = card.querySelector(".note-card-preview");
     const full    = card.querySelector(".note-card-full");
+    forceReadableNoteContentColor(card);
     const isOpen  = full.style.display !== "none";
     full.style.display    = isOpen ? "none"  : "block";
     preview.style.display = isOpen ? "block" : "none";
