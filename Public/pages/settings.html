@@ -186,7 +186,7 @@
     <div class="main-content">
         <details>
             <summary>About</summary>
-            <div style="background-color: white; padding: 1px; border: 1px solid #ccc; border-radius: 15px;">
+            <div class="about-panel">
                 <p>
                     This page contains your basic app settings. Use these controls to set your display style,
                     notification behavior, and default planner preferences.
@@ -196,8 +196,8 @@
     </div>
 
     <section class="settings-overlay">
-        <h2><i class="fas fa-sliders-h"></i> Settings Overlay</h2>
-        <p>Rough version for now. You can wire these controls to localStorage later.</p>
+        <h2><i class="fas fa-sliders-h"></i> Personalize Lockin</h2>
+        <p>Changes apply instantly and are saved for every page.</p>
 
         <div class="settings-grid">
             <article class="settings-card">
@@ -227,26 +227,93 @@
             <article class="settings-card">
                 <h3>Appearance</h3>
                 <div class="settings-row">
+                    <label for="themeMode">Theme</label>
+                    <select id="themeMode">
+                        <option value="Light">Light</option>
+                        <option value="Dark">Dark</option>
+                        <option value="Auto">Auto</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="fontScale">Font Size</label>
+                    <select id="fontScale">
+                        <option value="Normal">Normal</option>
+                        <option value="Small">Small</option>
+                        <option value="Large">Large</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="accentColor">Accent</label>
+                    <select id="accentColor">
+                        <option value="Sage">Sage</option>
+                        <option value="Ocean">Ocean</option>
+                        <option value="Sunset">Sunset</option>
+                        <option value="Rose">Rose</option>
+                    </select>
+                </div>
+                <div class="settings-row">
                     <label for="density">Layout Density</label>
                     <select id="density">
-                        <option>Comfortable</option>
-                        <option>Compact</option>
+                        <option value="Comfortable">Comfortable</option>
+                        <option value="Compact">Compact</option>
                     </select>
                 </div>
                 <div class="settings-row">
                     <label for="startPage">Start Page</label>
                     <select id="startPage">
-                        <option>Dashboard</option>
-                        <option>Planner</option>
-                        <option>Goals</option>
+                        <option value="Dashboard">Dashboard</option>
+                        <option value="Planner">Planner</option>
+                        <option value="Goals">Goals</option>
+                        <option value="Notes">Notes</option>
+                        <option value="Stats">Stats</option>
                     </select>
+                </div>
+                <div class="settings-row">
+                    <label for="animationsEnabled">Animations</label>
+                    <input id="animationsEnabled" type="checkbox" checked>
+                </div>
+                <div class="settings-row">
+                    <label for="compactCards">Compact Cards</label>
+                    <input id="compactCards" type="checkbox">
+                </div>
+                <div class="settings-row">
+                    <label for="sidebarStyle">Sidebar Style</label>
+                    <select id="sidebarStyle">
+                        <option value="Glass">Glass</option>
+                        <option value="Solid">Solid</option>
+                        <option value="Minimal">Minimal</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="contentWidth">Content Width</label>
+                    <select id="contentWidth">
+                        <option value="Standard">Standard</option>
+                        <option value="Wide">Wide</option>
+                        <option value="Compact">Compact</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="cornerStyle">Corner Style</label>
+                    <select id="cornerStyle">
+                        <option value="Soft">Soft</option>
+                        <option value="Sharp">Sharp</option>
+                        <option value="Rounded">Rounded</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="showFooter">Show Footer</label>
+                    <input id="showFooter" type="checkbox" checked>
+                </div>
+                <div class="settings-row">
+                    <label for="highContrastText">High Contrast Text</label>
+                    <input id="highContrastText" type="checkbox">
                 </div>
             </article>
         </div>
 
         <div class="settings-actions">
-            <button class="settings-btn" type="button">Save Changes</button>
-            <button class="settings-btn" type="button">Reset Defaults</button>
+            <button id="saveSettingsBtn" class="settings-btn" type="button">Save Changes</button>
+            <button id="resetSettingsBtn" class="settings-btn" type="button">Reset Defaults</button>
             <a href="dashboard.html" class="settings-btn link" aria-label="Go back to dashboard">
                 Go to Dashboard
             </a>

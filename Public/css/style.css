@@ -69,6 +69,220 @@ body {
     line-height: 1.6;
 }
 
+/* Theme + customization classes controlled by settings.js */
+body.dark-mode {
+    --page-bg: linear-gradient(135deg, #18261d 0%, #223329 100%);
+    --forest-dark: #e9f4ec;
+    --cream: #edf6ef;
+    --stone-gray: #b7c8bc;
+    background: var(--page-bg);
+    color: #e9f4ec;
+}
+
+body.dark-mode .main-content,
+body.dark-mode .box,
+body.dark-mode .widget,
+body.dark-mode .content-container,
+body.dark-mode .chart-wrapper,
+body.dark-mode .stat-card,
+body.dark-mode .stats-page-chart-wrapper,
+body.dark-mode .stats-page-insights-container,
+body.dark-mode .settings-overlay,
+body.dark-mode .settings-card,
+body.dark-mode .table-wrapper,
+body.dark-mode .archive-section,
+body.dark-mode .entry-bar,
+body.dark-mode .dropdown-content,
+body.dark-mode .note-card,
+body.dark-mode .notes-table tbody tr,
+body.dark-mode .tasks-table tbody tr,
+body.dark-mode .notes-input input,
+body.dark-mode .notes-input select,
+body.dark-mode .notes-input textarea,
+body.dark-mode .tasks-input input,
+body.dark-mode .tasks-input select,
+body.dark-mode .tasks-input textarea,
+body.dark-mode .settings-modal-content,
+body.dark-mode .settings-modal-header,
+body.dark-mode .settings-modal-footer {
+    background: rgba(36, 56, 43, 0.92);
+    color: #e9f4ec;
+    border-color: rgba(133, 168, 145, 0.45);
+}
+
+body.dark-mode .main-content h1,
+body.dark-mode .main-content h2,
+body.dark-mode .widget-header h3,
+body.dark-mode .chart-title,
+body.dark-mode .settings-card h3,
+body.dark-mode .settings-row label,
+body.dark-mode .stats-page-chart-title,
+body.dark-mode .stats-page-insights-title,
+body.dark-mode .stats-page-insight-label,
+body.dark-mode .notes-table td,
+body.dark-mode .tasks-table td,
+body.dark-mode .notes-table th,
+body.dark-mode .tasks-table th,
+body.dark-mode .deadline-item,
+body.dark-mode .goal-text,
+body.dark-mode .stat-label,
+body.dark-mode .empty-state-text,
+body.dark-mode .note-card-title,
+body.dark-mode .note-card-preview,
+body.dark-mode .note-card-full,
+body.dark-mode .settings-modal-header h2,
+body.dark-mode .settings-btn {
+    color: #e9f4ec;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background: rgba(23, 39, 30, 0.9);
+    color: #e9f4ec;
+    border-color: rgba(133, 168, 145, 0.45);
+}
+
+body.dark-mode .auth-btn {
+    background-color: #2f4736;
+    color: #e9f4ec;
+    border-color: rgba(133, 168, 145, 0.45);
+}
+
+body.dark-mode .user-greeting {
+    color: #e9f4ec;
+}
+
+body.font-scale-small {
+    font-size: 14px;
+}
+
+body.font-scale-normal {
+    font-size: 16px;
+}
+
+body.font-scale-large {
+    font-size: 18px;
+}
+
+body.no-animations *,
+body.no-animations *::before,
+body.no-animations *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+body.compact-cards .main-content,
+body.compact-cards .box,
+body.compact-cards .widget,
+body.compact-cards .content-container,
+body.compact-cards .settings-card,
+body.compact-cards .note-card,
+body.compact-cards .stats-page-card,
+body.compact-cards .chart-wrapper,
+body.compact-cards .stat-card {
+    padding: 12px;
+    border-radius: 12px;
+}
+
+body.sidebar-style-solid .sidebar {
+    background: #234732;
+    backdrop-filter: none;
+}
+
+body.sidebar-style-minimal .sidebar {
+    background: rgba(45, 90, 61, 0.75);
+    border-right-color: rgba(255, 255, 255, 0.2);
+    box-shadow: none;
+}
+
+body.sidebar-style-minimal .nav-item {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+body.content-width-wide .main-content,
+body.content-width-wide .settings-overlay {
+    width: 90vw;
+}
+
+body.content-width-compact .main-content,
+body.content-width-compact .settings-overlay {
+    width: 70vw;
+    max-width: 980px;
+}
+
+body.corners-sharp .main-content,
+body.corners-sharp .box,
+body.corners-sharp .widget,
+body.corners-sharp .settings-card,
+body.corners-sharp .note-card,
+body.corners-sharp .settings-modal-content,
+body.corners-sharp .stats-page-card,
+body.corners-sharp .stat-card {
+    border-radius: 6px;
+}
+
+body.corners-rounded .main-content,
+body.corners-rounded .box,
+body.corners-rounded .widget,
+body.corners-rounded .settings-card,
+body.corners-rounded .note-card,
+body.corners-rounded .settings-modal-content,
+body.corners-rounded .stats-page-card,
+body.corners-rounded .stat-card {
+    border-radius: 28px;
+}
+
+body.hide-footer footer {
+    display: none;
+}
+
+body.hide-footer {
+    padding-bottom: 16px;
+}
+
+body.high-contrast-text,
+body.high-contrast-text .main-content,
+body.high-contrast-text .box,
+body.high-contrast-text .widget,
+body.high-contrast-text .settings-card,
+body.high-contrast-text .note-card,
+body.high-contrast-text .stats-page-insight-item,
+body.high-contrast-text .deadline-item,
+body.high-contrast-text .goal-text,
+body.high-contrast-text .note-card-preview,
+body.high-contrast-text .note-card-full {
+    color: #111111 !important;
+}
+
+body.dark-mode.high-contrast-text,
+body.dark-mode.high-contrast-text .main-content,
+body.dark-mode.high-contrast-text .box,
+body.dark-mode.high-contrast-text .widget,
+body.dark-mode.high-contrast-text .settings-card,
+body.dark-mode.high-contrast-text .note-card,
+body.dark-mode.high-contrast-text .stats-page-insight-item,
+body.dark-mode.high-contrast-text .deadline-item,
+body.dark-mode.high-contrast-text .goal-text,
+body.dark-mode.high-contrast-text .note-card-preview,
+body.dark-mode.high-contrast-text .note-card-full,
+body.dark-mode.high-contrast-text .main-content h1,
+body.dark-mode.high-contrast-text .main-content h2,
+body.dark-mode.high-contrast-text .settings-row label,
+body.dark-mode.high-contrast-text .settings-btn {
+    color: #ffffff !important;
+}
+
+@media (max-width: 1024px) {
+    body.content-width-wide .main-content,
+    body.content-width-compact .main-content,
+    body.content-width-wide .settings-overlay,
+    body.content-width-compact .settings-overlay {
+        width: 92vw;
+    }
+}
+
 /* Containers */
 .container {
     display: flex;
@@ -2625,6 +2839,13 @@ details summary::after {
 details[open] summary::after {
     transform: rotate(180deg);
 }
+
+.about-panel {
+    background: #ffffff;
+    padding: 1px 12px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
 /* ================== PAGE-SPECIFIC: NOTES CARD GRID ================== */
 
 /* Page header row (title + New Note button side by side) */
@@ -3291,6 +3512,123 @@ body.comfortable-layout {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+}
+
+/* Dark mode readability for About and Notes modal surfaces */
+body.dark-mode details summary,
+body.dark-mode .about-panel {
+    color: #e9f4ec;
+}
+
+body.dark-mode .about-panel {
+    background: #24382b;
+    border-color: #4e6a58;
+}
+
+body.dark-mode .note-modal {
+    background: #1f2f24;
+    border: 1px solid #4e6a58;
+}
+
+body.dark-mode .modal-header span,
+body.dark-mode .modal-title-input,
+body.dark-mode .modal-select,
+body.dark-mode .rich-editor,
+body.dark-mode .modal-color-label {
+    color: #e9f4ec;
+}
+
+body.dark-mode .modal-title-input,
+body.dark-mode .modal-select {
+    background: #273a2d;
+    border-color: #4e6a58;
+}
+
+body.dark-mode .rich-toolbar {
+    background: #2a3f31;
+    border-color: #4e6a58;
+}
+
+body.dark-mode .rich-btn {
+    background: #2f4736;
+    border-color: #4e6a58;
+    color: #e9f4ec;
+}
+
+body.dark-mode .rich-btn:hover {
+    background: #3a5843;
+}
+
+body.dark-mode .rich-editor {
+    background: #273a2d;
+    border-color: #4e6a58;
+}
+
+body.dark-mode .rich-editor:empty::before {
+    color: #b9ccbF;
+}
+
+body.dark-mode .modal-close-btn {
+    color: #d6e7da;
+}
+
+@media (prefers-color-scheme: dark) {
+    details summary,
+    .about-panel {
+        color: #e9f4ec;
+    }
+
+    .about-panel {
+        background: #24382b;
+        border-color: #4e6a58;
+    }
+
+    .note-modal {
+        background: #1f2f24;
+        border: 1px solid #4e6a58;
+    }
+
+    .modal-header span,
+    .modal-title-input,
+    .modal-select,
+    .rich-editor,
+    .modal-color-label {
+        color: #e9f4ec;
+    }
+
+    .modal-title-input,
+    .modal-select {
+        background: #273a2d;
+        border-color: #4e6a58;
+    }
+
+    .rich-toolbar {
+        background: #2a3f31;
+        border-color: #4e6a58;
+    }
+
+    .rich-btn {
+        background: #2f4736;
+        border-color: #4e6a58;
+        color: #e9f4ec;
+    }
+
+    .rich-btn:hover {
+        background: #3a5843;
+    }
+
+    .rich-editor {
+        background: #273a2d;
+        border-color: #4e6a58;
+    }
+
+    .rich-editor:empty::before {
+        color: #b9ccbf;
+    }
+
+    .modal-close-btn {
+        color: #d6e7da;
+    }
 }
 
 /* ── Responsive tweaks for notes grid ─────────────────────────────────── */
