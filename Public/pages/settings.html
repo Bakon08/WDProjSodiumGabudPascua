@@ -57,22 +57,6 @@
             font-size: 18px;
         }
 
-        .settings-maintenance-card {
-            border-style: dashed;
-        }
-
-        .settings-maintenance-note {
-            margin: 0 0 12px;
-            color: var(--stone-gray);
-            font-size: 0.95rem;
-        }
-
-        .settings-maintenance-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
         .settings-row {
             display: flex;
             justify-content: space-between;
@@ -202,7 +186,7 @@
     <div class="main-content">
         <details>
             <summary>About</summary>
-            <div style="background-color: white; padding: 1px; border: 1px solid #ccc; border-radius: 15px;">
+            <div class="about-panel">
                 <p>
                     This page contains your basic app settings. Use these controls to set your display style,
                     notification behavior, and default planner preferences.
@@ -212,8 +196,8 @@
     </div>
 
     <section class="settings-overlay">
-        <h2><i class="fas fa-sliders-h"></i> Settings Overlay</h2>
-        <p>Rough version for now. You can wire these controls to localStorage later.</p>
+        <h2><i class="fas fa-sliders-h"></i> Personalize Lockin</h2>
+        <p>Changes apply instantly and are saved for every page.</p>
 
         <div class="settings-grid">
             <article class="settings-card">
@@ -243,28 +227,86 @@
             <article class="settings-card">
                 <h3>Appearance</h3>
                 <div class="settings-row">
+                    <label for="themeMode">Theme</label>
+                    <select id="themeMode">
+                        <option value="Light">Light</option>
+                        <option value="Dark">Dark</option>
+                        <option value="Auto">Auto</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="fontScale">Font Size</label>
+                    <select id="fontScale">
+                        <option value="Normal">Normal</option>
+                        <option value="Small">Small</option>
+                        <option value="Large">Large</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="accentColor">Accent</label>
+                    <select id="accentColor">
+                        <option value="Sage">Sage</option>
+                        <option value="Ocean">Ocean</option>
+                        <option value="Sunset">Sunset</option>
+                        <option value="Rose">Rose</option>
+                    </select>
+                </div>
+                <div class="settings-row">
                     <label for="density">Layout Density</label>
                     <select id="density">
-                        <option>Comfortable</option>
-                        <option>Compact</option>
+                        <option value="Comfortable">Comfortable</option>
+                        <option value="Compact">Compact</option>
                     </select>
                 </div>
                 <div class="settings-row">
                     <label for="startPage">Start Page</label>
                     <select id="startPage">
-                        <option>Dashboard</option>
-                        <option>Planner</option>
-                        <option>Goals</option>
+                        <option value="Dashboard">Dashboard</option>
+                        <option value="Planner">Planner</option>
+                        <option value="Goals">Goals</option>
+                        <option value="Notes">Notes</option>
+                        <option value="Stats">Stats</option>
                     </select>
                 </div>
-            </article>
-
-            <article class="settings-card settings-maintenance-card">
-                <h3>Maintenance</h3>
-                <p class="settings-maintenance-note">Generate demo content or wipe all saved app data.</p>
-                <div class="settings-maintenance-actions">
-                    <button id="generateSampleDataBtn" class="settings-btn settings-btn-sage" type="button">Generate Sample Data</button>
-                    <button id="clearAllDataBtn" class="settings-btn settings-btn-danger" type="button">Clear All Data</button>
+                <div class="settings-row">
+                    <label for="animationsEnabled">Animations</label>
+                    <input id="animationsEnabled" type="checkbox" checked>
+                </div>
+                <div class="settings-row">
+                    <label for="compactCards">Compact Cards</label>
+                    <input id="compactCards" type="checkbox">
+                </div>
+                <div class="settings-row">
+                    <label for="sidebarStyle">Sidebar Style</label>
+                    <select id="sidebarStyle">
+                        <option value="Glass">Glass</option>
+                        <option value="Solid">Solid</option>
+                        <option value="Minimal">Minimal</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="contentWidth">Content Width</label>
+                    <select id="contentWidth">
+                        <option value="Standard">Standard</option>
+                        <option value="Wide">Wide</option>
+                        <option value="Compact">Compact</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="cornerStyle">Corner Style</label>
+                    <select id="cornerStyle">
+                        <option value="Soft">Soft</option>
+                        <option value="Sharp">Sharp</option>
+                        <option value="Rounded">Rounded</option>
+                    </select>
+                </div>
+                <div class="settings-row">
+                    <label for="showFooter">Show Footer</label>
+                    <input id="showFooter" type="checkbox" checked>
+                </div>
+                <div class="settings-row">
+                    <label for="highContrastText">High Contrast Text</label>
+                    <input id="highContrastText" type="checkbox">
                 </div>
             </article>
         </div>
@@ -312,7 +354,6 @@
     </nav>
 
     <script src="../js/index.js"></script>
-    <script src="../js/sample-data.js"></script>
     <script src="../js/settings.js"></script>
 </body>
 </html>
