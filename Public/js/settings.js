@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const defaultSettings = {
     displayName: '',
     email: '',
-    deadlineAlerts: true,
-    dailyReminder: true,
     density: 'Comfortable',
     startPage: 'Dashboard',
     themeMode: 'Light',
@@ -70,18 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="settings-row">
                   <label for="email">Email</label>
                   <input id="email" type="email" placeholder="name@email.com">
-                </div>
-              </article>
-
-              <article class="settings-card">
-                <h3>Notifications</h3>
-                <div class="settings-row">
-                  <label for="deadlineAlerts">Deadline Alerts</label>
-                  <input id="deadlineAlerts" type="checkbox" checked>
-                </div>
-                <div class="settings-row">
-                  <label for="dailyReminder">Daily Reminder</label>
-                  <input id="dailyReminder" type="checkbox" checked>
                 </div>
               </article>
 
