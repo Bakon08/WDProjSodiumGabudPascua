@@ -6,10 +6,12 @@ const saveTaskBtn = document.getElementById("saveTaskBtn");
 const cancelTaskBtn = document.getElementById("cancelTaskBtn");
 const taskTitle = document.getElementById("taskTitle");
 const taskType = document.getElementById("taskType");
+const taskPriority = document.getElementById("taskPriority");
 const taskProgress = document.getElementById("taskProgress");
 const plannerDueDate = document.getElementById("plannerDueDate");
 const relatedGoal = document.getElementById("relatedGoal");
 const goalFilter = document.getElementById("goalFilter");
+const priorityFilterButtons = document.querySelectorAll(".priority-filter-btn");
 
 const tasksBody = document.getElementById("tasksBody");
 const completedTasksBody = document.getElementById("completedTasksBody");
@@ -21,6 +23,7 @@ const archiveCount = document.getElementById("archiveCount");
 let tasks = [];
 let editIndex = null;
 let activeGoalFilter = "";
+let activePriorityFilter = "all";
 let goalLookup = new Map();
 
 function makeId(prefix) {
@@ -82,6 +85,29 @@ function getGoalLabel(goal) {
   return `${typeLabel}: ${goal.text}`;
 }
 
+function getPriorityLabel(priority) {
+  return ["High", "Medium", "Low"].includes(priority) ? priority : "Medium";
+}
+
+function getPriorityClass(priority) {
+  if (priority === "High") return "priority-high";
+  if (priority === "Low") return "priority-low";
+  return "priority-medium";
+}
+
+function applyPriorityFilter(task) {
+  if (!activePriorityFilter || activePriorityFilter === "all") {
+    return true;
+  }
+  return getPriorityLabel(task.priority) === activePriorityFilter;
+}
+
+function updatePriorityFilterButtons() {
+  priorityFilterButtons.forEach(button => {
+    button.classList.toggle("active", button.dataset.priority === activePriorityFilter);
+  });
+}
+
 function renderGoalSelectors() {
   const currentRelatedSelection = relatedGoal ? relatedGoal.value : "";
   const currentFilterSelection = goalFilter ? goalFilter.value : activeGoalFilter;
@@ -128,8 +154,10 @@ function normalizeTask(task) {
     dueDate: task.dueDate || "",
     progress: task.progress || "Not Started",
     type: task.type || "School",
+    priority: getPriorityLabel(task.priority),
     completed: !!task.completed,
     completedDate: task.completedDate || null,
+    completedAt: task.completedAt || (task.completedDate ? `${task.completedDate}T12:00:00` : null),
     goalId: task.goalId || null
   };
 
@@ -206,12 +234,13 @@ function renderTasks() {
   const activeTasks = tasks
     .map((task, index) => ({ task, index }))
     .filter(item => !item.task.completed)
-    .filter(item => applyGoalFilter(item.task));
+    .filter(item => applyGoalFilter(item.task))
+    .filter(item => applyPriorityFilter(item.task));
 
   if (activeTasks.length === 0) {
     tasksBody.innerHTML = `
       <tr>
-        <td colspan="6">
+        <td colspan="7">
           <div class="empty-state">
             <div class="empty-state-icon">📭</div>
             <div class="empty-state-text">No active tasks</div>
@@ -228,6 +257,7 @@ function renderTasks() {
         <td>${task.dueDate || "-"}</td>
         <td>${task.progress}</td>
         <td>${task.type}</td>
+        <td><span class="priority-badge ${getPriorityClass(task.priority)}">${getPriorityLabel(task.priority)}</span></td>
         <td>${getGoalProgressChip(task)}</td>
         <td>
           <button class="complete-btn" title="Mark as Complete">✓</button>
@@ -252,14 +282,15 @@ function renderCompletedTasks() {
   const completedTasks = tasks
     .map((task, index) => ({ task, index }))
     .filter(item => item.task.completed)
-    .filter(item => applyGoalFilter(item.task));
+    .filter(item => applyGoalFilter(item.task))
+    .filter(item => applyPriorityFilter(item.task));
 
   archiveCount.textContent = `(${completedTasks.length})`;
 
   if (completedTasks.length === 0) {
     completedTasksBody.innerHTML = `
       <tr>
-        <td colspan="5">
+        <td colspan="6">
           <div class="empty-state">
             <div class="empty-state-icon">🎯</div>
             <div class="empty-state-text">No completed tasks yet</div>
@@ -275,6 +306,7 @@ function renderCompletedTasks() {
         <td style="text-decoration: line-through; opacity: 0.7;">${task.title}</td>
         <td>${task.completedDate || task.dueDate || "-"}</td>
         <td>${task.type}</td>
+        <td><span class="priority-badge ${getPriorityClass(task.priority)}">${getPriorityLabel(task.priority)}</span></td>
         <td>${getGoalProgressChip(task)}</td>
         <td>
           <button class="restore-btn" title="Restore to Active">↩️</button>
@@ -303,8 +335,10 @@ function saveTask() {
     dueDate: plannerDueDate.value,
     progress: targetProgress,
     type: taskType.value,
+    priority: taskPriority ? getPriorityLabel(taskPriority.value) : "Medium",
     completed,
     completedDate: completed ? (editIndex !== null ? tasks[editIndex].completedDate || new Date().toISOString().split("T")[0] : new Date().toISOString().split("T")[0]) : null,
+    completedAt: completed ? (editIndex !== null ? tasks[editIndex].completedAt || new Date().toISOString() : new Date().toISOString()) : null,
     goalId: relatedGoal?.value || null
   };
 
@@ -322,9 +356,10 @@ function saveTask() {
 }
 
 function completeTask(index) {
-  const today = new Date().toISOString().split("T")[0];
+  const now = new Date();
   tasks[index].completed = true;
-  tasks[index].completedDate = today;
+  tasks[index].completedDate = now.toISOString().split("T")[0];
+  tasks[index].completedAt = now.toISOString();
   tasks[index].progress = "Completed";
 
   saveTasksAndSyncGoals();
@@ -335,6 +370,7 @@ function completeTask(index) {
 function restoreTask(index) {
   tasks[index].completed = false;
   tasks[index].completedDate = null;
+  tasks[index].completedAt = null;
   tasks[index].progress = "In Progress";
 
   saveTasksAndSyncGoals();
@@ -348,6 +384,9 @@ function editTask(index) {
   plannerDueDate.value = task.dueDate;
   taskProgress.value = task.progress;
   taskType.value = task.type;
+  if (taskPriority) {
+    taskPriority.value = getPriorityLabel(task.priority);
+  }
   if (relatedGoal) {
     relatedGoal.value = task.goalId || "";
   }
@@ -376,6 +415,9 @@ function clearForm() {
   plannerDueDate.value = "";
   taskProgress.value = "Not Started";
   taskType.value = "School";
+  if (taskPriority) {
+    taskPriority.value = "Medium";
+  }
   if (relatedGoal) {
     relatedGoal.value = "";
   }
@@ -422,6 +464,14 @@ if (goalFilter) {
   });
 }
 
+priorityFilterButtons.forEach(button => {
+  button.addEventListener("click", function() {
+    activePriorityFilter = button.dataset.priority || "all";
+    updatePriorityFilterButtons();
+    renderTasks();
+  });
+});
+
 archiveToggle.addEventListener("click", () => {
   const isHidden = archiveContent.style.display === "none";
   archiveContent.style.display = isHidden ? "block" : "none";
@@ -437,3 +487,4 @@ window.addEventListener("storage", function(event) {
 });
 
 refreshPlannerView();
+updatePriorityFilterButtons();

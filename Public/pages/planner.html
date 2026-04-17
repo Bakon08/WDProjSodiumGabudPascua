@@ -95,19 +95,15 @@
          <summary>About</summary>
          <div class="about-panel">
           <p> 
-            This will be the "main" webpage of the website. This is where you write 
-            down the tasks you have and when they are due. You are also able to update 
-            your progress on the task you are working on. We will add a feature where you
-            will be able to write down the task type like school, house, family, personal, etc..
-            This would help you organize you tasks across different backgrounds.
+            <strong>How it works:</strong> Planner stores all tasks with due date, type, priority,
+            progress, and optional goal link. Active tasks are sorted by due date, while completed tasks
+            move to the archive so they still count in analytics.
           </p>
 
           <p>
-            This is the typical planner website where you can write down tasks but we format 
-            it in a way that is very organized and easy to understand. It would also prioritize the 
-            earliest due date to be on the top while the later ones to be at the bottom. There isn't 
-            anything too special about this webpage but because it is connected to the other 
-            webpages, it becomes a very powerful tool for productivity.
+            <strong>How to use it:</strong> Add tasks from the top entry bar, assign realistic priority,
+            and use Goal and Priority filters to focus your list. Update progress as you work,
+            mark tasks complete when finished, and restore archived items if needed.
           </p>
         </div>
       </details>
@@ -134,6 +130,11 @@
           <option value="House">House</option>
           <option value="Work">Work</option>
         </select>
+        <select id="taskPriority">
+          <option value="High">High Priority</option>
+          <option value="Medium" selected>Medium Priority</option>
+          <option value="Low">Low Priority</option>
+        </select>
         <select id="taskProgress">
           <option value="Not Started">Not Started</option>
           <option value="In Progress">In Progress</option>
@@ -151,6 +152,16 @@
         <select id="goalFilter">
           <option value="">All Goals</option>
         </select>
+      </div>
+
+      <div class="planner-priority-filter-bar" aria-label="Filter tasks by priority">
+        <span class="planner-filter-label">Priority Filter:</span>
+        <div class="planner-priority-filter-buttons">
+          <button type="button" class="priority-filter-btn active" data-priority="all">All Tasks</button>
+          <button type="button" class="priority-filter-btn high" data-priority="High">High Priority</button>
+          <button type="button" class="priority-filter-btn medium" data-priority="Medium">Medium Priority</button>
+          <button type="button" class="priority-filter-btn low" data-priority="Low">Low Priority</button>
+        </div>
       </div>
 
     <!-- 
@@ -178,6 +189,7 @@
               <th>Progress</th>
               <!-- Task type/category column -->
               <th style="word-break: break-all;">Task Type</th>
+              <th>Priority</th>
               <th>Goal Progress</th>
               <!-- Action buttons column (Complete/Edit/Delete) -->
               <th>Actions</th>
@@ -214,6 +226,7 @@
                   <th>Task</th>
                   <th>Completed Date</th>
                   <th>Type</th>
+                  <th>Priority</th>
                   <th>Goal Progress</th>
                   <!-- Restore or permanently delete -->
                   <th>Actions</th>

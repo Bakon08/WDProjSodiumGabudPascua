@@ -125,9 +125,13 @@ function getGoalWidget(goal) {
       return dateB - dateA;
     });
 
-  const total = linkedTasks.length;
-  const completed = linkedTasks.filter(task => task.completed).length;
-  const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+  const linkedTaskIds = Array.isArray(goal.linkedTaskIds) ? goal.linkedTaskIds : [];
+  const linkedTaskPool = linkedTaskIds.length > 0
+    ? linkedTasks.filter(task => linkedTaskIds.includes(task.id))
+    : linkedTasks;
+  const total = linkedTaskIds.length > 0 ? linkedTaskIds.length : linkedTaskPool.length;
+  const completed = total > 0 ? linkedTaskPool.filter(task => task.completed).length : 0;
+  const percent = total > 0 ? Math.round((completed / total) * 100) : goal.completed ? 100 : 0;
   const recentTasks = linkedTasks.slice(0, 3);
 
   const taskItemsHtml = recentTasks.length === 0
@@ -142,7 +146,7 @@ function getGoalWidget(goal) {
   return `
     <div class="goal-task-widget">
       <div class="goal-task-stats">
-        <span>${completed}/${total} tasks done</span>
+        <span>${total > 0 ? `${completed}/${total} tasks done` : (goal.completed ? 'Marked complete' : 'No linked tasks yet')}</span>
         <span>${percent}%</span>
       </div>
       <div class="goal-task-progress-bar">

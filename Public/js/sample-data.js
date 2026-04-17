@@ -88,6 +88,13 @@
     return date.toISOString().split('T')[0];
   }
 
+  function getRelativeDateTime(daysOffset, hoursOffset, minutesOffset) {
+    const date = new Date();
+    date.setDate(date.getDate() + daysOffset);
+    date.setHours(hoursOffset, minutesOffset || 0, 0, 0);
+    return date.toISOString();
+  }
+
   function normalizeTasksWithIds(rawTasks) {
     if (!Array.isArray(rawTasks)) {
       return [];
@@ -100,38 +107,156 @@
     }));
   }
 
-  function buildSampleTasks(goalIdsByType) {
-    const taskTemplates = [
-      { title: 'Review algebra notes', offset: -7, progress: 'Completed', type: 'School', completed: true, completedDateOffset: -7, goalType: 'annual' },
-      { title: 'Water indoor plants', offset: -6, progress: 'Completed', type: 'House', completed: true, completedDateOffset: -6, goalType: 'daily' },
-      { title: 'Plan project outline', offset: -5, progress: 'Completed', type: 'Work', completed: true, completedDateOffset: -5, goalType: 'quarterly' },
-      { title: 'Finish science slides', offset: -4, progress: 'Completed', type: 'School', completed: true, completedDateOffset: -4, goalType: 'monthly' },
-      { title: 'Fold laundry', offset: -3, progress: 'Completed', type: 'House', completed: true, completedDateOffset: -3, goalType: 'weekly' },
-      { title: 'Email group members', offset: -2, progress: 'In Progress', type: 'Work', completed: false, completedDate: null, goalType: 'quarterly' },
-      { title: 'Clean study desk', offset: -1, progress: 'Completed', type: 'Personal', completed: true, completedDateOffset: -1, goalType: 'daily' },
-      { title: 'Draft book summary', offset: 0, progress: 'In Progress', type: 'School', completed: false, completedDate: null, goalType: 'annual' },
-      { title: 'Weekend reflection', offset: 1, progress: 'Not Started', type: 'Personal', completed: false, completedDate: null, goalType: 'weekly' },
-      { title: 'Prepare weekly review', offset: 2, progress: 'In Progress', type: 'Personal', completed: false, completedDate: null, goalType: 'monthly' },
-      { title: 'Pack study materials', offset: 3, progress: 'Not Started', type: 'School', completed: false, completedDate: null, goalType: 'quarterly' },
-      { title: 'Call project teammates', offset: 4, progress: 'In Progress', type: 'Work', completed: false, completedDate: null, goalType: 'annual' },
-      { title: 'Finalize weekend schedule', offset: 5, progress: 'Not Started', type: 'Personal', completed: false, completedDate: null, goalType: 'daily' },
-      { title: 'Organize revision folder', offset: 6, progress: 'In Progress', type: 'School', completed: false, completedDate: null, goalType: 'monthly' },
-      { title: 'Sunday reflection journal', offset: 7, progress: 'Not Started', type: 'Personal', completed: false, completedDate: null, goalType: 'weekly' }
-    ];
+  const sampleSeedBlueprints = [
+    {
+      type: 'annual',
+      text: 'Finish the capstone project with clean documentation.',
+      completed: false,
+      tasks: [
+        { title: 'Outline capstone milestones', offset: -10, progress: 'Completed', type: 'School', priority: 'High', completed: true, completedDateOffset: -8, completionHour: 20, completionMinute: 15 },
+        { title: 'Draft documentation checklist', offset: -4, progress: 'In Progress', type: 'School', priority: 'Medium', completed: false },
+        { title: 'Review final presentation notes', offset: 2, progress: 'Not Started', type: 'School', priority: 'Low', completed: false },
+        { title: 'Rehearse capstone demo script', offset: -2, progress: 'Completed', type: 'School', priority: 'High', completed: true, completedDateOffset: 0, completionHour: 10, completionMinute: 5 }
+      ]
+    },
+    {
+      type: 'quarterly',
+      text: 'Improve grades in all core subjects before the next quarter ends.',
+      completed: false,
+      tasks: [
+        { title: 'Plan weekly study schedule', offset: -6, progress: 'Completed', type: 'School', priority: 'High', completed: true, completedDateOffset: -6, completionHour: 7, completionMinute: 40 },
+        { title: 'Email group members', offset: -2, progress: 'In Progress', type: 'Work', priority: 'Medium', completed: false },
+        { title: 'Pack study materials', offset: 3, progress: 'Not Started', type: 'School', priority: 'Low', completed: false },
+        { title: 'Solve practice exam set', offset: -3, progress: 'Completed', type: 'School', priority: 'High', completed: true, completedDateOffset: -2, completionHour: 14, completionMinute: 25 }
+      ]
+    },
+    {
+      type: 'monthly',
+      text: 'Submit every major assignment at least one day early.',
+      completed: true,
+      tasks: [
+        { title: 'Finish science slides', offset: -4, progress: 'Completed', type: 'School', priority: 'High', completed: true, completedDateOffset: -4, completionHour: 16, completionMinute: 50 },
+        { title: 'Prepare weekly review', offset: 2, progress: 'In Progress', type: 'Personal', priority: 'Medium', completed: false },
+        { title: 'Organize revision folder', offset: 6, progress: 'In Progress', type: 'School', priority: 'Low', completed: false },
+        { title: 'Submit math worksheet early', offset: -1, progress: 'Completed', type: 'School', priority: 'Medium', completed: true, completedDateOffset: -1, completionHour: 11, completionMinute: 35 }
+      ]
+    },
+    {
+      type: 'weekly',
+      text: 'Review planner tasks every Sunday night.',
+      completed: false,
+      tasks: [
+        { title: 'Fold laundry', offset: -3, progress: 'Completed', type: 'House', priority: 'Low', completed: true, completedDateOffset: -3, completionHour: 18, completionMinute: 10 },
+        { title: 'Weekend reflection', offset: 1, progress: 'Not Started', type: 'Personal', priority: 'Medium', completed: false },
+        { title: 'Sunday reflection journal', offset: 7, progress: 'Not Started', type: 'Personal', priority: 'High', completed: false },
+        { title: 'Reset planner priorities', offset: 0, progress: 'Completed', type: 'Personal', priority: 'High', completed: true, completedDateOffset: 0, completionHour: 21, completionMinute: 5 }
+      ]
+    },
+    {
+      type: 'daily',
+      text: 'Plan the next three priorities before lunch.',
+      completed: false,
+      tasks: [
+        { title: 'Water indoor plants', offset: -6, progress: 'Completed', type: 'House', priority: 'Low', completed: true, completedDateOffset: -6, completionHour: 6, completionMinute: 55 },
+        { title: 'Clean study desk', offset: -1, progress: 'Completed', type: 'Personal', priority: 'High', completed: true, completedDateOffset: -1, completionHour: 9, completionMinute: 10 },
+        { title: 'Finalize weekend schedule', offset: 5, progress: 'Not Started', type: 'Personal', priority: 'Medium', completed: false },
+        { title: 'Daily top-3 check-in', offset: -1, progress: 'Completed', type: 'Personal', priority: 'High', completed: true, completedDateOffset: 0, completionHour: 12, completionMinute: 20 }
+      ]
+    }
+  ];
 
-    return taskTemplates.map(function(task) {
-      return {
-        id: makeSampleId('sample-task'),
+  const unlinkedSampleTasks = [
+    {
+      title: 'Sort backpack and notes',
+      offset: -1,
+      progress: 'Completed',
+      type: 'School',
+      priority: 'Medium',
+      completed: true,
+      completedDateOffset: -1,
+      completionHour: 15,
+      completionMinute: 45
+    },
+    {
+      title: 'Prep tomorrow\'s desk setup',
+      offset: 4,
+      progress: 'Not Started',
+      type: 'Personal',
+      priority: 'Low',
+      completed: false
+    },
+    {
+      title: 'Follow up on science questions',
+      offset: -3,
+      progress: 'Completed',
+      type: 'School',
+      priority: 'High',
+      completed: true,
+      completedDateOffset: -2,
+      completionHour: 19,
+      completionMinute: 0
+    }
+  ];
+
+  function buildSampleGoalsAndTasks() {
+    const goals = { annual: [], quarterly: [], monthly: [], weekly: [], daily: [] };
+    const goalIdsByType = {};
+    const tasks = [];
+
+    sampleSeedBlueprints.forEach(function(seed) {
+      const goalId = makeSampleId('sample-goal');
+      const linkedTaskIds = [];
+
+      goalIdsByType[seed.type] = goalId;
+      goals[seed.type].push({
+        id: goalId,
+        text: seed.text,
+        completed: !!seed.completed,
+        isSample: true,
+        linkedTaskIds
+      });
+
+      seed.tasks.forEach(function(task) {
+        const taskId = makeSampleId('sample-task');
+        const completionHour = Number.isInteger(task.completionHour) ? task.completionHour : 8 + (tasks.length % 9);
+        const completionMinute = Number.isInteger(task.completionMinute) ? task.completionMinute : 30;
+        linkedTaskIds.push(taskId);
+        tasks.push({
+          id: taskId,
+          isSample: true,
+          title: task.title,
+          dueDate: getRelativeDate(task.offset),
+          progress: task.progress,
+          type: task.type,
+          priority: task.priority || 'Medium',
+          completed: task.completed,
+          completedDate: task.completed ? getRelativeDate(task.completedDateOffset ?? task.offset) : null,
+          completedAt: task.completed ? getRelativeDateTime(task.completedDateOffset ?? task.offset, completionHour, completionMinute) : null,
+          goalId
+        });
+      });
+    });
+
+    unlinkedSampleTasks.forEach(function(task) {
+      const taskId = makeSampleId('sample-task');
+      const completionHour = Number.isInteger(task.completionHour) ? task.completionHour : 18;
+      const completionMinute = Number.isInteger(task.completionMinute) ? task.completionMinute : 45;
+      tasks.push({
+        id: taskId,
         isSample: true,
         title: task.title,
         dueDate: getRelativeDate(task.offset),
         progress: task.progress,
         type: task.type,
+        priority: task.priority || 'Medium',
         completed: task.completed,
         completedDate: task.completed ? getRelativeDate(task.completedDateOffset ?? task.offset) : null,
-        goalId: goalIdsByType?.[task.goalType] || null
-      };
+        completedAt: task.completed ? getRelativeDateTime(task.completedDateOffset ?? task.offset, completionHour, completionMinute) : null,
+        goalId: null
+      });
     });
+
+    return { goals, goalIdsByType, tasks };
   }
 
   function buildSampleNotes() {
@@ -184,41 +309,6 @@
     ];
   }
 
-  function buildSampleGoals() {
-    const annualId = makeSampleId('sample-goal');
-    const quarterlyId = makeSampleId('sample-goal');
-    const monthlyId = makeSampleId('sample-goal');
-    const weeklyId = makeSampleId('sample-goal');
-    const dailyId = makeSampleId('sample-goal');
-
-    return {
-      goals: {
-        annual: [
-          { id: annualId, text: 'Finish the capstone project with clean documentation.', completed: false, isSample: true, linkedTaskIds: [] }
-        ],
-        quarterly: [
-          { id: quarterlyId, text: 'Improve grades in all core subjects before the next quarter ends.', completed: false, isSample: true, linkedTaskIds: [] }
-        ],
-        monthly: [
-          { id: monthlyId, text: 'Submit every major assignment at least one day early.', completed: true, isSample: true, linkedTaskIds: [] }
-        ],
-        weekly: [
-          { id: weeklyId, text: 'Review planner tasks every Sunday night.', completed: false, isSample: true, linkedTaskIds: [] }
-        ],
-        daily: [
-          { id: dailyId, text: 'Plan the next three priorities before lunch.', completed: false, isSample: true, linkedTaskIds: [] }
-        ]
-      },
-      goalIdsByType: {
-        annual: annualId,
-        quarterly: quarterlyId,
-        monthly: monthlyId,
-        weekly: weeklyId,
-        daily: dailyId
-      }
-    };
-  }
-
   function syncGoalLinkedTaskIds(goalsObject, allTasks) {
     const taskIdsByGoal = {};
     allTasks.forEach(task => {
@@ -245,11 +335,11 @@
     const existingTasks = normalizeTasksWithIds(JSON.parse(localStorage.getItem('tasks') || '[]'));
     const existingNotes = JSON.parse(localStorage.getItem('notes') || '[]');
     const existingGoals = readStoredGoals();
-    const sampleGoalBundle = buildSampleGoals();
+    const sampleGoalBundle = buildSampleGoalsAndTasks();
     const sampleGoals = sampleGoalBundle.goals;
     const safeTasks = Array.isArray(existingTasks) ? existingTasks : [];
     const safeNotes = Array.isArray(existingNotes) ? existingNotes : [];
-    const sampleTasks = buildSampleTasks(sampleGoalBundle.goalIdsByType);
+    const sampleTasks = sampleGoalBundle.tasks;
     const mergedTasks = [...safeTasks, ...sampleTasks];
 
     const mergedGoals = {

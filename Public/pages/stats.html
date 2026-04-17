@@ -1,42 +1,14 @@
-<!-- 
-    ============================================
-    STATISTICS PAGE - Productivity Analytics
-    ============================================
-    Displays comprehensive productivity metrics:
-    - Key performance indicators (cards)
-    - Task completion charts (7-day bar chart)
-    - Category breakdown (doughnut chart)
-    - Goals overview (grouped bar chart)
-    - AI-generated insights
-    ============================================
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Character encoding for proper text display -->
     <meta charset="UTF-8">
-    <!-- Responsive viewport settings for mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link to main stylesheet -->
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <!-- Font Awesome icons library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js library for creating charts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Page title shown in browser tab -->
     <title>Statistics - Lockin</title>
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="../../Assets/Logo.png">
 </head>
-
 <body>
-    <!-- 
-        ==========================================
-        SIDEBAR NAVIGATION (Desktop/Tablet)
-        ==========================================
-        Navigation bar for larger screens.
-        ==========================================
-    -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <img src="../../Assets/Logo.png" alt="Lockin Logo" class="sidebar-logo">
@@ -70,6 +42,7 @@
                 <div class="nav-indicator"></div>
             </a>
         </nav>
+
         <div class="sidebar-login">
             <button id="authBtn" class="auth-btn">Logout</button>
             <div id="userGreeting" class="user-greeting">Hello, <span id="usernameDisplay"></span></div>
@@ -80,194 +53,205 @@
         </div>
     </aside>
 
-    <!-- 
-        ==========================================
-        ABOUT SECTION
-        ==========================================
-        Collapsible description of Planner page.
-        ==========================================
-    -->
-    <div class="main-content">
-       <details>
-         <summary>About</summary>
-         <div class="about-panel">
-          <p>
-            This web page is where you can see all of your statistics from this website.
-            You will be able to see the number of tasks you have to do and how quick 
-            you are in finishing tasks. You will also be able to see which time of the day 
-            are you most productive and the time you spent on completing tasks.
-         </p>
-
-         <p> 
-            This webpage helps with tracking your pace and to see what works best 
-            for you. With this webpage, you will be able to know when you should work 
-            the most and whether you should complete tasks faster or take a break. 
-            You will see the trends in your work ethic which would help in improving 
-            productivity.
-         </p>
-        </div>
-      </details>
-    </div>
-
-    <!-- 
-        ==========================================
-        MAIN STATISTICS CONTENT
-        ==========================================
-        Dashboard showing all productivity metrics.
-        ==========================================
-    -->
-    <div class="main-content">
-        <h1 style="color: white; margin-bottom: 30px;">📊 Your Productivity Dashboard</h1>
-
-        <!-- 
-            ==========================================
-            KEY METRICS CARDS
-            ==========================================
-            Five cards showing core statistics:
-            1. Total Tasks
-            2. Tasks Completed (with progress bar)
-            3. Completion Rate (with progress bar)
-            4. Goals Completed (with progress bar)
-            5. Most Productive Day
-            ==========================================
-        -->
-        <div class="stats-page-container">
-            <!-- Card 1: Total tasks count -->
-            <div class="stats-page-card">
-                <div class="stats-page-label">Total Tasks</div>
-                <div class="stats-page-number" id="totalTasks">0</div>
+    <main class="main-content stats-page">
+        <section class="stats-hero">
+            <div class="stats-hero-copy">
+                <p class="stats-eyebrow">Analytics</p>
+                <h1>Productivity Dashboard</h1>
+                <p class="stats-hero-text">Track trends, streaks, goal progress, and time patterns from the data already saved in your browser.</p>
             </div>
 
-            <!-- Card 2: Tasks completed with visual progress bar -->
-            <div class="stats-page-card completed">
-                <div class="stats-page-label">Tasks Completed</div>
-                <div class="stats-page-number" id="completedTasks">0</div>
-                <div class="stats-page-progress-bar">
-                    <div class="stats-page-progress-fill" id="tasksProgress" style="width: 0%"></div>
+            <div class="stats-toolbar" aria-label="Stats controls">
+                <label class="stats-toolbar-label" for="statsRange">Date range</label>
+                <select id="statsRange" class="stats-range-select">
+                    <option value="week">Week</option>
+                    <option value="month" selected>Month</option>
+                    <option value="3-month">3-Month</option>
+                    <option value="all">All-Time</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="stats-summary-grid" aria-label="Key productivity metrics">
+            <article class="stats-summary-card">
+                <span class="stats-summary-label">Tasks in Range</span>
+                <strong id="totalTasks" class="stats-summary-value">0</strong>
+                <span class="stats-summary-note">Filtered by the selected date range</span>
+            </article>
+            <article class="stats-summary-card accent">
+                <span class="stats-summary-label">Completed Tasks</span>
+                <strong id="completedTasks" class="stats-summary-value">0</strong>
+                <span class="stats-summary-note">Tasks finished in the selected range</span>
+            </article>
+            <article class="stats-summary-card">
+                <span class="stats-summary-label">Completion Rate</span>
+                <strong id="completionRate" class="stats-summary-value">0%</strong>
+                <div class="stats-summary-progress"><span id="tasksProgress"></span></div>
+            </article>
+            <article class="stats-summary-card">
+                <span class="stats-summary-label">Current Streak</span>
+                <strong id="currentStreak" class="stats-summary-value">0</strong>
+                <span class="stats-summary-note">Consecutive days with completed tasks</span>
+            </article>
+            <article class="stats-summary-card">
+                <span class="stats-summary-label">Longest Streak</span>
+                <strong id="longestStreak" class="stats-summary-value">0</strong>
+                <span class="stats-summary-note">Best run across all saved data</span>
+            </article>
+            <article class="stats-summary-card accent-soft">
+                <span class="stats-summary-label">Goals Completed</span>
+                <strong id="completedGoals" class="stats-summary-value">0</strong>
+                <div class="stats-summary-progress"><span id="goalProgress"></span></div>
+            </article>
+            <article class="stats-summary-card">
+                <span class="stats-summary-label">Best Day</span>
+                <strong id="productiveDay" class="stats-summary-value">-</strong>
+                <span id="productiveCount" class="stats-summary-note">No data yet</span>
+            </article>
+            <article class="stats-summary-card">
+                <span class="stats-summary-label">Best Hour</span>
+                <strong id="productiveHour" class="stats-summary-value">-</strong>
+                <span id="productiveHourCount" class="stats-summary-note">No data yet</span>
+            </article>
+        </section>
+
+        <section class="stats-panel">
+            <header class="stats-panel-header compact">
+                <div>
+                    <p class="stats-panel-kicker">Page Guide</p>
+                    <h2>How this page works</h2>
                 </div>
+            </header>
+            <div class="stats-help-grid">
+                <article class="stats-help-card">
+                    <h3>Date Range</h3>
+                    <p><strong>How it works:</strong> Every metric on this page responds to the selected range. <strong>How to use it:</strong> Start with Month for a balanced view, then compare with Week and 3-Month to spot momentum changes.</p>
+                </article>
+                <article class="stats-help-card">
+                    <h3>Trend Chart</h3>
+                    <p><strong>How it works:</strong> The line chart groups completed tasks into weekly buckets and computes completion rate. <strong>How to use it:</strong> Watch for dips and then check Planner to reduce overload in those weeks.</p>
+                </article>
+                <article class="stats-help-card">
+                    <h3>Time Analysis</h3>
+                    <p><strong>How it works:</strong> Category bars estimate effort and heatmaps count when tasks were completed. <strong>How to use it:</strong> Schedule high-priority tasks during your strongest day/hour blocks.</p>
+                </article>
+                <article class="stats-help-card">
+                    <h3>Goal Progress</h3>
+                    <p><strong>How it works:</strong> Goal progress is based on linked Planner tasks, with fallback to goal completion state when no links exist. <strong>How to use it:</strong> Link tasks to goals in Planner so these bars stay accurate and actionable.</p>
+                </article>
+                <article class="stats-help-card">
+                    <h3>Streaks and Records</h3>
+                    <p><strong>How it works:</strong> Streaks count consecutive days with at least one completed task, and records track all-time bests. <strong>How to use it:</strong> Complete at least one meaningful task daily to keep streaks alive.</p>
+                </article>
+                <article class="stats-help-card">
+                    <h3>How Data Is Computed</h3>
+                    <p><strong>How it works:</strong> Data comes from localStorage task and goal records, including completion timestamps. <strong>How to use it:</strong> Keep task progress updated in Planner and goal links clean so analytics reflect your real workflow.</p>
+                </article>
             </div>
+        </section>
 
-            <!-- Card 3: Completion rate percentage with progress bar -->
-            <div class="stats-page-card">
-                <div class="stats-page-label">Completion Rate</div>
-                <div class="stats-page-number" id="completionRate">0%</div>
-                <div class="stats-page-progress-bar">
-                    <div class="stats-page-progress-fill" id="rateProgress" style="width: 0%"></div>
+        <section class="stats-panel stats-panel-large">
+            <header class="stats-panel-header">
+                <div>
+                    <p class="stats-panel-kicker">Productivity Trends</p>
+                    <h2>Task completion rate over the last 4 weeks</h2>
                 </div>
-            </div>
+                <p class="stats-panel-copy">This line graph tracks weekly completion percentage using the data saved in localStorage.</p>
+            </header>
+            <div id="trendChart" class="stats-chart-shell stats-line-chart" aria-live="polite"></div>
+            <div id="trendSummary" class="stats-panel-footnote"></div>
+        </section>
 
-            <!-- Card 4: Goals completed count with progress bar -->
-            <div class="stats-page-card goals">
-                <div class="stats-page-label">Goals Completed</div>
-                <div class="stats-page-number" id="completedGoals">0</div>
-                <div class="stats-page-progress-bar">
-                    <div class="stats-page-progress-fill" id="goalProgress" style="width: 0%"></div>
+        <section class="stats-panels-grid">
+            <article class="stats-panel">
+                <header class="stats-panel-header compact">
+                    <div>
+                        <p class="stats-panel-kicker">Time Analysis</p>
+                        <h2>Which categories take the most time</h2>
+                    </div>
+                </header>
+                <div id="categoryEffortChart" class="stats-bar-chart" aria-live="polite"></div>
+            </article>
+
+            <article class="stats-panel">
+                <header class="stats-panel-header compact">
+                    <div>
+                        <p class="stats-panel-kicker">Productive Hours</p>
+                        <h2>Completion heatmap by day and hour</h2>
+                    </div>
+                </header>
+                <div id="hourlyHeatmapChart" class="stats-heatmap-shell" aria-live="polite"></div>
+            </article>
+        </section>
+
+        <section class="stats-panel">
+            <header class="stats-panel-header compact">
+                <div>
+                    <p class="stats-panel-kicker">30-Day Streak View</p>
+                    <h2>Calendar heatmap of recent completions</h2>
                 </div>
-            </div>
+            </header>
+            <div id="calendarHeatmap" class="stats-calendar-shell" aria-live="polite"></div>
+        </section>
 
-            <!-- Card 5: Most productive day of the week -->
-            <div class="stats-page-card productivity">
-                <div class="stats-page-label">Most Productive Day</div>
-                <div class="stats-page-number" id="productiveDay">-</div>
-                <div class="stats-page-label" style="font-size: 0.8em; margin-top: 5px;" id="productiveCount"></div>
-            </div>
-        </div>
+        <section class="stats-panel">
+            <header class="stats-panel-header compact">
+                <div>
+                    <p class="stats-panel-kicker">Goal Progress</p>
+                    <h2>Progress bars for each goal</h2>
+                </div>
+                <p class="stats-panel-copy">Goal completion is calculated from linked planner tasks, with fallback support for goals that are already marked complete.</p>
+            </header>
+            <div id="goalProgressList" class="stats-goal-list"></div>
+        </section>
 
-        <!-- 
-            ==========================================
-            CHARTS SECTION
-            ==========================================
-            Two side-by-side charts:
-            1. 7-Day Task Completion (bar chart)
-            2. Tasks by Category (doughnut chart)
-            ==========================================
-        -->
-        <div class="stats-page-charts-container">
-            <!-- Chart 1: Last 7 days task completion trend -->
-            <div class="stats-page-chart-wrapper">
-                <div class="stats-page-chart-title">📈 Tasks Completed (Last 7 Days)</div>
-                <canvas id="tasksChart"></canvas>
-            </div>
+        <section class="stats-panels-grid">
+            <article class="stats-panel">
+                <header class="stats-panel-header compact">
+                    <div>
+                        <p class="stats-panel-kicker">Auto-Generated Insights</p>
+                        <h2>What the data is telling you</h2>
+                    </div>
+                </header>
+                <div id="insightsContent" class="stats-insight-list">
+                    <div class="stats-empty-state">No data available yet. Start adding tasks and goals.</div>
+                </div>
+            </article>
 
-            <!-- Chart 2: Task distribution by category/type -->
-            <div class="stats-page-chart-wrapper">
-                <div class="stats-page-chart-title">🏷️ Tasks by Category</div>
-                <canvas id="categoryChart"></canvas>
-            </div>
-        </div>
+            <article class="stats-panel">
+                <header class="stats-panel-header compact">
+                    <div>
+                        <p class="stats-panel-kicker">Personal Records</p>
+                        <h2>All-time bests</h2>
+                    </div>
+                </header>
+                <div class="stats-record-grid">
+                    <div class="stats-record-card">
+                        <span class="stats-record-label">Total Tasks Completed</span>
+                        <strong id="recordTotalCompleted" class="stats-record-value">0</strong>
+                    </div>
+                    <div class="stats-record-card">
+                        <span class="stats-record-label">Best Completion Day</span>
+                        <strong id="recordBestDay" class="stats-record-value">-</strong>
+                    </div>
+                    <div class="stats-record-card">
+                        <span class="stats-record-label">Best Completion Hour</span>
+                        <strong id="recordBestHour" class="stats-record-value">-</strong>
+                    </div>
+                    <div class="stats-record-card">
+                        <span class="stats-record-label">Longest Streak</span>
+                        <strong id="recordLongestStreak" class="stats-record-value">0</strong>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
 
-        <!-- 
-            ==========================================
-            GOALS BREAKDOWN CHART
-            ==========================================
-            Grouped bar chart comparing total goals
-            vs completed goals across all categories.
-            ==========================================
-        -->
-        <div class="stats-page-chart-wrapper" style="margin-top: 30px;">
-            <div class="stats-page-chart-title">🎖️ Goals Overview</div>
-            <canvas id="goalsChart"></canvas>
-        </div>
-
-        <!-- 
-            ==========================================
-            PRODUCTIVITY INSIGHTS
-            ==========================================
-            AI-generated insights based on user data:
-            - Completion rate feedback
-            - Task backlog warnings
-            - Goal progress updates
-            - Most productive day analysis
-            - Daily average calculations
-            ==========================================
-        -->
-        <div class="stats-page-insights-container">
-            <div class="stats-page-insights-title">💡 Productivity Insights</div>
-            <!-- Insights populated by stats.js -->
-            <div id="insightsContent">
-                <div class="stats-page-no-data">No data available yet. Start adding tasks and goals!</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 
-        ==========================================
-        FOOTER
-        ==========================================
-        Copyright and attribution links.
-        ==========================================
-    -->
     <footer>
-        &copy GABUD; PASCUA
-        <p>
-            W3Schools.com. (n.d.).
-            <a href="https://www.w3schools.com/" target="_blank">
-                https://www.w3schools.com/
-            </a>
-        </p>
-
-        <p>
-            GeeksforGeeks. (n.d.). GeeksforGeeks.
-            <a href="https://www.geeksforgeeks.org/" target="_blank">
-                https://www.geeksforgeeks.org/
-            </a>
-        </p>
-
-        <p>
-            Chart.js Documentation. (n.d.). Chart.js.
-            <a href="https://www.chartjs.org/" target="_blank">
-                https://www.chartjs.org/
-            </a>
-        </p>
+        &copy; 2026 Lockin
+        <p>All analytics are generated locally from data stored in your browser.</p>
     </footer>
 
-    <!-- 
-        ==========================================
-        BOTTOM NAVIGATION (Mobile Only)
-        ==========================================
-        Touch-friendly bottom navigation bar.
-        ==========================================
-    -->
     <nav class="bottom-nav">
         <a href="dashboard.html" class="bottom-nav-item">
             <i class="fas fa-home"></i>
@@ -289,7 +273,6 @@
     <script src="../js/index.js"></script>
     <script src="../js/sample-data.js"></script>
     <script src="../js/settings.js"></script>
-    <!-- Link to stats.js for metrics calculation and chart rendering -->
     <script src="../js/stats.js"></script>
 </body>
 </html>
